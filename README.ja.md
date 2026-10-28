@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@e4379bdaa33b6a5199b4ad4a79c59c422ca178ce status=reviewed -->
+<!-- i18n-source: README.md@2725a7403253e305cfe7775804e3f897218bb327 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -247,9 +247,9 @@ console.log(render(report, 'markdown'));
 | 2 つの SwiftUI アプリでの `scripts/simulator-compare.sh` | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
 2026 年 10 月 28 日に Mac（Apple silicon、M5 Max）で Node.js 26.12.1 を使って計測しました。7 つの fixture に対して
-`node dist/cli/main.js --json` を 100 回実行するセットを 3 回行い、Node.js の起動時間を含みます。3 セットの中央値は 0.11、0.11、0.11 秒、
-最も遅い実行は 0.31 秒でした。生成した 5,000 ファイル（Swift 33.4 MB、検出 10,000 件、うち一覧は 200 件）の SwiftUI プロジェクトは、3 回の実行で 1.27〜1.43 秒、
-メモリは最大 297 MB でした。
+`node dist/cli/main.js --json` を 100 回実行するセットを 3 回行い、Node.js の起動時間を含みます。3 セットの中央値は 0.12、0.12、0.12 秒、
+最も遅い実行は 0.17 秒でした。生成した 5,000 ファイル（Swift 33.4 MB、検出 10,000 件、うち一覧は 200 件）の SwiftUI プロジェクトは、3 回の実行で 1.13〜1.21 秒、
+メモリは最大 217 MB でした。
 
 ## ステータス
 

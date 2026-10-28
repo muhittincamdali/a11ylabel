@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@e4379bdaa33b6a5199b4ad4a79c59c422ca178ce status=reviewed -->
+<!-- i18n-source: README.md@2725a7403253e305cfe7775804e3f897218bb327 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -277,9 +277,9 @@ Terminal kayıtları, her biri farklı bir araç zinciriyle yapılmış projeler
 
 28 Ekim 2026'da Node.js 26.12.1 ile bir Mac'te (Apple silicon, M5 Max) ölçüldü: yedi fixture üzerinde
 `node dist/cli/main.js --json` komutunun 100'er çalıştırmalık üç seti, Node.js başlangıcı dahil. Üç
-setin medyanları 0,11, 0,11 ve 0,11 saniyeydi; en yavaş çalıştırma 0,31 saniye sürdü. 5.000 dosyalık
-(33,4 MB Swift, 10.000 bulgu, 200'ü listelenir) üretilmiş bir SwiftUI projesi üç çalıştırmada 1,27 ile 1,43 saniye
-sürdü; bellek kullanımı en çok 297 MB'tı.
+setin medyanları 0,12, 0,12 ve 0,12 saniyeydi; en yavaş çalıştırma 0,17 saniye sürdü. 5.000 dosyalık
+(33,4 MB Swift, 10.000 bulgu, 200'ü listelenir) üretilmiş bir SwiftUI projesi üç çalıştırmada 1,13 ile 1,21 saniye
+sürdü; bellek kullanımı en çok 217 MB'tı.
 
 ## Durum
 
