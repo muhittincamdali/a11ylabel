@@ -127,7 +127,8 @@ const variantOf = (file: SourceFile): FixVariant =>
       ? 'flutter'
       : appleVariant(file);
 
-function flutterAndroidOnly(files: readonly SourceFile[]): Hit[] {
+/** A11Y303 over a project: Flutter code that reads only disableAnimations. */
+export function checkFlutterMotionSetting(files: readonly SourceFile[]): Hit[] {
   if (files.some((file) => file.language === 'dart' && readsReduceMotion(file))) return [];
   const hits: Hit[] = [];
   for (const file of files) {
@@ -147,47 +148,55 @@ function flutterAndroidOnly(files: readonly SourceFile[]): Hit[] {
   return hits;
 }
 
+/**
+ * A11Y301, A11Y302 and A11Y304 in one file. `reader` is the first file of the app that reads
+ * Reduce Motion, or null; `root` names it in messages.
+ */
+export function checkMotionIn(file: SourceFile, reader: SourceFile | null, root: string): Hit[] {
+  const hits: Hit[] = [];
+  const triggers = readsReduceMotion(file) ? [] : motionTriggers(file);
+  // Once per file: appleVariant reads the whole file, and a file can hold a trigger per line.
+  const variant = variantOf(file);
+  for (const trigger of triggers) {
+    hits.push(
+      reader
+        ? hitAt(
+            file,
+            trigger.offset,
+            'A11Y302',
+            variant,
+            `${trigger.what}, in a file that does not read Reduce Motion (the app reads it in ${shownPath(reader.path, root)}).`,
+          )
+        : hitAt(
+            file,
+            trigger.offset,
+            'A11Y301',
+            variant,
+            `${trigger.what}, and nothing in the app reads Reduce Motion.`,
+          ),
+    );
+  }
+  if (file.language === 'js') {
+    for (const match of matches(file, /\bReduceMotion\s*\.\s*Never\b/g)) {
+      hits.push(
+        hitAt(
+          file,
+          match.index,
+          'A11Y304',
+          'react-native',
+          'ReduceMotion.Never: this Reanimated animation runs even when Reduce Motion is on.',
+        ),
+      );
+    }
+  }
+  return hits;
+}
+
 /** The Reduced Motion checks over all sources of a project (`root` names files in messages). */
 export function checkMotion(files: readonly SourceFile[], root: string): Hit[] {
   const reader = files.find(readsReduceMotion) ?? null;
-  const hits: Hit[] = [];
-  for (const file of files) {
-    const triggers = readsReduceMotion(file) ? [] : motionTriggers(file);
-    // Once per file: appleVariant reads the whole file, and a file can hold a trigger per line.
-    const variant = variantOf(file);
-    for (const trigger of triggers) {
-      hits.push(
-        reader
-          ? hitAt(
-              file,
-              trigger.offset,
-              'A11Y302',
-              variant,
-              `${trigger.what}, in a file that does not read Reduce Motion (the app reads it in ${shownPath(reader.path, root)}).`,
-            )
-          : hitAt(
-              file,
-              trigger.offset,
-              'A11Y301',
-              variant,
-              `${trigger.what}, and nothing in the app reads Reduce Motion.`,
-            ),
-      );
-    }
-    if (file.language === 'js') {
-      for (const match of matches(file, /\bReduceMotion\s*\.\s*Never\b/g)) {
-        hits.push(
-          hitAt(
-            file,
-            match.index,
-            'A11Y304',
-            'react-native',
-            'ReduceMotion.Never: this Reanimated animation runs even when Reduce Motion is on.',
-          ),
-        );
-      }
-    }
-  }
-  hits.push(...flutterAndroidOnly(files));
-  return hits;
+  return [
+    ...files.flatMap((file) => checkMotionIn(file, reader, root)),
+    ...checkFlutterMotionSetting(files),
+  ];
 }
