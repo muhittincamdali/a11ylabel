@@ -51,13 +51,23 @@ const md = (text: string) =>
 const code = (text: string) => {
   const value = text.replace(/\n/g, ' ');
   if (!value) return '';
-  const longestRun = Math.max(0, ...(value.match(BACKTICK_RUNS) ?? []).map((run) => run.length));
+  const longestRun = (value.match(BACKTICK_RUNS) ?? []).reduce(
+    (longest, run) => Math.max(longest, run.length),
+    0,
+  );
   const fence = '`'.repeat(longestRun + 1);
   const padding = /^[ `]|[ `]$/.test(value) && value.trim() !== '' ? ' ' : '';
   return `${fence}${padding}${value}${padding}${fence}`;
 };
 /** GitHub splits a table row on every `|` that has no backslash, inside code spans too. */
 const cell = (text: string) => text.replace(/\|/g, '\\|');
+/**
+ * Adds `lines` to `out` one at a time: push(...lines) passes every line as an argument, and a
+ * long list of them overflows the call stack.
+ */
+function append(out: string[], lines: readonly string[]): void {
+  for (const line of lines) out.push(line);
+}
 const where = (item: Finding) => code(`${item.file}${item.line ? `:${item.line}` : ''}`);
 
 function fixLines(fix: FixAdvice): string[] {
@@ -97,7 +107,8 @@ function labelTable(report: Report): string[] {
       `| [${label.name}](${label.criteria}) | ${label.status === 'blocked' ? `**${status}**` : status} | ${countText(label.counts) || '–'} | ${md(label.checked)} |`,
     );
   }
-  return [...out, ''];
+  out.push('');
+  return out;
 }
 
 function details(findings: readonly Finding[]): string[] {
@@ -113,7 +124,7 @@ function details(findings: readonly Finding[]): string[] {
     );
     if (item.fix && printed.has(item.fix.id))
       out.push(`**Fix: ${md(item.fix.title)}** (steps above)`, '');
-    else if (item.fix) out.push(...fixLines(item.fix));
+    else if (item.fix) append(out, fixLines(item.fix));
     if (item.fix) printed.add(item.fix.id);
     out.push(
       `Sources: ${item.sources.map((source) => `[${md(source.title)}](${source.url})`).join(', ')}`,
@@ -141,15 +152,19 @@ export function renderMarkdown(report: Report): string {
     ...labelTable(report),
   ];
   const known = facts(report);
-  if (known.length > 0) out.push(...known.map((fact) => `- ${fact}`), '');
+  if (known.length > 0) {
+    for (const fact of known) out.push(`- ${fact}`);
+    out.push('');
+  }
   if (report.findings.length > 0) {
     out.push('| Rule | Severity | Where | Finding |', '| --- | --- | --- | --- |');
     for (const item of report.findings) {
       out.push(`| ${item.rule} | ${item.severity} | ${cell(where(item))} | ${md(item.message)} |`);
     }
-    out.push('', ...details(report.findings));
+    out.push('');
+    append(out, details(report.findings));
   }
-  out.push(...manualChecks(report));
+  append(out, manualChecks(report));
   for (const note of report.notes) out.push(`> ${md(note)}`, '');
   out.push(
     `${countsLine(report)}. a11ylabel reads code; before claiming a label, Apple asks that people can complete every common task with the feature on ([overview](${OVERVIEW_URL})).`,

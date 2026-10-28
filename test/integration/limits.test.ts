@@ -67,4 +67,13 @@ describe('a report of a project with a finding on every line', () => {
       expect(result.stdout).toContain('more findings are not listed');
     }
   });
+
+  it('builds a Markdown report of more findings than the call stack holds arguments', () => {
+    // render() never gets this many after the limits; the Markdown builder must not depend on it.
+    const first = report.findings[0];
+    if (!first) throw new Error('no finding');
+    const findings = Array.from({ length: 30_000 }, (_, index) => ({ ...first, line: index + 1 }));
+    const output = render({ ...report, findings }, 'markdown');
+    expect(output).toContain(`:30000\``);
+  });
 });
