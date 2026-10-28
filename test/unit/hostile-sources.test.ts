@@ -1,7 +1,7 @@
 // Source files from a pull request can be written to make a pattern slow. Each case here must
 // finish well within the limit at 1 MB; the limit leaves room for a slow CI runner.
 import { describe, expect, it } from 'vitest';
-import { blankCommentsAndStrings, sourceFile } from '../../src/collect/sources.js';
+import { SOURCE_LIMITS, blankCommentsAndStrings, sourceFile } from '../../src/collect/sources.js';
 import { checkLabels } from '../../src/rules/labels.js';
 import { checkLargerText } from '../../src/rules/larger-text.js';
 import { appleVariant } from '../../src/rules/hit.js';
@@ -67,6 +67,31 @@ describe('rules on hostile sources', () => {
     expect(
       timed(() => [checkLargerText(file), checkLabels(file), motionTriggers(file)]),
     ).toBeLessThan(LIMIT_MS);
+  });
+});
+
+describe('Larger Text app-wide ranges on hostile sources', () => {
+  // Half the file opens app-wide ranges, half holds hits to look up in them. Checking every range
+  // for every hit took 5.6 s for one such Dart file of 3.6 MB, and 160 s for 32 of them.
+  const half = (unit: string) => unit.repeat(Math.floor(SOURCE_LIMITS.fileBytes / 2 / unit.length));
+
+  it('looks up Flutter hits in many app builders in linear time', () => {
+    const text = `void f() { MaterialApp(${half('builder: a, ')}); }\n${half('var x = TextScaler.noScaling;\n')}`;
+    const file = sourceFile('/app/lib/main.dart', text);
+    let hits: ReturnType<typeof checkLargerText> = [];
+    expect(timed(() => (hits = checkLargerText(file)))).toBeLessThan(LIMIT_MS);
+    expect(hits.length).toBeGreaterThan(60_000);
+    expect(hits.every((hit) => hit.rule === 'A11Y102')).toBe(true);
+  });
+
+  it('looks up React Native hits in many defaultProps in linear time', () => {
+    const text = `${half('Text.defaultProps = {};\n')}${half('<Text allowFontScaling={false} />\n')}`;
+    const file = sourceFile('/app/App.tsx', text);
+    let hits: ReturnType<typeof checkLargerText> = [];
+    expect(timed(() => (hits = checkLargerText(file, { reactNative: '0.77.0' })))).toBeLessThan(
+      LIMIT_MS,
+    );
+    expect(hits.length).toBeGreaterThan(50_000);
   });
 });
 
