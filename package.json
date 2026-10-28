@@ -1,6 +1,6 @@
 {
   "name": "@mcamdali/a11ylabel",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Shows which App Store Accessibility Nutrition Labels a native iOS, Flutter or React Native/Expo app can claim, what in its code blocks each one, and how to fix it.",
   "keywords": [
     "accessibility",

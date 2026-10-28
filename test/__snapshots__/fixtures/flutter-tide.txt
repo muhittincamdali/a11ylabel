@@ -1,4 +1,4 @@
-a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+a11ylabel 0.1.0 · rules nutrition-labels@2026.10.28
 
 tide · Flutter · fixtures/flutter-tide
 target Runner · iOS 15.0 (ios/Runner/Info.plist)
