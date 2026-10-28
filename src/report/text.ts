@@ -60,13 +60,29 @@ export function clean(text: string): string {
   return text.replace(UNSAFE_CHARACTERS, '\uFFFD');
 }
 
-/** A copy of a report (or any part of one) with every string passed through clean(). */
-export function withoutControlCharacters<T>(value: T): T {
-  if (typeof value === 'string') return clean(value) as T;
-  if (Array.isArray(value)) return value.map(withoutControlCharacters) as T;
+const LINE_BREAKS = /[\n\u2028\u2029]/g;
+
+/**
+ * clean(), and the line breaks clean() keeps (newline, U+2028, U+2029) replaced with U+FFFD too.
+ * The terminal and text reports make every line break themselves; a file name is printed on a line
+ * of its own without wrap(), so a newline in it would start a line that looks like the report's own,
+ * such as a made-up "0 errors" at the left edge. U+FFFD shows where the break was.
+ */
+export function oneLine(text: string): string {
+  return clean(text).replace(LINE_BREAKS, '\uFFFD');
+}
+
+/** A copy of a report (or any part of one) with every string passed through `replace` (clean()). */
+export function withoutControlCharacters<T>(
+  value: T,
+  replace: (text: string) => string = clean,
+): T {
+  if (typeof value === 'string') return replace(value) as T;
+  if (Array.isArray(value))
+    return value.map((item) => withoutControlCharacters(item, replace)) as T;
   if (value === null || typeof value !== 'object') return value;
   return Object.fromEntries(
-    Object.entries(value).map(([key, item]) => [key, withoutControlCharacters(item)]),
+    Object.entries(value).map(([key, item]) => [key, withoutControlCharacters(item, replace)]),
   ) as T;
 }
 

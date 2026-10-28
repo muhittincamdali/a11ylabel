@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Finding, LabelSummary, Report } from '../../src/model.js';
 import { render } from '../../src/report/index.js';
-import { clean, countText, wrap } from '../../src/report/text.js';
+import { clean, countText, oneLine, wrap } from '../../src/report/text.js';
 import { LABEL_IDS, labelById, RULE_DATA } from '../../src/rules/data.js';
 import { labelStatus, scan, verdictOf } from '../../src/scan.js';
 import { CLEAN_VIEW, LIGHT, nativeApp } from '../helpers/projects.js';
@@ -178,6 +178,24 @@ describe('render', () => {
       'a\uFFFDb\uFFFDc\uFFFDd\uFFFDe\uFFFDf',
     );
     expect(clean('tab\tand\nnewline stay')).toBe('tab\tand\nnewline stay');
+  });
+
+  it('replaces line breaks as well in the terminal and text reports only', () => {
+    expect(oneLine('a\nb\u2028c\u2029d\re\tf')).toBe('a\uFFFDb\uFFFDc\uFFFDd\uFFFDe\tf');
+    const file = 'Pa\n0 errors, all clear\u2028x.swift';
+    const hostile = report([finding({ file, title: 'T\nitle', message: 'm\ne' })], {
+      notes: ['note\nhere'],
+    });
+    for (const format of ['tty', 'text'] as const) {
+      const out = render(hostile, format, { color: format === 'tty' });
+      expect(out).not.toMatch(/[\u2028\u2029]/);
+      // biome-ignore lint/suspicious/noControlCharactersInRegex: a colour code may open the line.
+      expect(out).not.toMatch(/^(\u001b\[\d+m)*0 errors, all clear/m);
+      expect(out).toContain('Pa\uFFFD0 errors, all clear\uFFFDx.swift:3');
+    }
+    // Markdown makes a space of the newline inside the code span.
+    expect(render(hostile, 'markdown')).toContain('`Pa 0 errors, all clear\u2028x.swift:3`');
+    expect(JSON.parse(render(hostile, 'json')).findings[0].file).toBe(file);
   });
 
   it('renders text that wraps into more lines than the call stack holds arguments', () => {
