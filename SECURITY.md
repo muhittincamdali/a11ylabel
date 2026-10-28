@@ -43,6 +43,9 @@ Markdown links from file names or values in the project.
 
 The project you check may come from a pull request, so a11ylabel limits what it reads: 32 MB per
 project file; for sources 4 MB per file, 20,000 files and 128 MB in total; 5,000 colour sets;
-100,000 values per binary plist and 64 levels of nesting per plist or JSON file. Files over a
-limit are skipped with a note in the report. A file under these limits that still takes much
-longer or much more memory than a real project of its size is in scope.
+100,000 values per binary plist, whose strings and data together may not decode to more bytes
+than the file holds, and 64 levels of nesting per plist or JSON file. Files over a limit are
+skipped with a note in the report. Sources are read only from folders that, with symbolic links
+resolved, are inside the project; a source folder such as `lib/` that links out of it is skipped
+with a note. A file under these limits that still takes much longer or much more memory than a
+real project of its size is in scope.
