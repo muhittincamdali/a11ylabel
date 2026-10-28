@@ -40,7 +40,8 @@ First release.
   JavaScript, `jq` and GitHub Actions.
 - Limits on what a report lists: at most 20 findings of a rule per file and 100 per project. The
   label counts and the summary include the findings over these limits, and a note says how many of
-  each rule were left out.
+  each rule were left out. Names and values from the project (target names, versions, build
+  setting and Info.plist values) are cut to 200 characters.
 
 [Unreleased]: https://github.com/muhittincamdali/a11ylabel/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0
