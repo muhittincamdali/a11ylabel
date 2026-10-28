@@ -44,16 +44,20 @@ export function countText(counts: { errors: number; warnings: number; info: numb
     .join(', ');
 }
 
+const UNSAFE_CHARACTERS =
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: matching control characters is the point.
+  /[\u0000-\u0008\u000B-\u001F\u007F-\u009F\u061C\u200E\u200F\u202A-\u202E\u2066-\u2069]/g;
+
 /**
- * Replaces control characters (C0 except tab and newline, DEL, C1) and the bidirectional
- * embedding, override and isolate controls (U+202A to U+202E, U+2066 to U+2069) with U+FFFD.
+ * Replaces control characters (C0 except tab and newline, DEL, C1), the bidirectional
+ * embedding, override and isolate controls (U+202A to U+202E, U+2066 to U+2069) and the
+ * direction marks (U+200E, U+200F, U+061C) with U+FFFD.
  * File names, versions and plist values come from the checked project; printed raw, an escape
  * sequence in one of them could rewrite the terminal, and a bidi control could make a file name
  * or a whole report line read in a different order than it is.
  */
 export function clean(text: string): string {
-  // biome-ignore lint/suspicious/noControlCharactersInRegex: matching control characters is the point.
-  return text.replace(/[\u0000-\u0008\u000B-\u001F\u007F-\u009F‪-‮⁦-⁩]/g, '�');
+  return text.replace(UNSAFE_CHARACTERS, '\uFFFD');
 }
 
 /** A copy of a report (or any part of one) with every string passed through clean(). */
