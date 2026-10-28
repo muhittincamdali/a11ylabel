@@ -80,7 +80,7 @@ function facts(report: Report): string[] {
     ...report.labels.flatMap((label) =>
       label.signals.map(
         (signal) =>
-          `${label.name}: ${md(signal.text.toLowerCase())} (${code(signal.file)}${signal.files > 1 ? ` and ${signal.files - 1} more` : ''})`,
+          `${label.name}: ${md(signal.text)} (${code(signal.file)}${signal.files > 1 ? ` and ${signal.files - 1} more` : ''})`,
       ),
     ),
   ];
