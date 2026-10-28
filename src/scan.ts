@@ -19,10 +19,12 @@ import {
   type LabelId,
   labelById,
   RULE_DATA,
+  type RuleId,
   ruleById,
   type Severity,
 } from './rules/data.js';
 import type { Hit } from './rules/hit.js';
+import { HIT_LIMITS } from './rules/limit.js';
 import { VERSION } from './version.js';
 
 const SEVERITY_ORDER: Record<Severity, number> = { error: 0, warning: 1, info: 2 };
@@ -68,6 +70,40 @@ function byPlace(left: Finding, right: Finding): number {
 
 const count = (findings: readonly Finding[], severity: Severity) =>
   findings.filter((item) => item.severity === severity).length;
+
+const COUNT_KEY = { error: 'errors', warning: 'warnings', info: 'info' } as const;
+
+/**
+ * Errors, warnings and info of the listed findings and the hits not listed (counted by rule),
+ * for the label `id`, or for all labels when it is left out.
+ */
+function countsOf(
+  findings: readonly Finding[],
+  notListed: ReadonlyArray<readonly [RuleId, number]>,
+  id?: LabelId,
+): Report['summary'] {
+  const totals = { errors: 0, warnings: 0, info: 0 };
+  const add = (severity: Severity, labels: readonly LabelId[], amount: number) => {
+    if (id === undefined || labels.includes(id)) totals[COUNT_KEY[severity]] += amount;
+  };
+  for (const item of findings) add(item.severity, item.labels, 1);
+  for (const [rule, amount] of notListed) {
+    const { severity, labels } = ruleById(rule);
+    add(severity, labels, amount);
+  }
+  return totals;
+}
+
+/** The note that says how many findings the report leaves out; null when it lists them all. */
+function notListedNote(notListed: ReadonlyArray<readonly [RuleId, number]>): string | null {
+  const total = notListed.reduce((sum, [, amount]) => sum + amount, 0);
+  if (total === 0) return null;
+  const byRule = [...notListed]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([rule, amount]) => `${rule}: ${amount}`)
+    .join(', ');
+  return `${total === 1 ? '1 more finding is' : `${total} more findings are`} not listed (${byRule}): a report lists at most ${HIT_LIMITS.perFile} findings of a rule per file and ${HIT_LIMITS.perRule} per project. The counts include them.`;
+}
 
 /** The status of one label from its findings; see LabelStatus. */
 export function labelStatus(
@@ -142,28 +178,26 @@ export async function scan(path: string, options: ScanOptions = {}): Promise<Rep
   const project = await detectProject(path);
   const app = await collectApp(project);
   const scope = LABEL_IDS.filter((id) => !options.labels || options.labels.includes(id));
-  const findings = checkApp(app)
+  const inScope = (rule: RuleId) => ruleById(rule).labels.some((label) => scope.includes(label));
+  const hits = checkApp(app);
+  const findings = hits.listed
+    .filter((hit) => inScope(hit.rule))
     .map((hit) => toFinding(hit, project.root))
-    .filter((item) => item.labels.some((label) => scope.includes(label)))
     .sort(byPlace);
+  const notListed = [...hits.notListed].filter(([rule]) => inScope(rule));
   const signals = findSignals(app.sources);
   const notKnown = new Set<LabelId>();
   const unreadPlist = app.targets.some((target) => target.unreadInfoPlist);
   if (unreadPlist || app.appNotChecked) notKnown.add('dark-interface');
   const labels: LabelSummary[] = scope.map((id) => {
     const label = labelById(id);
-    const own = findings.filter((item) => item.labels.includes(id));
     return {
       id,
       name: label.name,
       status: labelStatus(id, findings, notKnown),
       coverage: label.coverage,
       criteria: label.criteria,
-      counts: {
-        errors: count(own, 'error'),
-        warnings: count(own, 'warning'),
-        info: count(own, 'info'),
-      },
+      counts: countsOf(findings, notListed, id),
       signals: signals
         .filter((signal) => signal.label === id)
         .map((signal) => ({
@@ -192,6 +226,8 @@ export async function scan(path: string, options: ScanOptions = {}): Promise<Rep
   if (unreadPlist) {
     notes.push("An Info.plist could not be read, so the app's UIUserInterfaceStyle is not known.");
   }
+  const leftOut = notListedNote(notListed);
+  if (leftOut) notes.push(leftOut);
   return {
     schemaVersion: SCHEMA_VERSION,
     tool: { name: 'a11ylabel', version: VERSION },
@@ -208,10 +244,6 @@ export async function scan(path: string, options: ScanOptions = {}): Promise<Rep
     labels,
     findings,
     notes,
-    summary: {
-      errors: count(findings, 'error'),
-      warnings: count(findings, 'warning'),
-      info: count(findings, 'info'),
-    },
+    summary: countsOf(findings, notListed),
   };
 }

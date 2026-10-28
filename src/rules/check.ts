@@ -7,20 +7,30 @@ import { type LabelId, RULE_DATA } from './data.js';
 import type { Hit } from './hit.js';
 import { checkLabels } from './labels.js';
 import { checkLargerText } from './larger-text.js';
+import { type LimitedHits, limitHits } from './limit.js';
 import { checkContrastVariants, checkVideo } from './media.js';
-import { checkMotion } from './motion.js';
+import { checkFlutterMotionSetting, checkMotionIn, readsReduceMotion } from './motion.js';
 
-export function checkApp(app: AppModel): Hit[] {
+/** The hits of each check, one file at a time, so that no more than one file's hits are held. */
+function* hitGroups(app: AppModel): Generator<readonly Hit[]> {
   const { sources } = app;
+  const { root } = app.project;
   const reactNative = app.project.packages.get('react-native')?.version ?? null;
-  return [
-    ...sources.flatMap((file) => checkLargerText(file, { reactNative })),
-    ...checkDarkInterface(app),
-    ...checkMotion(sources, app.project.root),
-    ...sources.flatMap(checkLabels),
-    ...checkContrastVariants(app.colors),
-    ...sources.flatMap(checkVideo),
-  ];
+  const reader = sources.find(readsReduceMotion) ?? null;
+  yield checkDarkInterface(app);
+  yield checkContrastVariants(app.colors);
+  yield checkFlutterMotionSetting(sources);
+  for (const file of sources) {
+    yield checkLargerText(file, { reactNative });
+    yield checkMotionIn(file, reader, root);
+    yield checkLabels(file);
+    yield checkVideo(file);
+  }
+}
+
+/** Runs every rule on a collected project; see limitHits for what the report lists. */
+export function checkApp(app: AppModel): LimitedHits {
+  return limitHits(hitGroups(app));
 }
 
 const SIGNALS = RULE_DATA.signals.map((item) => ({
