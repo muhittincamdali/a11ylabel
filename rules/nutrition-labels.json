@@ -1,0 +1,888 @@
+{
+  "$schema": "./schema.json",
+  "ruleSet": "nutrition-labels",
+  "dataVersion": "2026.10.28",
+  "read": "2026-10-28",
+  "labels": [
+    {
+      "id": "voiceover",
+      "name": "VoiceOver",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria",
+      "coverage": "partial",
+      "checked": "Icon-only buttons without an accessibility label, and labels that name the control type.",
+      "manual": "Complete every common task with VoiceOver alone: reading order, grouping, values and states, custom actions, focus in modal views."
+    },
+    {
+      "id": "voice-control",
+      "name": "Voice Control",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria",
+      "coverage": "partial",
+      "checked": "Icon-only buttons without a name Voice Control can show and say.",
+      "manual": "Say \"Show names\" and \"Show numbers\" on every screen of the common tasks; reach swipe and long-press actions by voice; dictate into every text field."
+    },
+    {
+      "id": "larger-text",
+      "name": "Larger Text",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria",
+      "coverage": "checked",
+      "checked": "Text scaling turned off or capped below 200% (for the whole app or one view), and fixed font sizes that Dynamic Type does not scale.",
+      "manual": "Use the common tasks at the largest accessibility text size: no overlapping text, no truncation that hides information."
+    },
+    {
+      "id": "dark-interface",
+      "name": "Dark Interface",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria",
+      "coverage": "checked",
+      "checked": "A light appearance forced in Info.plist, the build settings, the Expo config or code; a Flutter app without a dark theme; asset colours without a dark variant.",
+      "manual": "Use the common tasks in Dark Mode: no screen, sheet, web view or launch screen that flashes bright."
+    },
+    {
+      "id": "differentiate-without-color",
+      "name": "Differentiate Without Color Alone",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/differentiate-without-color-alone-evaluation-criteria",
+      "coverage": "manual",
+      "checked": "Nothing: whether colour is the only difference is a question of design, not of code a11ylabel can read.",
+      "manual": "Look for status, charts and selections told apart by colour alone; add a shape, symbol or text."
+    },
+    {
+      "id": "sufficient-contrast",
+      "name": "Sufficient Contrast",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/sufficient-contrast-evaluation-criteria",
+      "coverage": "hint",
+      "checked": "Asset catalog colours without a high contrast variant for the Increase Contrast setting.",
+      "manual": "Measure text and controls against their background: about 4.5:1 for most text, by default or with Increase Contrast."
+    },
+    {
+      "id": "reduced-motion",
+      "name": "Reduced Motion",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria",
+      "coverage": "checked",
+      "checked": "Repeating, parallax, 3D and auto-playing animations in an app that never reads the Reduce Motion setting, or in files that do not.",
+      "manual": "Turn on Reduce Motion and use the common tasks: no spinning, scaling, parallax or auto-advancing motion left."
+    },
+    {
+      "id": "captions",
+      "name": "Captions",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/captions-evaluation-criteria",
+      "coverage": "hint",
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video and audio of the common tasks have captions or transcripts, and that people can tell which media is captioned."
+    },
+    {
+      "id": "audio-descriptions",
+      "name": "Audio Descriptions",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/audio-descriptions-evaluation-criteria",
+      "coverage": "hint",
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video of the common tasks offers an audio-described track."
+    }
+  ],
+  "rules": [
+    {
+      "id": "A11Y101",
+      "labels": ["larger-text"],
+      "severity": "error",
+      "title": "Text size locked for the whole app",
+      "summary": "Text scaling is turned off or capped below 200% for every text of the app: React Native Text.defaultProps, a MediaQuery in a Flutter app's builder, or a Dynamic Type limit on a SwiftUI scene or a UIKit window. Apple's Larger Text criteria ask that text can grow to at least 200% or the system's largest size.",
+      "sources": [
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        },
+        {
+          "title": "React Native Text: allowFontScaling, maxFontSizeMultiplier",
+          "url": "https://reactnative.dev/docs/text"
+        },
+        {
+          "title": "Flutter MediaQuery.withClampedTextScaling",
+          "url": "https://api.flutter.dev/flutter/widgets/MediaQuery/withClampedTextScaling.html"
+        },
+        {
+          "title": "SwiftUI dynamicTypeSize(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/dynamictypesize(_:)"
+        },
+        {
+          "title": "UIKit UIView.maximumContentSizeCategory",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/maximumcontentsizecategory"
+        }
+      ],
+      "fixes": {
+        "react-native": {
+          "title": "Let every Text follow the system text size",
+          "steps": [
+            "Remove allowFontScaling = false from Text.defaultProps and TextInput.defaultProps.",
+            "If the layout breaks at large sizes, set maxFontSizeMultiplier to 2 or more only where needed (0 removes the limit), and let rows wrap instead of truncating.",
+            "Check the common tasks at the largest accessibility size (Settings > Accessibility > Display & Text Size > Larger Text)."
+          ],
+          "guide": "docs/guides/larger-text.md#react-native-and-expo"
+        },
+        "flutter": {
+          "title": "Stop overriding the text scaler for the whole app",
+          "steps": [
+            "Remove the MediaQuery, MediaQuery.withNoTextScaling or TextScaler.noScaling that wraps the app in MaterialApp.builder.",
+            "If a limit is needed, use MediaQuery.withClampedTextScaling with maxScaleFactor 2.0 or more, or clamp only the widgets that cannot grow.",
+            "Check the common tasks at the largest accessibility size on an iOS simulator."
+          ],
+          "guide": "docs/guides/larger-text.md#flutter"
+        },
+        "swiftui": {
+          "title": "Remove the Dynamic Type limit from the scene",
+          "steps": [
+            "Remove .dynamicTypeSize(…) from the WindowGroup content, or raise its upper bound to .accessibility3 or above (AX3 is the first size above 200% for body text).",
+            "Put a limit only on the views that cannot grow, such as a tab bar, and give them .accessibilityShowsLargeContentViewer().",
+            "Preview the screens with .dynamicTypeSize(.accessibility5)."
+          ],
+          "guide": "docs/guides/larger-text.md#swiftui"
+        },
+        "uikit": {
+          "title": "Remove the content size limit from the window",
+          "steps": [
+            "Remove maximumContentSizeCategory from the window, or set it to .accessibilityExtraLarge (AX3) or larger.",
+            "Limit only views that cannot grow and offer the Large Content Viewer for them (UILargeContentViewerInteraction).",
+            "Check the common tasks at the largest accessibility size."
+          ],
+          "guide": "docs/guides/larger-text.md#uikit"
+        }
+      }
+    },
+    {
+      "id": "A11Y102",
+      "labels": ["larger-text"],
+      "severity": "warning",
+      "title": "Text that does not scale",
+      "summary": "One text or view turns text scaling off: allowFontScaling={false}, TextScaler.noScaling or linear(1.0), adjustsFontForContentSizeCategory = false, or a fixed .dynamicTypeSize. Fine for a tab bar or other repeated navigation; a blocker for primary content.",
+      "sources": [
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        },
+        {
+          "title": "React Native Text: allowFontScaling",
+          "url": "https://reactnative.dev/docs/text"
+        },
+        {
+          "title": "Flutter TextScaler.noScaling",
+          "url": "https://api.flutter.dev/flutter/painting/TextScaler/noScaling-constant.html"
+        },
+        {
+          "title": "UIKit adjustsFontForContentSizeCategory",
+          "url": "https://developer.apple.com/documentation/uikit/uicontentsizecategoryadjusting/adjustsfontforcontentsizecategory"
+        }
+      ],
+      "fixes": {
+        "react-native": {
+          "title": "Let this text scale",
+          "steps": [
+            "Remove allowFontScaling={false}; if the text truly cannot grow (a tab bar label), keep it and make sure its meaning is available another way.",
+            "Let the container grow with the text: no fixed height, numberOfLines only where the full text is shown elsewhere."
+          ],
+          "guide": "docs/guides/larger-text.md#react-native-and-expo"
+        },
+        "flutter": {
+          "title": "Let this text scale",
+          "steps": [
+            "Remove textScaler: TextScaler.noScaling (or linear(1.0), or textScaleFactor: 1.0) from this widget.",
+            "If it cannot grow, clamp it with MediaQuery.withClampedTextScaling(maxScaleFactor: 2.0) rather than turning scaling off."
+          ],
+          "guide": "docs/guides/larger-text.md#flutter"
+        },
+        "swiftui": {
+          "title": "Let this view follow Dynamic Type",
+          "steps": [
+            "Remove the fixed .dynamicTypeSize(…) or replace it with a range whose upper bound is .accessibility3 or above.",
+            "For a control that cannot grow, add .accessibilityShowsLargeContentViewer()."
+          ],
+          "guide": "docs/guides/larger-text.md#swiftui"
+        },
+        "uikit": {
+          "title": "Let this label follow Dynamic Type",
+          "steps": [
+            "Set adjustsFontForContentSizeCategory = true.",
+            "Give the label a font from UIFont.preferredFont(forTextStyle:) or UIFontMetrics(forTextStyle:).scaledFont(for:), which that property needs to take effect.",
+            "Set numberOfLines = 0 so the text wraps."
+          ],
+          "guide": "docs/guides/larger-text.md#uikit"
+        }
+      }
+    },
+    {
+      "id": "A11Y103",
+      "labels": ["larger-text"],
+      "severity": "warning",
+      "title": "Text capped below 200%",
+      "summary": "A limit stops text below twice its size: maxFontSizeMultiplier under 2, a Flutter clamp with maxScaleFactor under 2.0, a SwiftUI .dynamicTypeSize range that ends below .accessibility3, or a UIKit maximumContentSizeCategory below .accessibilityExtraLarge.",
+      "sources": [
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        },
+        {
+          "title": "React Native Text: maxFontSizeMultiplier",
+          "url": "https://reactnative.dev/docs/text"
+        },
+        {
+          "title": "Flutter MediaQuery.withClampedTextScaling",
+          "url": "https://api.flutter.dev/flutter/widgets/MediaQuery/withClampedTextScaling.html"
+        },
+        {
+          "title": "SwiftUI DynamicTypeSize",
+          "url": "https://developer.apple.com/documentation/swiftui/dynamictypesize"
+        },
+        {
+          "title": "UIKit UIView.maximumContentSizeCategory",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/maximumcontentsizecategory"
+        }
+      ],
+      "fixes": {
+        "react-native": {
+          "title": "Raise the limit to 2 or remove it",
+          "steps": [
+            "Set maxFontSizeMultiplier to 2 or more, or to 0 for no limit.",
+            "Keep a lower limit only on repeated navigation such as a tab bar."
+          ],
+          "guide": "docs/guides/larger-text.md#react-native-and-expo"
+        },
+        "flutter": {
+          "title": "Raise maxScaleFactor to 2.0 or remove the clamp",
+          "steps": [
+            "Set maxScaleFactor to 2.0 or more in withClampedTextScaling or TextScaler.clamp.",
+            "Keep a lower limit only on widgets that cannot grow, such as a bottom navigation bar."
+          ],
+          "guide": "docs/guides/larger-text.md#flutter"
+        },
+        "swiftui": {
+          "title": "End the range at .accessibility3 or above",
+          "steps": [
+            "Change the upper bound of .dynamicTypeSize(…) to .accessibility3 or larger, or remove it.",
+            "For a control that has to stay small, add .accessibilityShowsLargeContentViewer()."
+          ],
+          "guide": "docs/guides/larger-text.md#swiftui"
+        },
+        "uikit": {
+          "title": "Raise maximumContentSizeCategory to AX3 or remove it",
+          "steps": [
+            "Set maximumContentSizeCategory to .accessibilityExtraLarge or larger, or to nil.",
+            "Offer the Large Content Viewer for views that stay small."
+          ],
+          "guide": "docs/guides/larger-text.md#uikit"
+        }
+      }
+    },
+    {
+      "id": "A11Y104",
+      "labels": ["larger-text"],
+      "severity": "warning",
+      "title": "Fixed font size",
+      "summary": "A font with a point size that Dynamic Type does not scale: SwiftUI .system(size:) or Font.custom(_:fixedSize:), or a UIKit font from systemFont(ofSize:) or UIFont(name:size:) in a file that never uses UIFontMetrics.",
+      "sources": [
+        {
+          "title": "SwiftUI Font.system(size:weight:design:)",
+          "url": "https://developer.apple.com/documentation/swiftui/font/system(size:weight:design:)"
+        },
+        {
+          "title": "SwiftUI Font.custom(_:fixedSize:)",
+          "url": "https://developer.apple.com/documentation/swiftui/font/custom(_:fixedsize:)"
+        },
+        {
+          "title": "UIKit UIFontMetrics",
+          "url": "https://developer.apple.com/documentation/uikit/uifontmetrics"
+        },
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        }
+      ],
+      "fixes": {
+        "swiftui": {
+          "title": "Use a text style, or a size relative to one",
+          "steps": [
+            "Replace .system(size: 17) with a text style such as .body, .headline or .title.",
+            "For a custom size or font, use .system(size: 17, …) only for decoration; for text, use Font.custom(\"Name\", size: 17, relativeTo: .body) or a @ScaledMetric size."
+          ],
+          "guide": "docs/guides/larger-text.md#swiftui"
+        },
+        "uikit": {
+          "title": "Scale the font with UIFontMetrics",
+          "steps": [
+            "Wrap the font: UIFontMetrics(forTextStyle: .body).scaledFont(for: font), or use UIFont.preferredFont(forTextStyle:).",
+            "Set adjustsFontForContentSizeCategory = true on the label, text field or text view."
+          ],
+          "guide": "docs/guides/larger-text.md#uikit"
+        }
+      }
+    },
+    {
+      "id": "A11Y201",
+      "labels": ["dark-interface"],
+      "severity": "error",
+      "title": "Light appearance forced for the whole app",
+      "summary": "UIUserInterfaceStyle is Light, which makes the app ignore Dark Mode, and nothing in the code turns a dark appearance on. In an Expo config, userInterfaceStyle \"light\" does the same, and so does leaving it out: Expo then uses light.",
+      "sources": [
+        {
+          "title": "UIUserInterfaceStyle (Information Property List)",
+          "url": "https://developer.apple.com/documentation/bundleresources/information-property-list/uiuserinterfacestyle"
+        },
+        {
+          "title": "Dark Interface evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria"
+        },
+        {
+          "title": "Expo app config: userInterfaceStyle",
+          "url": "https://docs.expo.dev/versions/latest/config/app/"
+        }
+      ],
+      "fixes": {
+        "info-plist": {
+          "title": "Follow the system appearance",
+          "steps": [
+            "Remove UIUserInterfaceStyle from Info.plist, or set it to Automatic (or to Dark for an app that is always dark).",
+            "Give every custom colour a dark variant in the asset catalog, then use the common tasks in Dark Mode."
+          ],
+          "guide": "docs/guides/dark-interface.md#info-plist-and-build-settings"
+        },
+        "build-setting": {
+          "title": "Remove the build setting that forces light",
+          "steps": [
+            "Delete INFOPLIST_KEY_UIUserInterfaceStyle (Build Settings > Info.plist Values > User Interface Style), or set it to Automatic.",
+            "Give every custom colour a dark variant in the asset catalog, then use the common tasks in Dark Mode."
+          ],
+          "guide": "docs/guides/dark-interface.md#info-plist-and-build-settings"
+        },
+        "expo-config": {
+          "title": "Set userInterfaceStyle to automatic",
+          "steps": [
+            "In app.json (or app.config), set \"userInterfaceStyle\": \"automatic\"; Expo uses light when the key is missing.",
+            "On Android, install expo-system-ui for the setting to apply there too.",
+            "Read the scheme with useColorScheme() and give every screen dark colours."
+          ],
+          "guide": "docs/guides/dark-interface.md#expo"
+        }
+      }
+    },
+    {
+      "id": "A11Y202",
+      "labels": ["dark-interface"],
+      "severity": "info",
+      "title": "Light by default, dark through an in-app setting",
+      "summary": "The app forces a light appearance but its code can switch to dark. Apple accepts an in-app mode that keeps the interface dark; check that it covers every common task.",
+      "sources": [
+        {
+          "title": "Dark Interface evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria"
+        },
+        {
+          "title": "UIKit UIView.overrideUserInterfaceStyle",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/overrideuserinterfacestyle"
+        }
+      ],
+      "fixes": {
+        "info-plist": {
+          "title": "Check the in-app dark mode",
+          "steps": [
+            "Turn on the app's dark setting and use the common tasks: launch, sign-in, purchase and settings must stay dark.",
+            "Consider following the system appearance by default, so people who use Dark Mode do not have to find the setting."
+          ],
+          "guide": "docs/guides/dark-interface.md#an-in-app-setting"
+        }
+      }
+    },
+    {
+      "id": "A11Y203",
+      "labels": ["dark-interface"],
+      "severity": "warning",
+      "title": "Light colour scheme set in code",
+      "summary": "Code sets a light appearance with a literal value: .preferredColorScheme(.light), overrideUserInterfaceStyle = .light, Appearance.setColorScheme('light') or themeMode: ThemeMode.light. On a window, root view or app, that is the whole app.",
+      "sources": [
+        {
+          "title": "SwiftUI preferredColorScheme(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/preferredcolorscheme(_:)"
+        },
+        {
+          "title": "UIKit UIView.overrideUserInterfaceStyle",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/overrideuserinterfacestyle"
+        },
+        {
+          "title": "React Native Appearance",
+          "url": "https://reactnative.dev/docs/appearance"
+        },
+        {
+          "title": "Flutter ThemeMode",
+          "url": "https://api.flutter.dev/flutter/material/ThemeMode.html"
+        }
+      ],
+      "fixes": {
+        "swiftui": {
+          "title": "Let the view follow the system appearance",
+          "steps": [
+            "Remove .preferredColorScheme(.light), or pass nil unless the person picked light in the app.",
+            "Use semantic colours (Color.primary, Color(.systemBackground)) or asset colours with dark variants."
+          ],
+          "guide": "docs/guides/dark-interface.md#swiftui-and-uikit"
+        },
+        "uikit": {
+          "title": "Let the window follow the system appearance",
+          "steps": [
+            "Remove overrideUserInterfaceStyle = .light, or set .unspecified unless the person picked light in the app.",
+            "Use semantic colours (UIColor.systemBackground, .label) or asset colours with dark variants."
+          ],
+          "guide": "docs/guides/dark-interface.md#swiftui-and-uikit"
+        },
+        "react-native": {
+          "title": "Stop forcing the light scheme",
+          "steps": [
+            "Remove Appearance.setColorScheme('light'), or call it only with the person's own choice.",
+            "Read useColorScheme() and pick colours for both schemes."
+          ],
+          "guide": "docs/guides/dark-interface.md#react-native"
+        },
+        "flutter": {
+          "title": "Use ThemeMode.system",
+          "steps": [
+            "Set themeMode: ThemeMode.system (the default) and pass a darkTheme.",
+            "If the app offers its own setting, keep ThemeMode.light only for people who chose it."
+          ],
+          "guide": "docs/guides/dark-interface.md#flutter"
+        }
+      }
+    },
+    {
+      "id": "A11Y204",
+      "labels": ["dark-interface"],
+      "severity": "warning",
+      "title": "Flutter app without a dark theme",
+      "summary": "A MaterialApp without darkTheme uses its light theme in Dark Mode too: Flutter falls back to theme, or to ThemeData.light() when both are missing.",
+      "sources": [
+        {
+          "title": "Flutter MaterialApp.darkTheme",
+          "url": "https://api.flutter.dev/flutter/material/MaterialApp/darkTheme.html"
+        },
+        {
+          "title": "Dark Interface evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria"
+        }
+      ],
+      "fixes": {
+        "flutter": {
+          "title": "Add a dark theme",
+          "steps": [
+            "Pass darkTheme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: …, brightness: Brightness.dark)) to MaterialApp.",
+            "Leave themeMode at ThemeMode.system, and read colours from Theme.of(context).colorScheme instead of constants."
+          ],
+          "guide": "docs/guides/dark-interface.md#flutter"
+        }
+      }
+    },
+    {
+      "id": "A11Y205",
+      "labels": ["dark-interface"],
+      "severity": "info",
+      "title": "Asset colours without a dark variant",
+      "summary": "Named colours in the asset catalog have no Dark appearance, so they stay the same in Dark Mode. A colour meant for both schemes needs a dark value.",
+      "sources": [
+        {
+          "title": "Supporting Dark Mode in your interface",
+          "url": "https://developer.apple.com/documentation/uikit/supporting-dark-mode-in-your-interface"
+        }
+      ],
+      "fixes": {
+        "asset-catalog": {
+          "title": "Add a dark value to each colour",
+          "steps": [
+            "Select the colour set in Xcode, set Appearances to \"Any, Dark\" in the Attributes inspector and fill the Dark well.",
+            "Keep a single value only for colours that read well on both light and dark backgrounds."
+          ],
+          "guide": "docs/guides/dark-interface.md#asset-catalog-colours"
+        }
+      }
+    },
+    {
+      "id": "A11Y301",
+      "labels": ["reduced-motion"],
+      "severity": "warning",
+      "title": "Motion in an app that never reads Reduce Motion",
+      "summary": "Repeating, rotating, parallax or auto-playing animation, and nothing in the app reads the Reduce Motion setting. Apple's criteria ask apps to change or stop such motion when the setting is on.",
+      "sources": [
+        {
+          "title": "Reduced Motion evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityReduceMotion",
+          "url": "https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityreducemotion"
+        },
+        {
+          "title": "UIKit UIAccessibility.isReduceMotionEnabled",
+          "url": "https://developer.apple.com/documentation/uikit/uiaccessibility/isreducemotionenabled"
+        },
+        {
+          "title": "React Native AccessibilityInfo.isReduceMotionEnabled",
+          "url": "https://reactnative.dev/docs/accessibilityinfo"
+        },
+        {
+          "title": "Flutter AccessibilityFeatures.reduceMotion",
+          "url": "https://api.flutter.dev/flutter/dart-ui/AccessibilityFeatures/reduceMotion.html"
+        }
+      ],
+      "fixes": {
+        "swiftui": {
+          "title": "Read Reduce Motion and calm the animation",
+          "steps": [
+            "Add @Environment(\\.accessibilityReduceMotion) var reduceMotion to the view.",
+            "When it is true, drop repeatForever, rotation and 3D effects, or replace them with a fade."
+          ],
+          "guide": "docs/guides/reduced-motion.md#swiftui-and-uikit"
+        },
+        "uikit": {
+          "title": "Read Reduce Motion and calm the animation",
+          "steps": [
+            "Check UIAccessibility.isReduceMotionEnabled before starting the animation, and observe UIAccessibility.reduceMotionStatusDidChangeNotification.",
+            "When it is on, skip parallax (UIInterpolatingMotionEffect) and endless animations, or replace them with a cross-fade."
+          ],
+          "guide": "docs/guides/reduced-motion.md#swiftui-and-uikit"
+        },
+        "react-native": {
+          "title": "Read Reduce Motion and calm the animation",
+          "steps": [
+            "Read AccessibilityInfo.isReduceMotionEnabled() and listen to its reduceMotionChanged event (or use Reanimated's useReducedMotion()).",
+            "When it is on, do not start Animated.loop, auto-playing Lottie or carousel motion; show the final frame instead."
+          ],
+          "guide": "docs/guides/reduced-motion.md#react-native-and-expo"
+        },
+        "flutter": {
+          "title": "Read Reduce Motion and calm the animation",
+          "steps": [
+            "Read PlatformDispatcher.instance.accessibilityFeatures.reduceMotion (iOS) together with MediaQuery.disableAnimationsOf(context) (Android).",
+            "When either is set, do not call repeat() or auto-play Lottie and carousels; jump to the end value instead."
+          ],
+          "guide": "docs/guides/reduced-motion.md#flutter"
+        }
+      }
+    },
+    {
+      "id": "A11Y302",
+      "labels": ["reduced-motion"],
+      "severity": "info",
+      "title": "Motion in a file that does not read Reduce Motion",
+      "summary": "The app reads Reduce Motion somewhere, but not in the file with this animation. It may still be covered, for example by a flag passed in from another view; check it with the setting on.",
+      "sources": [
+        {
+          "title": "Reduced Motion evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria"
+        }
+      ],
+      "fixes": {
+        "swiftui": {
+          "title": "Check this animation with Reduce Motion on",
+          "steps": [
+            "Turn on Reduce Motion and open this screen.",
+            "If the animation still repeats, rotates or moves in depth, read accessibilityReduceMotion here too."
+          ],
+          "guide": "docs/guides/reduced-motion.md#swiftui-and-uikit"
+        },
+        "uikit": {
+          "title": "Check this animation with Reduce Motion on",
+          "steps": [
+            "Turn on Reduce Motion and open this screen.",
+            "If the animation still runs as before, check UIAccessibility.isReduceMotionEnabled here too."
+          ],
+          "guide": "docs/guides/reduced-motion.md#swiftui-and-uikit"
+        },
+        "react-native": {
+          "title": "Check this animation with Reduce Motion on",
+          "steps": [
+            "Turn on Reduce Motion and open this screen.",
+            "If the animation still loops or auto-plays, pass the Reduce Motion state to this component."
+          ],
+          "guide": "docs/guides/reduced-motion.md#react-native-and-expo"
+        },
+        "flutter": {
+          "title": "Check this animation with Reduce Motion on",
+          "steps": [
+            "Turn on Reduce Motion and open this screen.",
+            "If the animation still repeats, read accessibilityFeatures.reduceMotion here too."
+          ],
+          "guide": "docs/guides/reduced-motion.md#flutter"
+        }
+      }
+    },
+    {
+      "id": "A11Y303",
+      "labels": ["reduced-motion"],
+      "severity": "warning",
+      "title": "Flutter reads disableAnimations, which iOS Reduce Motion does not set",
+      "summary": "MediaQueryData.disableAnimations follows Android's Remove animations setting. On iOS, Reduce Motion is AccessibilityFeatures.reduceMotion and does not set that flag, so this check never sees it on an iPhone.",
+      "sources": [
+        {
+          "title": "Flutter MediaQueryData.disableAnimations",
+          "url": "https://api.flutter.dev/flutter/widgets/MediaQueryData/disableAnimations.html"
+        },
+        {
+          "title": "Flutter AccessibilityFeatures.reduceMotion",
+          "url": "https://api.flutter.dev/flutter/dart-ui/AccessibilityFeatures/reduceMotion.html"
+        }
+      ],
+      "fixes": {
+        "flutter": {
+          "title": "Also read the iOS setting",
+          "steps": [
+            "Combine both: MediaQuery.disableAnimationsOf(context) || View.of(context).platformDispatcher.accessibilityFeatures.reduceMotion.",
+            "Rebuild when the setting changes: listen to PlatformDispatcher.onAccessibilityFeaturesChanged or WidgetsBindingObserver.didChangeAccessibilityFeatures."
+          ],
+          "guide": "docs/guides/reduced-motion.md#flutter"
+        }
+      }
+    },
+    {
+      "id": "A11Y304",
+      "labels": ["reduced-motion"],
+      "severity": "warning",
+      "title": "Animation set to ignore Reduce Motion",
+      "summary": "Reanimated animations follow the system Reduce Motion setting by default (ReduceMotion.System); ReduceMotion.Never makes this one run anyway.",
+      "sources": [
+        {
+          "title": "Reanimated: accessibility and ReduceMotion",
+          "url": "https://docs.swmansion.com/react-native-reanimated/docs/guides/accessibility/"
+        },
+        {
+          "title": "Reduced Motion evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria"
+        }
+      ],
+      "fixes": {
+        "react-native": {
+          "title": "Let Reanimated follow the setting",
+          "steps": [
+            "Remove ReduceMotion.Never, or use ReduceMotion.System (the default).",
+            "If the motion carries meaning, give the reduced version a fade instead of turning it off."
+          ],
+          "guide": "docs/guides/reduced-motion.md#react-native-and-expo"
+        }
+      }
+    },
+    {
+      "id": "A11Y401",
+      "labels": ["voiceover", "voice-control"],
+      "severity": "warning",
+      "title": "Icon-only button without an accessibility label",
+      "summary": "A button that shows only an image or icon and has no label of its own. VoiceOver then reads nothing useful (or an asset name), and Voice Control has no name to show or to say.",
+      "sources": [
+        {
+          "title": "VoiceOver evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria"
+        },
+        {
+          "title": "Voice Control evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityLabel(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/accessibilitylabel(_:)"
+        },
+        {
+          "title": "React Native accessibility: accessibilityLabel",
+          "url": "https://reactnative.dev/docs/accessibility"
+        },
+        {
+          "title": "Flutter IconButton.tooltip",
+          "url": "https://api.flutter.dev/flutter/material/IconButton/tooltip.html"
+        }
+      ],
+      "fixes": {
+        "swiftui": {
+          "title": "Name the button",
+          "steps": [
+            "Use Label(\"Close\", systemImage: \"xmark\").labelStyle(.iconOnly) as the button's label, or add .accessibilityLabel(\"Close\").",
+            "Name the action, not the control: \"Close\", not \"Close button\" or \"X\"."
+          ],
+          "guide": "docs/guides/voiceover.md#swiftui"
+        },
+        "uikit": {
+          "title": "Name the button",
+          "steps": [
+            "Set button.accessibilityLabel = \"Close\" (for a UIBarButtonItem, item.accessibilityLabel).",
+            "For a system action, prefer UIBarButtonItem(systemItem:), which comes with a localized label."
+          ],
+          "guide": "docs/guides/voiceover.md#uikit"
+        },
+        "react-native": {
+          "title": "Name the button",
+          "steps": [
+            "Add accessibilityLabel=\"Close\" (or aria-label) and accessibilityRole=\"button\" to the Pressable or Touchable.",
+            "For react-native-paper's IconButton, pass accessibilityLabel."
+          ],
+          "guide": "docs/guides/voiceover.md#react-native-and-expo"
+        },
+        "flutter": {
+          "title": "Name the button",
+          "steps": [
+            "Pass tooltip: 'Close' to IconButton or FloatingActionButton; Flutter uses it as the semantic label.",
+            "For other buttons, give the Icon a semanticLabel or wrap the button in Semantics(label: …, button: true)."
+          ],
+          "guide": "docs/guides/voiceover.md#flutter"
+        }
+      }
+    },
+    {
+      "id": "A11Y402",
+      "labels": ["voiceover"],
+      "severity": "info",
+      "title": "Accessibility label names the control type",
+      "summary": "The label ends with the kind of control (\"Close button\", \"Agree checkbox\"). VoiceOver already speaks the type from the element's traits or role, so it is said twice.",
+      "sources": [
+        {
+          "title": "VoiceOver evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria"
+        }
+      ],
+      "fixes": {
+        "swiftui": {
+          "title": "Drop the control type from the label",
+          "steps": [
+            "Shorten the label to the action (\"Close\"); add .accessibilityAddTraits(.isButton) where the view is not already a Button."
+          ],
+          "guide": "docs/guides/voiceover.md#swiftui"
+        },
+        "uikit": {
+          "title": "Drop the control type from the label",
+          "steps": [
+            "Shorten the label to the action (\"Close\"); set accessibilityTraits = .button on custom controls."
+          ],
+          "guide": "docs/guides/voiceover.md#uikit"
+        },
+        "react-native": {
+          "title": "Drop the control type from the label",
+          "steps": [
+            "Shorten the label to the action (\"Close\") and set accessibilityRole=\"button\" (or role=\"button\")."
+          ],
+          "guide": "docs/guides/voiceover.md#react-native-and-expo"
+        },
+        "flutter": {
+          "title": "Drop the control type from the label",
+          "steps": [
+            "Shorten the tooltip or semanticLabel to the action (\"Close\"); IconButton already reports a button."
+          ],
+          "guide": "docs/guides/voiceover.md#flutter"
+        }
+      }
+    },
+    {
+      "id": "A11Y501",
+      "labels": ["sufficient-contrast"],
+      "severity": "info",
+      "title": "Asset colours without a high contrast variant",
+      "summary": "Named colours have no High Contrast appearance, so turning on Increase Contrast does not change them. Apple's criteria accept low default contrast only when Increase Contrast fixes it.",
+      "sources": [
+        {
+          "title": "Sufficient Contrast evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/sufficient-contrast-evaluation-criteria"
+        },
+        {
+          "title": "UIKit UITraitCollection.accessibilityContrast",
+          "url": "https://developer.apple.com/documentation/uikit/uitraitcollection/accessibilitycontrast"
+        }
+      ],
+      "fixes": {
+        "asset-catalog": {
+          "title": "Check the contrast, then add high contrast values where needed",
+          "steps": [
+            "Measure text and control colours against their backgrounds (about 4.5:1 for most text).",
+            "Where the default falls short, tick High Contrast in the colour set's Attributes inspector and fill the new wells with stronger values."
+          ],
+          "guide": "docs/guides/contrast-color-media.md#sufficient-contrast"
+        }
+      }
+    },
+    {
+      "id": "A11Y601",
+      "labels": ["captions", "audio-descriptions"],
+      "severity": "info",
+      "title": "The app plays video",
+      "summary": "Video playback was found, so the Captions and Audio Descriptions labels apply to it. Whether the media carries captions and described audio is not visible in code.",
+      "sources": [
+        {
+          "title": "Captions evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/captions-evaluation-criteria"
+        },
+        {
+          "title": "Audio Descriptions evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/audio-descriptions-evaluation-criteria"
+        },
+        {
+          "title": "AVFoundation: selecting subtitles and alternative audio tracks",
+          "url": "https://developer.apple.com/documentation/avfoundation/selecting-subtitles-and-alternative-audio-tracks"
+        }
+      ],
+      "fixes": {
+        "swiftui": {
+          "title": "Check the media, then decide on the two labels",
+          "steps": [
+            "List the videos of the common tasks and check each for a captions track and a described-audio track.",
+            "With AVPlayerViewController or VideoPlayer, the system shows legible and audio options when the asset has them."
+          ],
+          "guide": "docs/guides/contrast-color-media.md#captions-and-audio-descriptions"
+        },
+        "uikit": {
+          "title": "Check the media, then decide on the two labels",
+          "steps": [
+            "List the videos of the common tasks and check each for a captions track and a described-audio track.",
+            "With AVPlayerViewController, the system shows legible and audio options when the asset has them."
+          ],
+          "guide": "docs/guides/contrast-color-media.md#captions-and-audio-descriptions"
+        },
+        "react-native": {
+          "title": "Check the media, then decide on the two labels",
+          "steps": [
+            "List the videos of the common tasks and check each for a captions track and a described-audio track.",
+            "Expose text tracks in the player (expo-video subtitle tracks, react-native-video textTracks)."
+          ],
+          "guide": "docs/guides/contrast-color-media.md#captions-and-audio-descriptions"
+        },
+        "flutter": {
+          "title": "Check the media, then decide on the two labels",
+          "steps": [
+            "List the videos of the common tasks and check each for a captions track and a described-audio track.",
+            "video_player takes closed captions through closedCaptionFile; show them with ClosedCaption."
+          ],
+          "guide": "docs/guides/contrast-color-media.md#captions-and-audio-descriptions"
+        }
+      }
+    }
+  ],
+  "signals": [
+    {
+      "label": "larger-text",
+      "text": "Uses Dynamic Type text styles",
+      "pattern": "\\.font\\(\\s*\\.(?:largeTitle|title|title2|title3|headline|subheadline|body|callout|footnote|caption|caption2)\\b|preferredFont\\(\\s*forTextStyle|UIFontMetrics|relativeTo\\s*:"
+    },
+    {
+      "label": "dark-interface",
+      "text": "Reads the colour scheme",
+      "pattern": "\\\\\\.colorScheme\\b|traitCollection\\.userInterfaceStyle|useColorScheme\\s*\\(|Appearance\\.getColorScheme|platformBrightness|Brightness\\.dark|darkTheme\\s*:"
+    },
+    {
+      "label": "reduced-motion",
+      "text": "Reads the Reduce Motion setting",
+      "pattern": "accessibilityReduceMotion|isReduceMotionEnabled|UIAccessibilityIsReduceMotionEnabled|reduceMotionStatusDidChange|useReducedMotion|accessibilityFeatures\\s*\\.\\s*reduceMotion"
+    },
+    {
+      "label": "voiceover",
+      "text": "Sets accessibility labels",
+      "pattern": "accessibilityLabel|aria-label|semanticLabel|Semantics\\s*\\(|tooltip\\s*:"
+    },
+    {
+      "label": "voice-control",
+      "text": "Sets input labels for Voice Control",
+      "pattern": "accessibilityInputLabels|accessibilityUserInputLabels"
+    },
+    {
+      "label": "differentiate-without-color",
+      "text": "Reads the Differentiate Without Color setting",
+      "pattern": "accessibilityDifferentiateWithoutColor|shouldDifferentiateWithoutColor|UIAccessibilityShouldDifferentiateWithoutColor"
+    },
+    {
+      "label": "sufficient-contrast",
+      "text": "Reads the Increase Contrast setting",
+      "pattern": "colorSchemeContrast|accessibilityContrast|isDarkerSystemColorsEnabled|highContrast|isHighTextContrastEnabled"
+    }
+  ]
+}
