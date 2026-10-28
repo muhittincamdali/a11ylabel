@@ -118,7 +118,7 @@ function labelTable(report: Report, paint: Paint, width: number): string[] {
   const signals = report.labels.flatMap((label) =>
     label.signals.map(
       (signal) =>
-        `${label.name}: ${signal.text.toLowerCase()} (${signal.file}${signal.files > 1 ? ` and ${signal.files - 1} more` : ''})`,
+        `${label.name}: ${signal.text} (${signal.file}${signal.files > 1 ? ` and ${signal.files - 1} more` : ''})`,
     ),
   );
   if (signals.length > 0) {
