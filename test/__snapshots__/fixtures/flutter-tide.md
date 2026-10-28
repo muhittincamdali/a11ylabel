@@ -122,4 +122,4 @@ Sources: [VoiceOver evaluation criteria \(App Store Connect Help\)](https://deve
 
 1 error, 6 warnings, 0 info. a11ylabel reads code; before claiming a label, Apple asks that people can complete every common task with the feature on ([overview](https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels)).
 
-<sub>[a11ylabel](https://github.com/muhittincamdali/a11ylabel) 0.0.0, rules nutrition-labels@2026.10.28 (sources read 2026-10-28). Reads the project's files; it does not build or run the app.</sub>
+<sub>[a11ylabel](https://github.com/muhittincamdali/a11ylabel) 0.1.0, rules nutrition-labels@2026.10.28 (sources read 2026-10-28). Reads the project's files; it does not build or run the app.</sub>
