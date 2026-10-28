@@ -1,0 +1,131 @@
+a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+
+Ledger · native iOS · fixtures/native-uikit
+target Ledger · UIUserInterfaceStyle Light · iOS 17.0 (Ledger/Info.plist)
+
+Label                              Status            Findings
+VoiceOver                          review            2 warnings, 1 info
+Voice Control                      review            2 warnings
+Larger Text                        BLOCKED           1 error, 2 warnings
+Dark Interface                     no blocker found  1 info
+Differentiate Without Color Alone  check by hand
+Sufficient Contrast                check by hand
+Reduced Motion                     review            1 warning
+Captions                           check by hand     1 info
+Audio Descriptions                 check by hand     1 info
+
+1 label blocked by the code (Larger Text); 3 to review, no blocker found for 1
+Already in the code: VoiceOver: Sets accessibility labels (Ledger/BalanceViewController.swift);
+Larger Text: Uses Dynamic Type text styles (Ledger/BalanceViewController.swift)
+
+ERROR    A11Y101 Text size locked for the whole app · Larger Text
+         Ledger/SceneDelegate.swift:15
+         The window's maximumContentSizeCategory is .extraExtraLarge: no text in it grows past that
+         size, below 200%.
+         Fix: [A] Remove the content size limit from the window
+
+WARNING  A11Y102 Text that does not scale · Larger Text
+         Ledger/BalanceViewController.swift:20
+         adjustsFontForContentSizeCategory is false: this text keeps its size when the system text
+         size changes.
+         Fix: [B] Let this label follow Dynamic Type
+
+WARNING  A11Y104 Fixed font size · Larger Text
+         Ledger/BalanceViewController.swift:19
+         systemFont(ofSize:) gives a fixed point size, and this file never scales a font with
+         UIFontMetrics.
+         Fix: [C] Scale the font with UIFontMetrics
+
+WARNING  A11Y301 Motion in an app that never reads Reduce Motion · Reduced Motion
+         Ledger/BalanceViewController.swift:28
+         UIInterpolatingMotionEffect, a parallax effect, and nothing in the app reads Reduce Motion.
+         Fix: [D] Read Reduce Motion and calm the animation
+
+WARNING  A11Y401 Icon-only button without an accessibility label · VoiceOver, Voice Control
+         Ledger/BalanceViewController.swift:22
+         hideButton gets an image and no title or accessibilityLabel in this file.
+         Fix: [E] Name the button
+
+WARNING  A11Y401 Icon-only button without an accessibility label · VoiceOver, Voice Control
+         Ledger/BalanceViewController.swift:50
+         A UIBarButtonItem with an image and no accessibilityLabel (export).
+         Fix: [E] Name the button
+
+INFO     A11Y202 Light by default, dark through an in-app setting · Dark Interface
+         Ledger/Info.plist:48
+         Ledger: UIUserInterfaceStyle is Light, but Ledger/SceneDelegate.swift switches to a dark
+         appearance: check that the setting keeps every common task dark.
+         Fix: [F] Check the in-app dark mode
+
+INFO     A11Y402 Accessibility label names the control type · VoiceOver
+         Ledger/BalanceViewController.swift:64
+         The label "Balance tab" ends with "tab", which VoiceOver already says from the element's
+         traits.
+         Fix: [G] Drop the control type from the label
+
+INFO     A11Y601 The app plays video · Captions, Audio Descriptions
+         Ledger/TutorialViewController.swift:9
+         AVPlayerViewController plays video here: check that it has captions and an audio-described
+         track.
+         Fix: [H] Check the media, then decide on the two labels
+
+How to fix
+
+[A]      Remove the content size limit from the window
+         1. Remove maximumContentSizeCategory from the window, or set it to .accessibilityExtraLarge
+            (AX3) or larger.
+         2. Limit only views that cannot grow and offer the Large Content Viewer for them
+            (UILargeContentViewerInteraction).
+         3. Check the common tasks at the largest accessibility size.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#uikit
+
+[B]      Let this label follow Dynamic Type
+         1. Set adjustsFontForContentSizeCategory = true.
+         2. Give the label a font from UIFont.preferredFont(forTextStyle:) or
+            UIFontMetrics(forTextStyle:).scaledFont(for:), which that property needs to take effect.
+         3. Set numberOfLines = 0 so the text wraps.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#uikit
+
+[C]      Scale the font with UIFontMetrics
+         1. Wrap the font: UIFontMetrics(forTextStyle: .body).scaledFont(for: font), or use
+            UIFont.preferredFont(forTextStyle:).
+         2. Set adjustsFontForContentSizeCategory = true on the label, text field or text view.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#uikit
+
+[D]      Read Reduce Motion and calm the animation
+         1. Check UIAccessibility.isReduceMotionEnabled before starting the animation, and observe
+            UIAccessibility.reduceMotionStatusDidChangeNotification.
+         2. When it is on, skip parallax (UIInterpolatingMotionEffect) and endless animations, or
+            replace them with a cross-fade.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/reduced-motion.md#swiftui-and-uikit
+
+[E]      Name the button
+         1. Set button.accessibilityLabel = "Close" (for a UIBarButtonItem,
+            item.accessibilityLabel).
+         2. For a system action, prefer UIBarButtonItem(systemItem:), which comes with a localized
+            label.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#uikit
+
+[F]      Check the in-app dark mode
+         1. Turn on the app's dark setting and use the common tasks: launch, sign-in, purchase and
+            settings must stay dark.
+         2. Consider following the system appearance by default, so people who use Dark Mode do not
+            have to find the setting.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#an-in-app-setting
+
+[G]      Drop the control type from the label
+         1. Shorten the label to the action ("Close"); set accessibilityTraits = .button on custom
+            controls.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#uikit
+
+[H]      Check the media, then decide on the two labels
+         1. List the videos of the common tasks and check each for a captions track and a
+            described-audio track.
+         2. With AVPlayerViewController, the system shows legible and audio options when the asset
+            has them.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/contrast-color-media.md#captions-and-audio-descriptions
+
+1 error, 5 warnings, 3 info
+a11ylabel reads code. Before claiming a label, Apple asks that people can complete every common task
+of the app with the feature on.
+Criteria: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels

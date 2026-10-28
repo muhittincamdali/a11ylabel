@@ -1,0 +1,23 @@
+name: Pantry
+options:
+  bundleIdPrefix: dev.a11ylabel.fixtures
+  deploymentTarget:
+    iOS: "18.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    CODE_SIGNING_ALLOWED: "NO"
+targets:
+  Pantry:
+    type: application
+    platform: iOS
+    sources:
+      - Pantry
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.a11ylabel.fixtures.pantry
+        GENERATE_INFOPLIST_FILE: "YES"
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: "YES"
+        INFOPLIST_KEY_UILaunchScreen_Generation: "YES"
+        INFOPLIST_KEY_CFBundleDisplayName: Pantry
+        INFOPLIST_KEY_UIUserInterfaceStyle: Light

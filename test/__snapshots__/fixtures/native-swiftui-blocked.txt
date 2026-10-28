@@ -1,0 +1,148 @@
+a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+
+Pantry · native iOS · fixtures/native-swiftui-blocked
+target Pantry · UIUserInterfaceStyle Light · iOS 18.0
+
+Label                              Status            Findings
+VoiceOver                          review            2 warnings, 1 info
+Voice Control                      review            2 warnings
+Larger Text                        BLOCKED           1 error, 3 warnings
+Dark Interface                     BLOCKED           1 error, 1 info
+Differentiate Without Color Alone  check by hand
+Sufficient Contrast                check by hand     1 info
+Reduced Motion                     review            1 warning
+Captions                           check by hand     1 info
+Audio Descriptions                 check by hand     1 info
+
+2 labels blocked by the code (Larger Text, Dark Interface); 3 to review
+Already in the code: VoiceOver: Sets accessibility labels (Pantry/PantryListView.swift); Larger
+Text: Uses Dynamic Type text styles (Pantry/RecipeView.swift)
+
+ERROR    A11Y101 Text size locked for the whole app · Larger Text
+         Pantry/PantryApp.swift:9
+         .dynamicTypeSize(...DynamicTypeSize.xLarge) on the app's scene: no text grows past xLarge,
+         below 200%.
+         Fix: [A] Remove the Dynamic Type limit from the scene
+
+ERROR    A11Y201 Light appearance forced for the whole app · Dark Interface
+         Pantry.xcodeproj/project.pbxproj:194
+         Pantry: INFOPLIST_KEY_UIUserInterfaceStyle is Light: the app ignores Dark Mode and nothing
+         in the code turns it dark.
+         Fix: [B] Remove the build setting that forces light
+
+WARNING  A11Y104 Fixed font size · Larger Text
+         Pantry/PantryListView.swift:25
+         .system(size:) is a fixed point size: Dynamic Type does not scale it.
+         Fix: [C] Use a text style, or a size relative to one
+
+WARNING  A11Y104 Fixed font size · Larger Text
+         Pantry/PantryListView.swift:28
+         .system(size:) is a fixed point size: Dynamic Type does not scale it.
+         Fix: [C] Use a text style, or a size relative to one
+
+WARNING  A11Y104 Fixed font size · Larger Text
+         Pantry/RecipeView.swift:15
+         Font.custom(_:fixedSize:) keeps its size whatever the system text size is.
+         Fix: [C] Use a text style, or a size relative to one
+
+WARNING  A11Y301 Motion in an app that never reads Reduce Motion · Reduced Motion
+         Pantry/PantryListView.swift:48
+         repeatForever, an animation that never stops, and nothing in the app reads Reduce Motion.
+         Fix: [D] Read Reduce Motion and calm the animation
+
+WARNING  A11Y401 Icon-only button without an accessibility label · VoiceOver, Voice Control
+         Pantry/PantryListView.swift:58
+         A Button whose label is only the image "Filter", whose asset name becomes the label, with
+         no accessibilityLabel.
+         Fix: [E] Name the button
+
+WARNING  A11Y401 Icon-only button without an accessibility label · VoiceOver, Voice Control
+         Pantry/PantryListView.swift:63
+         A Button whose label is only the SF Symbol "plus", whose name is not a label you chose,
+         with no accessibilityLabel.
+         Fix: [E] Name the button
+
+INFO     A11Y205 Asset colours without a dark variant · Dark Interface
+         Pantry/Assets.xcassets/Brand.colorset/Contents.json
+         3 of 3 asset colours have no dark variant: Brand, Card, Muted.
+         Fix: [F] Add a dark value to each colour
+
+INFO     A11Y402 Accessibility label names the control type · VoiceOver
+         Pantry/PantryListView.swift:38
+         The label "Delete button" ends with "button", which VoiceOver already says from the
+         element's traits.
+         Fix: [G] Drop the control type from the label
+
+INFO     A11Y501 Asset colours without a high contrast variant · Sufficient Contrast
+         Pantry/Assets.xcassets/Brand.colorset/Contents.json
+         3 of 3 asset colours have no high contrast variant: Brand, Card, Muted.
+         Fix: [H] Check the contrast, then add high contrast values where needed
+
+INFO     A11Y601 The app plays video · Captions, Audio Descriptions
+         Pantry/RecipeView.swift:10
+         VideoPlayer plays video here: check that it has captions and an audio-described track.
+         Fix: [I] Check the media, then decide on the two labels
+
+How to fix
+
+[A]      Remove the Dynamic Type limit from the scene
+         1. Remove .dynamicTypeSize(…) from the WindowGroup content, or raise its upper bound to
+            .accessibility3 or above (AX3 is the first size above 200% for body text).
+         2. Put a limit only on the views that cannot grow, such as a tab bar, and give them
+            .accessibilityShowsLargeContentViewer().
+         3. Preview the screens with .dynamicTypeSize(.accessibility5).
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#swiftui
+
+[B]      Remove the build setting that forces light
+         1. Delete INFOPLIST_KEY_UIUserInterfaceStyle (Build Settings > Info.plist Values > User
+            Interface Style), or set it to Automatic.
+         2. Give every custom colour a dark variant in the asset catalog, then use the common tasks
+            in Dark Mode.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#info-plist-and-build-settings
+
+[C]      Use a text style, or a size relative to one
+         1. Replace .system(size: 17) with a text style such as .body, .headline or .title.
+         2. For a custom size or font, use .system(size: 17, …) only for decoration; for text, use
+            Font.custom("Name", size: 17, relativeTo: .body) or a @ScaledMetric size.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#swiftui
+
+[D]      Read Reduce Motion and calm the animation
+         1. Add @Environment(\.accessibilityReduceMotion) var reduceMotion to the view.
+         2. When it is true, drop repeatForever, rotation and 3D effects, or replace them with a
+            fade.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/reduced-motion.md#swiftui-and-uikit
+
+[E]      Name the button
+         1. Use Label("Close", systemImage: "xmark").labelStyle(.iconOnly) as the button's label, or
+            add .accessibilityLabel("Close").
+         2. Name the action, not the control: "Close", not "Close button" or "X".
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#swiftui
+
+[F]      Add a dark value to each colour
+         1. Select the colour set in Xcode, set Appearances to "Any, Dark" in the Attributes
+            inspector and fill the Dark well.
+         2. Keep a single value only for colours that read well on both light and dark backgrounds.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#asset-catalog-colours
+
+[G]      Drop the control type from the label
+         1. Shorten the label to the action ("Close"); add .accessibilityAddTraits(.isButton) where
+            the view is not already a Button.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#swiftui
+
+[H]      Check the contrast, then add high contrast values where needed
+         1. Measure text and control colours against their backgrounds (about 4.5:1 for most text).
+         2. Where the default falls short, tick High Contrast in the colour set's Attributes
+            inspector and fill the new wells with stronger values.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/contrast-color-media.md#sufficient-contrast
+
+[I]      Check the media, then decide on the two labels
+         1. List the videos of the common tasks and check each for a captions track and a
+            described-audio track.
+         2. With AVPlayerViewController or VideoPlayer, the system shows legible and audio options
+            when the asset has them.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/contrast-color-media.md#captions-and-audio-descriptions
+
+2 errors, 6 warnings, 4 info
+a11ylabel reads code. Before claiming a label, Apple asks that people can complete every common task
+of the app with the feature on.
+Criteria: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels

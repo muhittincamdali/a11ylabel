@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "a11ylabel",
+    "version": "0.0.0"
+  },
+  "rules": {
+    "ruleSet": "nutrition-labels",
+    "dataVersion": "2026.10.28",
+    "read": "2026-10-28"
+  },
+  "project": {
+    "path": "fixtures/rn-088-courier",
+    "name": "HelloWorld",
+    "ecosystem": "react-native",
+    "versions": [
+      {
+        "name": "react-native",
+        "version": "0.88.1",
+        "source": "declared"
+      }
+    ],
+    "targets": [
+      {
+        "name": "HelloWorld",
+        "infoPlists": [
+          "ios/HelloWorld/Info.plist"
+        ],
+        "interfaceStyle": null,
+        "deploymentTarget": "15.1"
+      }
+    ]
+  },
+  "scope": [
+    "voiceover",
+    "voice-control",
+    "larger-text",
+    "dark-interface",
+    "differentiate-without-color",
+    "sufficient-contrast",
+    "reduced-motion",
+    "captions",
+    "audio-descriptions"
+  ],
+  "verdict": {
+    "code": "review",
+    "text": "No label blocked; 5 labels to review (VoiceOver, Voice Control, Larger Text, Dark Interface, Reduced Motion)"
+  },
+  "labels": [
+    {
+      "id": "voiceover",
+      "name": "VoiceOver",
+      "status": "review",
+      "coverage": "partial",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 1
+      },
+      "signals": [
+        {
+          "text": "Sets accessibility labels",
+          "file": "App.tsx",
+          "files": 1
+        }
+      ],
+      "checked": "Icon-only buttons without an accessibility label, and labels that name the control type.",
+      "manual": "Complete every common task with VoiceOver alone: reading order, grouping, values and states, custom actions, focus in modal views."
+    },
+    {
+      "id": "voice-control",
+      "name": "Voice Control",
+      "status": "review",
+      "coverage": "partial",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Icon-only buttons without a name Voice Control can show and say.",
+      "manual": "Say \"Show names\" and \"Show numbers\" on every screen of the common tasks; reach swipe and long-press actions by voice; dictate into every text field."
+    },
+    {
+      "id": "larger-text",
+      "name": "Larger Text",
+      "status": "review",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Text scaling turned off or capped below 200% (for the whole app or one view), and fixed font sizes that Dynamic Type does not scale.",
+      "manual": "Use the common tasks at the largest accessibility text size: no overlapping text, no truncation that hides information."
+    },
+    {
+      "id": "dark-interface",
+      "name": "Dark Interface",
+      "status": "review",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "A light appearance forced in Info.plist, the build settings, the Expo config or code; a Flutter app without a dark theme; asset colours without a dark variant.",
+      "manual": "Use the common tasks in Dark Mode: no screen, sheet, web view or launch screen that flashes bright."
+    },
+    {
+      "id": "differentiate-without-color",
+      "name": "Differentiate Without Color Alone",
+      "status": "manual",
+      "coverage": "manual",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/differentiate-without-color-alone-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Nothing: whether colour is the only difference is a question of design, not of code a11ylabel can read.",
+      "manual": "Look for status, charts and selections told apart by colour alone; add a shape, symbol or text."
+    },
+    {
+      "id": "sufficient-contrast",
+      "name": "Sufficient Contrast",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/sufficient-contrast-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Asset catalog colours without a high contrast variant for the Increase Contrast setting.",
+      "manual": "Measure text and controls against their background: about 4.5:1 for most text, by default or with Increase Contrast."
+    },
+    {
+      "id": "reduced-motion",
+      "name": "Reduced Motion",
+      "status": "review",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Repeating, parallax, 3D and auto-playing animations in an app that never reads the Reduce Motion setting, or in files that do not.",
+      "manual": "Turn on Reduce Motion and use the common tasks: no spinning, scaling, parallax or auto-advancing motion left."
+    },
+    {
+      "id": "captions",
+      "name": "Captions",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/captions-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video and audio of the common tasks have captions or transcripts, and that people can tell which media is captioned."
+    },
+    {
+      "id": "audio-descriptions",
+      "name": "Audio Descriptions",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/audio-descriptions-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video of the common tasks offers an audio-described track."
+    }
+  ],
+  "findings": [
+    {
+      "rule": "A11Y102",
+      "labels": [
+        "larger-text"
+      ],
+      "severity": "warning",
+      "title": "Text that does not scale",
+      "message": "allowFontScaling is false: this text keeps its size when the system text size grows.",
+      "file": "App.tsx",
+      "line": 63,
+      "target": null,
+      "fix": {
+        "id": "A11Y102/react-native",
+        "title": "Let this text scale",
+        "steps": [
+          "Remove allowFontScaling={false}; if the text truly cannot grow (a tab bar label), keep it and make sure its meaning is available another way.",
+          "Let the container grow with the text: no fixed height, numberOfLines only where the full text is shown elsewhere."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#react-native-and-expo"
+      },
+      "sources": [
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        },
+        {
+          "title": "React Native Text: allowFontScaling",
+          "url": "https://reactnative.dev/docs/text"
+        },
+        {
+          "title": "Flutter TextScaler.noScaling",
+          "url": "https://api.flutter.dev/flutter/painting/TextScaler/noScaling-constant.html"
+        },
+        {
+          "title": "UIKit adjustsFontForContentSizeCategory",
+          "url": "https://developer.apple.com/documentation/uikit/uicontentsizecategoryadjusting/adjustsfontforcontentsizecategory"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y103",
+      "labels": [
+        "larger-text"
+      ],
+      "severity": "warning",
+      "title": "Text capped below 200%",
+      "message": "maxFontSizeMultiplier is 1.2: this text stops at 120% of its size.",
+      "file": "App.tsx",
+      "line": 48,
+      "target": null,
+      "fix": {
+        "id": "A11Y103/react-native",
+        "title": "Raise the limit to 2 or remove it",
+        "steps": [
+          "Set maxFontSizeMultiplier to 2 or more, or to 0 for no limit.",
+          "Keep a lower limit only on repeated navigation such as a tab bar."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#react-native-and-expo"
+      },
+      "sources": [
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        },
+        {
+          "title": "React Native Text: maxFontSizeMultiplier",
+          "url": "https://reactnative.dev/docs/text"
+        },
+        {
+          "title": "Flutter MediaQuery.withClampedTextScaling",
+          "url": "https://api.flutter.dev/flutter/widgets/MediaQuery/withClampedTextScaling.html"
+        },
+        {
+          "title": "SwiftUI DynamicTypeSize",
+          "url": "https://developer.apple.com/documentation/swiftui/dynamictypesize"
+        },
+        {
+          "title": "UIKit UIView.maximumContentSizeCategory",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/maximumcontentsizecategory"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y203",
+      "labels": [
+        "dark-interface"
+      ],
+      "severity": "warning",
+      "title": "Light colour scheme set in code",
+      "message": "Appearance.setColorScheme('light') keeps the whole app light, whatever the system appearance is.",
+      "file": "App.tsx",
+      "line": 22,
+      "target": null,
+      "fix": {
+        "id": "A11Y203/react-native",
+        "title": "Stop forcing the light scheme",
+        "steps": [
+          "Remove Appearance.setColorScheme('light'), or call it only with the person's own choice.",
+          "Read useColorScheme() and pick colours for both schemes."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#react-native"
+      },
+      "sources": [
+        {
+          "title": "SwiftUI preferredColorScheme(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/preferredcolorscheme(_:)"
+        },
+        {
+          "title": "UIKit UIView.overrideUserInterfaceStyle",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/overrideuserinterfacestyle"
+        },
+        {
+          "title": "React Native Appearance",
+          "url": "https://reactnative.dev/docs/appearance"
+        },
+        {
+          "title": "Flutter ThemeMode",
+          "url": "https://api.flutter.dev/flutter/material/ThemeMode.html"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y301",
+      "labels": [
+        "reduced-motion"
+      ],
+      "severity": "warning",
+      "title": "Motion in an app that never reads Reduce Motion",
+      "message": "Animated.loop, an animation that never stops, and nothing in the app reads Reduce Motion.",
+      "file": "App.tsx",
+      "line": 35,
+      "target": null,
+      "fix": {
+        "id": "A11Y301/react-native",
+        "title": "Read Reduce Motion and calm the animation",
+        "steps": [
+          "Read AccessibilityInfo.isReduceMotionEnabled() and listen to its reduceMotionChanged event (or use Reanimated's useReducedMotion()).",
+          "When it is on, do not start Animated.loop, auto-playing Lottie or carousel motion; show the final frame instead."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/reduced-motion.md#react-native-and-expo"
+      },
+      "sources": [
+        {
+          "title": "Reduced Motion evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityReduceMotion",
+          "url": "https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityreducemotion"
+        },
+        {
+          "title": "UIKit UIAccessibility.isReduceMotionEnabled",
+          "url": "https://developer.apple.com/documentation/uikit/uiaccessibility/isreducemotionenabled"
+        },
+        {
+          "title": "React Native AccessibilityInfo.isReduceMotionEnabled",
+          "url": "https://reactnative.dev/docs/accessibilityinfo"
+        },
+        {
+          "title": "Flutter AccessibilityFeatures.reduceMotion",
+          "url": "https://api.flutter.dev/flutter/dart-ui/AccessibilityFeatures/reduceMotion.html"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y401",
+      "labels": [
+        "voiceover",
+        "voice-control"
+      ],
+      "severity": "warning",
+      "title": "Icon-only button without an accessibility label",
+      "message": "A Pressable that shows only an icon or image, without accessibilityLabel.",
+      "file": "App.tsx",
+      "line": 52,
+      "target": null,
+      "fix": {
+        "id": "A11Y401/react-native",
+        "title": "Name the button",
+        "steps": [
+          "Add accessibilityLabel=\"Close\" (or aria-label) and accessibilityRole=\"button\" to the Pressable or Touchable.",
+          "For react-native-paper's IconButton, pass accessibilityLabel."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#react-native-and-expo"
+      },
+      "sources": [
+        {
+          "title": "VoiceOver evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria"
+        },
+        {
+          "title": "Voice Control evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityLabel(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/accessibilitylabel(_:)"
+        },
+        {
+          "title": "React Native accessibility: accessibilityLabel",
+          "url": "https://reactnative.dev/docs/accessibility"
+        },
+        {
+          "title": "Flutter IconButton.tooltip",
+          "url": "https://api.flutter.dev/flutter/material/IconButton/tooltip.html"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y402",
+      "labels": [
+        "voiceover"
+      ],
+      "severity": "info",
+      "title": "Accessibility label names the control type",
+      "message": "The label \"Call courier button\" ends with \"button\", which VoiceOver already says from the element's traits.",
+      "file": "App.tsx",
+      "line": 66,
+      "target": null,
+      "fix": {
+        "id": "A11Y402/react-native",
+        "title": "Drop the control type from the label",
+        "steps": [
+          "Shorten the label to the action (\"Close\") and set accessibilityRole=\"button\" (or role=\"button\")."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#react-native-and-expo"
+      },
+      "sources": [
+        {
+          "title": "VoiceOver evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria"
+        }
+      ]
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 0,
+    "warnings": 5,
+    "info": 1
+  }
+}

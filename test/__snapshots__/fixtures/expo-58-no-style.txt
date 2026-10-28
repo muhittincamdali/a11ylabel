@@ -1,0 +1,41 @@
+a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+
+expo-58-no-style · Expo · fixtures/expo-58-no-style
+react-native 0.88.0 (declared)
+expo 58.0.20 (declared)
+expo-router 58.0.27 (declared)
+react-native-reanimated 4.7.1 (declared)
+
+Label                              Status            Findings
+VoiceOver                          no blocker found
+Voice Control                      no blocker found
+Larger Text                        no blocker found
+Dark Interface                     BLOCKED           1 error
+Differentiate Without Color Alone  check by hand
+Sufficient Contrast                check by hand
+Reduced Motion                     no blocker found
+Captions                           check by hand
+Audio Descriptions                 check by hand
+
+1 label blocked by the code (Dark Interface); no blocker found for 4
+Already in the code: Dark Interface: Reads the colour scheme (src/app/_layout.tsx and 4 more)
+
+ERROR    A11Y201 Light appearance forced for the whole app · Dark Interface
+         app.json
+         app.json does not set userInterfaceStyle, so Expo uses light: the app ignores Dark Mode and
+         nothing in the code turns it dark.
+         Fix: [A] Set userInterfaceStyle to automatic
+
+How to fix
+
+[A]      Set userInterfaceStyle to automatic
+         1. In app.json (or app.config), set "userInterfaceStyle": "automatic"; Expo uses light when
+            the key is missing.
+         2. On Android, install expo-system-ui for the setting to apply there too.
+         3. Read the scheme with useColorScheme() and give every screen dark colours.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#expo
+
+1 error, 0 warnings, 0 info
+a11ylabel reads code. Before claiming a label, Apple asks that people can complete every common task
+of the app with the feature on.
+Criteria: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels
