@@ -1,3 +1,4 @@
+import { mkdirSync, symlinkSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
@@ -7,6 +8,7 @@ import {
   type SourceLimits,
   sourceFile,
 } from '../../src/collect/sources.js';
+import { scratchDir } from '../helpers/scratch.js';
 import { tree } from '../helpers/tree.js';
 
 describe('listSourceFiles', () => {
@@ -105,6 +107,41 @@ describe('readSources', () => {
     expect(notes).toEqual([
       'Source files not read (after the first 0 MB of source): ios/F3.swift, ios/F4.swift, ios/F5.swift and 2 more.',
     ]);
+  });
+
+  it('does not read a source folder that links out of the project', async () => {
+    // The audit's Flutter project: lib -> ../outside-secret, whose leak.dart was reported as
+    // lib/leak.dart.
+    const parent = scratchDir('linked-lib');
+    const outside = join(parent, 'outside-secret');
+    mkdirSync(outside);
+    writeFileSync(join(outside, 'leak.dart'), 'const secret = 1;\n');
+    const root = join(parent, 'app');
+    mkdirSync(join(root, 'ios'), { recursive: true });
+    writeFileSync(join(root, 'ios', 'AppDelegate.swift'), 'import UIKit\n');
+    symlinkSync('../outside-secret', join(root, 'lib'));
+    const { files, notes } = await readSources(
+      [
+        { folder: join(root, 'ios'), languages: swift },
+        { folder: join(root, 'lib'), languages: new Set(['dart'] as const) },
+      ],
+      root,
+    );
+    expect(files.map((file) => file.path.slice(root.length + 1))).toEqual([
+      'ios/AppDelegate.swift',
+    ]);
+    expect(notes).toEqual(['lib is outside the project; it was not read.']);
+  });
+
+  it('reads a source folder that links inside the project', async () => {
+    const root = tree({ 'src/main.dart': 'void main() {}' });
+    symlinkSync('src', join(root, 'lib'));
+    const { files, notes } = await readSources(
+      [{ folder: join(root, 'lib'), languages: new Set(['dart'] as const) }],
+      root,
+    );
+    expect(files.map((file) => file.path.slice(root.length + 1))).toEqual(['lib/main.dart']);
+    expect(notes).toEqual([]);
   });
 
   it('gives line numbers by offset', () => {
