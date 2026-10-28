@@ -1,0 +1,11 @@
+# Generated or recorded files: kept exactly as produced.
+dist/
+coverage/
+site/
+fixtures/
+test/__snapshots__/
+test/data/
+_work/
+.simulator-work/
+.test-work/
+package-lock.json
