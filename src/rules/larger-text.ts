@@ -173,7 +173,9 @@ function appBuilders(file: SourceFile): Argument[] {
   )) {
     const args = callArguments(file, match.index + match[0].length);
     if (!args) continue;
-    builders.push(...topLevelArguments(file, args).filter((arg) => arg.label === 'builder'));
+    // Not push(...list): a call can have more arguments than the call stack holds.
+    for (const arg of topLevelArguments(file, args))
+      if (arg.label === 'builder') builders.push(arg);
   }
   return builders;
 }
