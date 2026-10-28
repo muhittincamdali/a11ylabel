@@ -231,8 +231,10 @@ function assetHits(app: AppModel): Hit[] {
 export function checkDarkInterface(app: AppModel): Hit[] {
   const inApp = darkInCode(app.sources);
   const hits = [...targetHits(app, inApp), ...expoHits(app, inApp)];
-  if (!inApp) hits.push(...app.sources.flatMap(lightInCode));
-  hits.push(...app.sources.flatMap(flutterWithoutDarkTheme));
+  // One hit at a time: push(...list) passes each hit as an argument, and a file with a trigger on
+  // every line has more of them than the call stack holds.
+  for (const file of inApp ? [] : app.sources) for (const hit of lightInCode(file)) hits.push(hit);
+  for (const file of app.sources) for (const hit of flutterWithoutDarkTheme(file)) hits.push(hit);
   if (!darkByDefault(app.targets)) hits.push(...assetHits(app));
   return hits;
 }
