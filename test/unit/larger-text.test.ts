@@ -7,6 +7,7 @@ import {
   checkLargerText,
   DYNAMIC_TYPE_SIZES,
   dynamicTypeLimit,
+  fontCall,
 } from '../../src/rules/larger-text.js';
 
 const run = (path: string, text: string) =>
@@ -239,5 +240,15 @@ final class ProfileViewController: UIViewController {
   it('reads Objective-C fonts', () => {
     const text = `self.label.font = [UIFont systemFontOfSize:15];\nself.label.adjustsFontForContentSizeCategory = NO;\n`;
     expect(rules('/app/Legacy.m', text)).toEqual(['A11Y102', 'A11Y104']);
+  });
+});
+
+describe('fontCall', () => {
+  it('names the font call', () => {
+    expect(fontCall('systemFont(ofSize')).toBe('systemFont(ofSize:)');
+    expect(fontCall('boldSystemFont( ofSize')).toBe('boldSystemFont(ofSize:)');
+    expect(fontCall('UIFont(name:')).toBe('UIFont(name:size:)');
+    expect(fontCall('systemFontOfSize:')).toBe('systemFontOfSize:');
+    expect(fontCall('fontWithName:')).toBe('fontWithName:size:');
   });
 });
