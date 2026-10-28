@@ -5,6 +5,7 @@ import {
   CONTENT_SIZE_CATEGORIES,
   capsBelowTwice,
   checkLargerText,
+  DEFAULT_PROPS_IGNORED_FROM,
   DYNAMIC_TYPE_SIZES,
   dynamicTypeLimit,
   fontCall,
@@ -250,5 +251,30 @@ describe('fontCall', () => {
     expect(fontCall('UIFont(name:')).toBe('UIFont(name:size:)');
     expect(fontCall('systemFontOfSize:')).toBe('systemFontOfSize:');
     expect(fontCall('fontWithName:')).toBe('fontWithName:size:');
+  });
+});
+
+describe('React Native defaultProps by version', () => {
+  const text =
+    'Text.defaultProps = Text.defaultProps || {};\nText.defaultProps.allowFontScaling = false;\n';
+  const at = (reactNative: string | null) =>
+    checkLargerText(sourceFile('/app/index.js', text), { reactNative }).map((hit) => hit.rule);
+
+  it('reports them before React Native 0.78 and when the version is not known', () => {
+    expect(at('0.77.2')).toEqual(['A11Y101']);
+    expect(at(null)).toEqual(['A11Y101']);
+  });
+
+  it('leaves them alone from 0.78, where React 19 ignores defaultProps on Text', () => {
+    expect(at(DEFAULT_PROPS_IGNORED_FROM)).toEqual([]);
+    expect(at('0.88.1')).toEqual([]);
+    expect(
+      checkLargerText(
+        sourceFile('/app/index.js', 'TextInput.defaultProps = { allowFontScaling: false };'),
+        {
+          reactNative: '0.88.1',
+        },
+      ),
+    ).toEqual([]);
   });
 });
