@@ -1,6 +1,7 @@
 // Scans one project: detects it, reads it, runs the rules and builds the report with a status for
 // each Accessibility Nutrition Label.
 import { type AppModel, collectApp, STYLE_KEY, shownPath } from './collect/app.js';
+import { clip, clipOrNull } from './core/clip.js';
 import { detectProject } from './detect/project.js';
 import type {
   Finding,
@@ -167,7 +168,9 @@ function targetsOf(app: AppModel): TargetSummary[] {
     return {
       name: target.name,
       infoPlists: target.infoPlists.map((plist) => shownPath(plist.path, app.project.root)),
-      interfaceStyle: (fromPlist as string | undefined) ?? target.styleSetting?.value ?? null,
+      interfaceStyle: clipOrNull(
+        (fromPlist as string | undefined) ?? target.styleSetting?.value ?? null,
+      ),
       deploymentTarget: target.deploymentTarget,
     };
   });
@@ -210,12 +213,12 @@ export async function scan(path: string, options: ScanOptions = {}): Promise<Rep
     };
   });
   const versions: VersionInfo[] = [...project.packages.values()].map((item) => ({
-    name: item.name,
-    version: item.version,
+    name: clip(item.name),
+    version: clipOrNull(item.version),
     source: item.source,
   }));
   if (project.flutter?.version) {
-    versions.push({ name: 'flutter', version: project.flutter.version, source: 'pinned' });
+    versions.push({ name: 'flutter', version: clip(project.flutter.version), source: 'pinned' });
   }
   const notes = [...app.notes];
   if (project.expoConfig && project.expoConfig.json === null) {
@@ -234,7 +237,7 @@ export async function scan(path: string, options: ScanOptions = {}): Promise<Rep
     rules: { ruleSet: RULE_DATA.ruleSet, dataVersion: RULE_DATA.dataVersion, read: RULE_DATA.read },
     project: {
       path,
-      name: project.name,
+      name: clip(project.name),
       ecosystem: project.ecosystem,
       versions,
       targets: targetsOf(app),

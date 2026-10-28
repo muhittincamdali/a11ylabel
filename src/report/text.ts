@@ -70,6 +70,14 @@ export function withoutControlCharacters<T>(value: T): T {
   ) as T;
 }
 
+/**
+ * Adds `lines` to the end of `out` one at a time. push(...lines) passes every line as an argument,
+ * and a long enough text wraps into more lines than the call stack holds arguments.
+ */
+export function append(out: string[], lines: Iterable<string>): void {
+  for (const line of lines) out.push(line);
+}
+
 /** Splits text into lines of at most `width` columns (a longer word gets a line of its own). */
 export function wrap(text: string, width: number): string[] {
   const lines: string[] = [];

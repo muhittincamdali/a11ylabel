@@ -180,6 +180,16 @@ describe('render', () => {
     expect(clean('tab\tand\nnewline stay')).toBe('tab\tand\nnewline stay');
   });
 
+  it('renders text that wraps into more lines than the call stack holds arguments', () => {
+    // 59-character words at the narrowest width get a line each: 400,000 lines of one note.
+    const long = Array.from({ length: 400_000 }, () => 'w'.repeat(59)).join(' ');
+    const input = report([finding({ message: long })], { notes: [long] });
+    for (const format of ['tty', 'text'] as const) {
+      const out = render(input, format, { color: true, width: 60 });
+      expect(out.split('\n').length).toBeGreaterThan(800_000);
+    }
+  });
+
   it('counts and wraps', () => {
     expect(countText({ errors: 1, warnings: 2, info: 3 })).toBe('1 error, 2 warnings, 3 info');
     expect(countText({ errors: 0, warnings: 0, info: 0 })).toBe('');
