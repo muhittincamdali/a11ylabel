@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "ruleSet": {
+      "type": "string",
+      "const": "nutrition-labels"
+    },
+    "dataVersion": {
+      "type": "string",
+      "pattern": "^\\d{4}\\.\\d{2}\\.\\d{2}$"
+    },
+    "read": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "voiceover",
+              "voice-control",
+              "larger-text",
+              "dark-interface",
+              "differentiate-without-color",
+              "sufficient-contrast",
+              "reduced-motion",
+              "captions",
+              "audio-descriptions"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "criteria": {
+            "type": "string",
+            "format": "uri"
+          },
+          "coverage": {
+            "type": "string",
+            "enum": [
+              "checked",
+              "partial",
+              "hint",
+              "manual"
+            ]
+          },
+          "checked": {
+            "type": "string",
+            "minLength": 1
+          },
+          "manual": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "criteria",
+          "coverage",
+          "checked",
+          "manual"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "A11Y101",
+              "A11Y102",
+              "A11Y103",
+              "A11Y104",
+              "A11Y201",
+              "A11Y202",
+              "A11Y203",
+              "A11Y204",
+              "A11Y205",
+              "A11Y301",
+              "A11Y302",
+              "A11Y303",
+              "A11Y304",
+              "A11Y401",
+              "A11Y402",
+              "A11Y501",
+              "A11Y601"
+            ]
+          },
+          "labels": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "voiceover",
+                "voice-control",
+                "larger-text",
+                "dark-interface",
+                "differentiate-without-color",
+                "sufficient-contrast",
+                "reduced-motion",
+                "captions",
+                "audio-descriptions"
+              ]
+            }
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sources": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "title",
+                "url"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "fixes": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "enum": [
+                "info-plist",
+                "build-setting",
+                "expo-config",
+                "asset-catalog",
+                "uikit",
+                "swiftui",
+                "react-native",
+                "flutter"
+              ]
+            },
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "steps": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "guide": {
+                  "type": "string",
+                  "pattern": "^docs\\/guides\\/[\\w-]+\\.md(?:#[\\w-]+)?$"
+                }
+              },
+              "required": [
+                "title",
+                "steps",
+                "guide"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "labels",
+          "severity",
+          "title",
+          "summary",
+          "sources",
+          "fixes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "signals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "enum": [
+              "voiceover",
+              "voice-control",
+              "larger-text",
+              "dark-interface",
+              "differentiate-without-color",
+              "sufficient-contrast",
+              "reduced-motion",
+              "captions",
+              "audio-descriptions"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pattern": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "label",
+          "text",
+          "pattern"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "ruleSet",
+    "dataVersion",
+    "read",
+    "labels",
+    "rules",
+    "signals"
+  ],
+  "additionalProperties": false,
+  "title": "a11ylabel rule data"
+}
