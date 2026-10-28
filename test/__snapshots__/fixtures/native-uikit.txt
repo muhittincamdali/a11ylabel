@@ -1,4 +1,4 @@
-a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+a11ylabel 0.1.0 · rules nutrition-labels@2026.10.28
 
 Ledger · native iOS · fixtures/native-uikit
 target Ledger · UIUserInterfaceStyle Light · iOS 17.0 (Ledger/Info.plist)

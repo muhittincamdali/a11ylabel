@@ -7,6 +7,10 @@ All notable changes to a11ylabel are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-28
+
+First release.
+
 ### Added
 
 - The `a11ylabel` command (npm package `@mcamdali/a11ylabel`) for native iOS, Flutter (app and
@@ -35,4 +39,5 @@ All notable changes to a11ylabel are listed here. The format follows
 - Guides for claiming labels and for each label group, an API reference site, and examples for
   JavaScript, `jq` and GitHub Actions.
 
-[Unreleased]: https://github.com/muhittincamdali/a11ylabel/commits/main
+[Unreleased]: https://github.com/muhittincamdali/a11ylabel/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0

@@ -2,7 +2,7 @@
   "schemaVersion": 0,
   "tool": {
     "name": "a11ylabel",
-    "version": "0.0.0"
+    "version": "0.1.0"
   },
   "rules": {
     "ruleSet": "nutrition-labels",

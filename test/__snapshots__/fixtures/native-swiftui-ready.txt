@@ -1,4 +1,4 @@
-a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+a11ylabel 0.1.0 · rules nutrition-labels@2026.10.28
 
 Pantry · native iOS · fixtures/native-swiftui-ready
 target Pantry · iOS 18.0
