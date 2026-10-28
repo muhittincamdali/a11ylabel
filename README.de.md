@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
+<!-- i18n-source: README.md@6ff027cd7ebc2a47513ef24c6774454bdd417336 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -268,11 +268,13 @@ jeweils einer Toolchain erstellt wurden:
 | React-Native-0.88.1-App                                    | [hell](docs/media/demo-react-native-light.svg) · [dunkel](docs/media/demo-react-native-dark.svg)                                                    |
 | `scripts/simulator-compare.sh` an den beiden SwiftUI-Apps  | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
-Gemessen am 28. Oktober 2026 auf einem Mac (Apple silicon, M5 Max) mit Node.js 26.12.1: drei Durchgänge
-mit je 100 Läufen von `node dist/cli/main.js --json` über die sieben Fixtures, einschließlich des
-Node.js-Starts. Die Mediane der drei Durchgänge waren 0,11, 0,11 und 0,11 Sekunden; der langsamste Lauf
-dauerte 0,15 Sekunden. Ein erzeugtes SwiftUI-Projekt mit 5.000 Dateien (33,4 MB Swift, 10.000 Befunde, davon 200 aufgeführt)
-brauchte in drei Läufen 1,06 bis 1,19 Sekunden, bei höchstens 230 MB (220 MiB) Speicher.
+Gemessen am 28. Oktober 2026 auf einem Mac (Apple silicon, M5 Max) mit Node.js 26.12.1: fünf Runden
+mit je drei Durchgängen zu 100 Läufen von `node dist/cli/main.js --json` über die sieben Fixtures,
+einschließlich des Node.js-Starts. Die Fixtures lagen im Dateicache (warme Läufe). Die Mediane der 15
+Durchgänge lagen bei 0,11 bis 0,12 Sekunden. Einzelne Läufe schwanken stärker: Der langsamste Lauf einer
+Runde dauerte 0,15 bis 0,38 Sekunden. Ein erzeugtes SwiftUI-Projekt mit 5.000 Dateien (33,4 MB Swift,
+10.000 Befunde, davon 200 aufgeführt) brauchte in drei Läufen 1,05 bis 1,11 Sekunden, bei höchstens
+230 MB (220 MiB) Speicher.
 
 ## Status
 

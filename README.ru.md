@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
+<!-- i18n-source: README.md@6ff027cd7ebc2a47513ef24c6774454bdd417336 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -265,10 +265,12 @@ console.log(render(report, 'markdown'));
 | Приложение на React Native 0.88.1                              | [светлая](docs/media/demo-react-native-light.svg) · [тёмная](docs/media/demo-react-native-dark.svg)                                                 |
 | `scripts/simulator-compare.sh` на двух приложениях SwiftUI     | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
-Измерено 28 октября 2026 года на Mac (Apple silicon, M5 Max) с Node.js 26.12.1: три серии по 100 запусков
-`node dist/cli/main.js --json` на семи фикстурах, включая запуск Node.js. Медианы трёх серий — 0,11, 0,11 и
-0,11 секунды; самый медленный запуск занял 0,15 секунды. Сгенерированный проект SwiftUI из 5 000 файлов (33,4 МБ
-кода на Swift, 10 000 находок, из них 200 перечислены) занял от 1,06 до 1,19 секунды за три запуска при пиковом расходе памяти 230 МБ (220 МиБ).
+Измерено 28 октября 2026 года на Mac (Apple silicon, M5 Max) с Node.js 26.12.1: пять раундов по три серии
+из 100 запусков `node dist/cli/main.js --json` на семи фикстурах, включая запуск Node.js. Фикстуры
+находились в файловом кэше (тёплые запуски). Медианы 15 серий — от 0,11 до 0,12 секунды. Отдельные
+запуски разбросаны сильнее: самый медленный запуск раунда занял от 0,15 до 0,38 секунды. Сгенерированный
+проект SwiftUI из 5 000 файлов (33,4 МБ кода на Swift, 10 000 находок, из них 200 перечислены) занял от
+1,05 до 1,11 секунды за три запуска при пиковом расходе памяти 230 МБ (220 МиБ).
 
 ## Статус
 

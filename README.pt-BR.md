@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
+<!-- i18n-source: README.md@6ff027cd7ebc2a47513ef24c6774454bdd417336 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -264,11 +264,13 @@ As gravações de terminal vêm da CLI nos [fixtures](fixtures/README.md), proje
 | App React Native 0.88.1                                      | [claro](docs/media/demo-react-native-light.svg) · [escuro](docs/media/demo-react-native-dark.svg)                                                   |
 | `scripts/simulator-compare.sh` nos dois apps SwiftUI         | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
-Medido em 28 de outubro de 2026 em um Mac (Apple silicon, M5 Max) com Node.js 26.12.1: três séries de 100
-execuções de `node dist/cli/main.js --json` sobre os sete fixtures, incluindo a inicialização do Node.js. As
-medianas das três séries foram 0,11, 0,11 e 0,11 segundo; a execução mais lenta levou 0,15 segundo. Um projeto
-SwiftUI gerado com 5.000 arquivos (33,4 MB de Swift, 10.000 achados, dos quais 200 listados) levou de 1,06 a 1,19 segundo em três
-execuções, com no máximo 230 MB (220 MiB) de memória.
+Medido em 28 de outubro de 2026 em um Mac (Apple silicon, M5 Max) com Node.js 26.12.1: cinco rodadas de
+três séries de 100 execuções de `node dist/cli/main.js --json` sobre os sete fixtures, incluindo a
+inicialização do Node.js. Os fixtures estavam no cache de arquivos (execuções a quente). As medianas das
+15 séries foram de 0,11 a 0,12 segundo. Execuções isoladas variam mais: a mais lenta de cada rodada levou
+de 0,15 a 0,38 segundo. Um projeto SwiftUI gerado com 5.000 arquivos (33,4 MB de Swift, 10.000 achados,
+dos quais 200 listados) levou de 1,05 a 1,11 segundo em três execuções, com no máximo 230 MB (220 MiB)
+de memória.
 
 ## Status
 

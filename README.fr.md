@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
+<!-- i18n-source: README.md@6ff027cd7ebc2a47513ef24c6774454bdd417336 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -267,11 +267,13 @@ chaque toolchain :
 | App React Native 0.88.1                                           | [clair](docs/media/demo-react-native-light.svg) · [sombre](docs/media/demo-react-native-dark.svg)                                                   |
 | `scripts/simulator-compare.sh` sur les deux apps SwiftUI          | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
-Mesuré le 28 octobre 2026 sur un Mac (Apple silicon, M5 Max) avec Node.js 26.12.1 : trois séries de 100
-exécutions de `node dist/cli/main.js --json` sur les sept fixtures, démarrage de Node.js inclus. Les médianes
-des trois séries étaient de 0,11, 0,11 et 0,11 seconde ; l’exécution la plus lente a pris 0,15 seconde. Un projet
-SwiftUI généré de 5 000 fichiers (33,4 Mo de Swift, 10 000 constats, dont 200 listés) a pris de 1,06 à 1,19 seconde en trois
-exécutions, avec au plus 230 Mo (220 Mio) de mémoire.
+Mesuré le 28 octobre 2026 sur un Mac (Apple silicon, M5 Max) avec Node.js 26.12.1 : cinq tours de trois
+séries de 100 exécutions de `node dist/cli/main.js --json` sur les sept fixtures, démarrage de Node.js
+inclus. Les fixtures étaient dans le cache de fichiers (exécutions à chaud). Les médianes des 15 séries
+allaient de 0,11 à 0,12 seconde. Les exécutions isolées varient davantage : la plus lente de chaque tour
+a pris de 0,15 à 0,38 seconde. Un projet SwiftUI généré de 5 000 fichiers (33,4 Mo de Swift, 10 000
+constats, dont 200 listés) a pris de 1,05 à 1,11 seconde en trois exécutions, avec au plus 230 Mo
+(220 Mio) de mémoire.
 
 ## État d’avancement
 

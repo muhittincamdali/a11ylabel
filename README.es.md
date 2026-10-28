@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
+<!-- i18n-source: README.md@6ff027cd7ebc2a47513ef24c6774454bdd417336 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -270,11 +270,13 @@ con cada toolchain:
 | App de React Native 0.88.1                                    | [claro](docs/media/demo-react-native-light.svg) · [oscuro](docs/media/demo-react-native-dark.svg)                                                   |
 | `scripts/simulator-compare.sh` en las dos apps SwiftUI        | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
-Medido el 28 de octubre de 2026 en un Mac (Apple silicon, M5 Max) con Node.js 26.12.1: tres series de 100
-ejecuciones de `node dist/cli/main.js --json` sobre los siete fixtures, con el arranque de Node.js
-incluido. Las medianas de las tres series fueron 0,11, 0,11 y 0,11 segundos; la ejecución más lenta tardó
-0,15 segundos. Un proyecto SwiftUI generado de 5.000 archivos (33,4 MB de Swift, 10.000 hallazgos, 200 de ellos listados) tardó
-entre 1,06 y 1,19 segundos en tres ejecuciones, con un máximo de 230 MB (220 MiB) de memoria.
+Medido el 28 de octubre de 2026 en un Mac (Apple silicon, M5 Max) con Node.js 26.12.1: cinco rondas de
+tres series de 100 ejecuciones de `node dist/cli/main.js --json` sobre los siete fixtures, con el
+arranque de Node.js incluido. Los fixtures estaban en la caché de archivos (ejecuciones en caliente).
+Las medianas de las 15 series fueron de 0,11 a 0,12 segundos. Las ejecuciones sueltas varían más: la
+más lenta de cada ronda tardó entre 0,15 y 0,38 segundos. Un proyecto SwiftUI generado de 5.000 archivos
+(33,4 MB de Swift, 10.000 hallazgos, 200 de ellos listados) tardó entre 1,05 y 1,11 segundos en tres
+ejecuciones, con un máximo de 230 MB (220 MiB) de memoria.
 
 ## Estado
 
