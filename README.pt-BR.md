@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2725a7403253e305cfe7775804e3f897218bb327 status=reviewed -->
+<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -266,9 +266,9 @@ As gravações de terminal vêm da CLI nos [fixtures](fixtures/README.md), proje
 
 Medido em 28 de outubro de 2026 em um Mac (Apple silicon, M5 Max) com Node.js 26.12.1: três séries de 100
 execuções de `node dist/cli/main.js --json` sobre os sete fixtures, incluindo a inicialização do Node.js. As
-medianas das três séries foram 0,12, 0,12 e 0,12 segundo; a execução mais lenta levou 0,17 segundo. Um projeto
-SwiftUI gerado com 5.000 arquivos (33,4 MB de Swift, 10.000 achados, dos quais 200 listados) levou de 1,13 a 1,21 segundo em três
-execuções, com no máximo 217 MB de memória.
+medianas das três séries foram 0,11, 0,11 e 0,11 segundo; a execução mais lenta levou 0,15 segundo. Um projeto
+SwiftUI gerado com 5.000 arquivos (33,4 MB de Swift, 10.000 achados, dos quais 200 listados) levou de 1,06 a 1,19 segundo em três
+execuções, com no máximo 230 MB (220 MiB) de memória.
 
 ## Status
 
@@ -305,6 +305,7 @@ execuções, com no máximo 217 MB de memória.
 - **Saída limitada.** Um relatório lista no máximo 20 achados de uma regra por arquivo e 100 por projeto,
   ou seja, 1.700 no máximo. Os achados acima desses limites continuam contados nos totais de cada rótulo e
   no resumo, e uma nota informa quantos de cada regra ficaram de fora.
+  Nomes e valores do projeto, como nomes de target, versões e valores do Info.plist, são cortados em 200 caracteres.
 
 ## Documentação
 

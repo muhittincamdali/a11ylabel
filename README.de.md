@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2725a7403253e305cfe7775804e3f897218bb327 status=reviewed -->
+<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -270,9 +270,9 @@ jeweils einer Toolchain erstellt wurden:
 
 Gemessen am 28. Oktober 2026 auf einem Mac (Apple silicon, M5 Max) mit Node.js 26.12.1: drei Durchgänge
 mit je 100 Läufen von `node dist/cli/main.js --json` über die sieben Fixtures, einschließlich des
-Node.js-Starts. Die Mediane der drei Durchgänge waren 0,12, 0,12 und 0,12 Sekunden; der langsamste Lauf
-dauerte 0,17 Sekunden. Ein erzeugtes SwiftUI-Projekt mit 5.000 Dateien (33,4 MB Swift, 10.000 Befunde, davon 200 aufgeführt)
-brauchte in drei Läufen 1,13 bis 1,21 Sekunden, bei höchstens 217 MB Speicher.
+Node.js-Starts. Die Mediane der drei Durchgänge waren 0,11, 0,11 und 0,11 Sekunden; der langsamste Lauf
+dauerte 0,15 Sekunden. Ein erzeugtes SwiftUI-Projekt mit 5.000 Dateien (33,4 MB Swift, 10.000 Befunde, davon 200 aufgeführt)
+brauchte in drei Läufen 1,06 bis 1,19 Sekunden, bei höchstens 230 MB (220 MiB) Speicher.
 
 ## Status
 
@@ -312,6 +312,7 @@ brauchte in drei Läufen 1,13 bis 1,21 Sekunden, bei höchstens 217 MB Speicher.
 - **Begrenzte Ausgabe.** Ein Bericht führt höchstens 20 Befunde einer Regel pro Datei und 100 pro
   Projekt auf, also höchstens 1.700. Befunde über diesen Grenzen zählen weiter in den Zahlen der Labels
   und der Zusammenfassung, und ein Hinweis nennt, wie viele je Regel ausgelassen wurden.
+  Namen und Werte aus dem Projekt, etwa Target-Namen, Versionen und Info.plist-Werte, werden auf 200 Zeichen gekürzt.
 
 ## Dokumentation
 

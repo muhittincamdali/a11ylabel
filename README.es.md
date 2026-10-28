@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2725a7403253e305cfe7775804e3f897218bb327 status=reviewed -->
+<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -272,9 +272,9 @@ con cada toolchain:
 
 Medido el 28 de octubre de 2026 en un Mac (Apple silicon, M5 Max) con Node.js 26.12.1: tres series de 100
 ejecuciones de `node dist/cli/main.js --json` sobre los siete fixtures, con el arranque de Node.js
-incluido. Las medianas de las tres series fueron 0,12, 0,12 y 0,12 segundos; la ejecución más lenta tardó
-0,17 segundos. Un proyecto SwiftUI generado de 5.000 archivos (33,4 MB de Swift, 10.000 hallazgos, 200 de ellos listados) tardó
-entre 1,13 y 1,21 segundos en tres ejecuciones, con un máximo de 217 MB de memoria.
+incluido. Las medianas de las tres series fueron 0,11, 0,11 y 0,11 segundos; la ejecución más lenta tardó
+0,15 segundos. Un proyecto SwiftUI generado de 5.000 archivos (33,4 MB de Swift, 10.000 hallazgos, 200 de ellos listados) tardó
+entre 1,06 y 1,19 segundos en tres ejecuciones, con un máximo de 230 MB (220 MiB) de memoria.
 
 ## Estado
 
@@ -313,6 +313,7 @@ entre 1,13 y 1,21 segundos en tres ejecuciones, con un máximo de 217 MB de memo
 - **Salida acotada.** Un informe enumera como máximo 20 hallazgos de una regla por archivo y 100 por
   proyecto, es decir, 1.700 como máximo. Los hallazgos por encima de esos límites siguen contando en los
   recuentos de cada etiqueta y en el resumen, y una nota indica cuántos de cada regla se dejaron fuera.
+  Los nombres y valores del proyecto, como nombres de target, versiones y valores de Info.plist, se recortan a 200 caracteres.
 
 ## Documentación
 

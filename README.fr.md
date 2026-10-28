@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2725a7403253e305cfe7775804e3f897218bb327 status=reviewed -->
+<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -269,9 +269,9 @@ chaque toolchain :
 
 Mesuré le 28 octobre 2026 sur un Mac (Apple silicon, M5 Max) avec Node.js 26.12.1 : trois séries de 100
 exécutions de `node dist/cli/main.js --json` sur les sept fixtures, démarrage de Node.js inclus. Les médianes
-des trois séries étaient de 0,12, 0,12 et 0,12 seconde ; l’exécution la plus lente a pris 0,17 seconde. Un projet
-SwiftUI généré de 5 000 fichiers (33,4 Mo de Swift, 10 000 constats, dont 200 listés) a pris de 1,13 à 1,21 seconde en trois
-exécutions, avec au plus 217 Mo de mémoire.
+des trois séries étaient de 0,11, 0,11 et 0,11 seconde ; l’exécution la plus lente a pris 0,15 seconde. Un projet
+SwiftUI généré de 5 000 fichiers (33,4 Mo de Swift, 10 000 constats, dont 200 listés) a pris de 1,06 à 1,19 seconde en trois
+exécutions, avec au plus 230 Mo (220 Mio) de mémoire.
 
 ## État d’avancement
 
@@ -309,6 +309,7 @@ exécutions, avec au plus 217 Mo de mémoire.
 - **Sortie bornée.** Un rapport liste au plus 20 constats d’une règle par fichier et 100 par projet, soit
   1 700 au plus. Les constats au-delà de ces limites restent comptés dans les totaux des labels et dans le
   résumé, et une note indique combien ont été laissés de côté pour chaque règle.
+  Les noms et valeurs du projet, comme les noms de cible, les versions et les valeurs d’Info.plist, sont coupés à 200 caractères.
 
 ## Documentation
 

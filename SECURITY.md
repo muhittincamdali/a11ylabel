@@ -47,7 +47,8 @@ project file; for sources 4 MB per file, 20,000 files and 128 MB in total; 5,000
 than the file holds, and 64 levels of nesting per plist or JSON file. Files over a limit are
 skipped with a note in the report. A report lists at most 20 findings of a rule per file and 100
 per project; the rest are counted, not listed, so a file with a finding on every line cannot make
-the output grow with it. Sources are read only from folders that, with symbolic links
-resolved, are inside the project; a source folder such as `lib/` that links out of it is skipped
-with a note. A file under these limits that still takes much longer or much more memory than a
+the output grow with it. Names and values from the project (target names, versions, build
+setting and Info.plist values) are cut to 200 characters in the report. Sources are read only
+from folders that, with symbolic links resolved, are inside the project; a source folder such as
+`lib/` that links out of it is skipped with a note. A file under these limits that still takes much longer or much more memory than a
 real project of its size is in scope.

@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2725a7403253e305cfe7775804e3f897218bb327 status=reviewed -->
+<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -266,9 +266,9 @@ console.log(render(report, 'markdown'));
 | `scripts/simulator-compare.sh` на двух приложениях SwiftUI     | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
 Измерено 28 октября 2026 года на Mac (Apple silicon, M5 Max) с Node.js 26.12.1: три серии по 100 запусков
-`node dist/cli/main.js --json` на семи фикстурах, включая запуск Node.js. Медианы трёх серий — 0,12, 0,12 и
-0,12 секунды; самый медленный запуск занял 0,17 секунды. Сгенерированный проект SwiftUI из 5 000 файлов (33,4 МБ
-кода на Swift, 10 000 находок, из них 200 перечислены) занял от 1,13 до 1,21 секунды за три запуска при пиковом расходе памяти 217 МБ.
+`node dist/cli/main.js --json` на семи фикстурах, включая запуск Node.js. Медианы трёх серий — 0,11, 0,11 и
+0,11 секунды; самый медленный запуск занял 0,15 секунды. Сгенерированный проект SwiftUI из 5 000 файлов (33,4 МБ
+кода на Swift, 10 000 находок, из них 200 перечислены) занял от 1,06 до 1,19 секунды за три запуска при пиковом расходе памяти 230 МБ (220 МиБ).
 
 ## Статус
 
@@ -306,6 +306,7 @@ console.log(render(report, 'markdown'));
 - **Ограниченный вывод.** Отчёт перечисляет не более 20 находок одного правила на файл и 100 на проект,
   то есть не более 1 700. Находки сверх этих пределов всё равно учитываются в счётчиках меток и в сводке,
   а примечание сообщает, сколько находок каждого правила не перечислено.
+  Имена и значения из проекта, например имена таргетов, версии и значения Info.plist, обрезаются до 200 символов.
 
 ## Документация
 
