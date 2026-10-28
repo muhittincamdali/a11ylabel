@@ -83,7 +83,7 @@
       "labels": ["larger-text"],
       "severity": "error",
       "title": "Text size locked for the whole app",
-      "summary": "Text scaling is turned off or capped below 200% for every text of the app: React Native Text.defaultProps, a MediaQuery in a Flutter app's builder, or a Dynamic Type limit on a SwiftUI scene or a UIKit window. Apple's Larger Text criteria ask that text can grow to at least 200% or the system's largest size.",
+      "summary": "Text scaling is turned off or capped below 200% for every text of the app: React Native Text.defaultProps (before React Native 0.78; React 19 ignores defaultProps on function components such as Text), a MediaQuery in a Flutter app's builder, or a Dynamic Type limit on a SwiftUI scene or a UIKit window. Apple's Larger Text criteria ask that text can grow to at least 200% or the system's largest size.",
       "sources": [
         {
           "title": "Larger Text evaluation criteria (App Store Connect Help)",
@@ -92,6 +92,10 @@
         {
           "title": "React Native Text: allowFontScaling, maxFontSizeMultiplier",
           "url": "https://reactnative.dev/docs/text"
+        },
+        {
+          "title": "React 19 upgrade guide: defaultProps removed from function components",
+          "url": "https://react.dev/blog/2024/04/25/react-19-upgrade-guide"
         },
         {
           "title": "Flutter MediaQuery.withClampedTextScaling",
