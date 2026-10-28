@@ -40,7 +40,7 @@ describe('rules/nutrition-labels.json', () => {
 
   it('cites a primary source over HTTPS for every rule', () => {
     const primary =
-      /^https:\/\/(developer\.apple\.com|reactnative\.dev|docs\.expo\.dev|api\.flutter\.dev|docs\.swmansion\.com\/react-native-reanimated)\//;
+      /^https:\/\/(developer\.apple\.com|reactnative\.dev|react\.dev\/blog|docs\.expo\.dev|api\.flutter\.dev|docs\.swmansion\.com\/react-native-reanimated)\//;
     for (const rule of RULE_DATA.rules) {
       expect(rule.sources.length, rule.id).toBeGreaterThan(0);
       for (const source of rule.sources) expect(source.url, rule.id).toMatch(primary);

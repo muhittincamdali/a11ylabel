@@ -11,6 +11,7 @@ import {
   spanAt,
   topLevelArguments,
 } from '../core/syntax.js';
+import { atLeast } from '../core/versions.js';
 import type { RuleId } from './data.js';
 import { type Hit, hitAt, matches, quoted } from './hit.js';
 
@@ -64,7 +65,21 @@ const percent = (value: number) => `${Math.round(value * 100)}%`;
 const RN_DEFAULT_PROPS =
   /\b(Text|TextInput)\.defaultProps(?:\s*\.\s*(allowFontScaling|maxFontSizeMultiplier)\s*=\s*([\w.]+)|\s*=\s*(?=\{|\(\s*\{))/g;
 
-function reactNativeAppWide(file: SourceFile, hits: Hit[]): Span[] {
+/**
+ * React Native 0.78 moved to React 19, which applies defaultProps only to class components: Text
+ * and TextInput are function components, so their defaultProps no longer change any text.
+ */
+export const DEFAULT_PROPS_IGNORED_FROM = '0.78.0';
+
+/** What the Larger Text checks need to know about the project. */
+export interface LargerTextContext {
+  /** The react-native version of a React Native or Expo app, when known. */
+  reactNative: string | null;
+}
+
+function reactNativeAppWide(file: SourceFile, hits: Hit[], context: LargerTextContext): Span[] {
+  const ignored =
+    context.reactNative !== null && atLeast(context.reactNative, DEFAULT_PROPS_IGNORED_FROM);
   const spans: Span[] = [];
   for (const match of matches(file, RN_DEFAULT_PROPS)) {
     const component = match[1] as string;
@@ -81,6 +96,7 @@ function reactNativeAppWide(file: SourceFile, hits: Hit[]): Span[] {
       off = /\ballowFontScaling\s*:\s*false\b/.test(span.inner);
       cap = number(/\bmaxFontSizeMultiplier\s*:\s*([\d.]+)/.exec(span.inner)?.[1]);
     }
+    if (ignored) continue;
     if (off) {
       hits.push(
         hitAt(
@@ -109,9 +125,9 @@ function reactNativeAppWide(file: SourceFile, hits: Hit[]): Span[] {
 const inside = (spans: Span[], offset: number) =>
   spans.some((span) => offset > span.open && offset < span.close);
 
-function checkReactNative(file: SourceFile): Hit[] {
+function checkReactNative(file: SourceFile, context: LargerTextContext): Hit[] {
   const hits: Hit[] = [];
-  const appWide = reactNativeAppWide(file, hits);
+  const appWide = reactNativeAppWide(file, hits, context);
   for (const match of matches(file, /\ballowFontScaling\s*(?:=\s*\{\s*false\s*\}|:\s*false\b)/g)) {
     if (inside(appWide, match.index)) continue;
     hits.push(
@@ -359,8 +375,11 @@ function checkFixedFonts(file: SourceFile, hits: Hit[]) {
 }
 
 /** The Larger Text checks for one source file. */
-export function checkLargerText(file: SourceFile): Hit[] {
-  if (file.language === 'js') return checkReactNative(file);
+export function checkLargerText(
+  file: SourceFile,
+  context: LargerTextContext = { reactNative: null },
+): Hit[] {
+  if (file.language === 'js') return checkReactNative(file, context);
   if (file.language === 'dart') return checkFlutter(file);
   const hits: Hit[] = [];
   if (file.language === 'swift') checkDynamicTypeSize(file, hits);

@@ -12,8 +12,9 @@ import { checkMotion } from './motion.js';
 
 export function checkApp(app: AppModel): Hit[] {
   const { sources } = app;
+  const reactNative = app.project.packages.get('react-native')?.version ?? null;
   return [
-    ...sources.flatMap(checkLargerText),
+    ...sources.flatMap((file) => checkLargerText(file, { reactNative })),
     ...checkDarkInterface(app),
     ...checkMotion(sources, app.project.root),
     ...sources.flatMap(checkLabels),
