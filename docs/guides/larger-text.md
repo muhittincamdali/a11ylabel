@@ -56,7 +56,7 @@ Text(recipe).font(.custom("Georgia", size: 16, relativeTo: .body))
   or a range that ends below AX3 does not. For a control that has to stay small, add
   `.accessibilityShowsLargeContentViewer()`.
 
-The [fixed app](../../fixtures/native-swiftui-ready) does all of this; the simulator screenshots
+The [fixed app](https://github.com/muhittincamdali/a11ylabel/tree/main/fixtures/native-swiftui-ready) does all of this; the simulator screenshots
 in the README show it at AX5 next to the original.
 
 ## UIKit
@@ -127,7 +127,7 @@ Text(tide.height);
 - If a widget cannot grow (a bottom navigation bar), clamp only that widget with
   `MediaQuery.withClampedTextScaling(maxScaleFactor: 2.0, child: …)`.
 
-The [flutter-tide fixture](../../fixtures/flutter-tide) on the iOS 27.0 simulator at AX5 shows its
+The [flutter-tide fixture](https://github.com/muhittincamdali/a11ylabel/tree/main/fixtures/flutter-tide) on the iOS 27.0 simulator at AX5 shows its
 text at 130%: see `docs/media/simulator/flutter-tide-ax5-dark.png`.
 
 ## Sources
