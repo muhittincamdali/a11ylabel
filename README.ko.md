@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@9b89a12078d421a75c4e78c0de2f0c9deba28fd2 status=reviewed -->
+<!-- i18n-source: README.md@2725a7403253e305cfe7775804e3f897218bb327 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -247,9 +247,9 @@ console.log(render(report, 'markdown'));
 | 두 SwiftUI 앱에서의 `scripts/simulator-compare.sh` | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
 2026년 10월 28일 Mac(Apple silicon, M5 Max)에서 Node.js 26.12.1로 측정했습니다. 일곱 개 fixture에 대해
-`node dist/cli/main.js --json`을 100회 실행하는 세트를 세 번 진행했으며 Node.js 시작 시간이 포함됩니다. 세 세트의 중앙값은 0.11초, 0.11초, 0.11초였고,
-가장 느린 실행은 0.31초였습니다. 생성한 5,000개 파일(Swift 33.4 MB, 발견 사항 10,000건, 그중 200건 나열)의 SwiftUI 프로젝트는 세 번 실행에서 1.27~1.43초가 걸렸고,
-메모리는 최대 297 MB였습니다.
+`node dist/cli/main.js --json`을 100회 실행하는 세트를 세 번 진행했으며 Node.js 시작 시간이 포함됩니다. 세 세트의 중앙값은 0.12초, 0.12초, 0.12초였고,
+가장 느린 실행은 0.17초였습니다. 생성한 5,000개 파일(Swift 33.4 MB, 발견 사항 10,000건, 그중 200건 나열)의 SwiftUI 프로젝트는 세 번 실행에서 1.13~1.21초가 걸렸고,
+메모리는 최대 217 MB였습니다.
 
 ## 상태
 
