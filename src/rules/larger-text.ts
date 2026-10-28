@@ -313,6 +313,15 @@ const SWIFTUI_FIXED_FONTS = /\.\s*system\s*\(\s*size\s*:|\.\s*custom(?=\s*\()/g;
 const UIKIT_FIXED_FONTS =
   /\b(?:bold|italic|monospacedDigit|monospaced)?[sS]ystemFont\s*\(\s*ofSize\b|\bUIFont\s*\(\s*name\s*:|\b(?:bold|italic)?[sS]ystemFontOfSize\s*:|\bfontWithName\s*:/g;
 
+/** How a message names the font call it found: "systemFont(ofSize:)", "UIFont(name:size:)". */
+export function fontCall(found: string): string {
+  const call = found.replace(/\s+/g, '');
+  if (call.endsWith('(ofSize')) return `${call})`.replace('(ofSize)', '(ofSize:)');
+  if (call === 'UIFont(name:') return 'UIFont(name:size:)';
+  if (call === 'fontWithName:') return 'fontWithName:size:';
+  return call;
+}
+
 function checkFixedFonts(file: SourceFile, hits: Hit[]) {
   if (file.language === 'swift') {
     for (const match of matches(file, SWIFTUI_FIXED_FONTS)) {
@@ -343,7 +352,7 @@ function checkFixedFonts(file: SourceFile, hits: Hit[]) {
         match.index,
         'A11Y104',
         'uikit',
-        `${match[0].replace(/[\s(:]+$/, '')} gives a fixed point size, and this file never scales a font with UIFontMetrics.`,
+        `${fontCall(match[0])} gives a fixed point size, and this file never scales a font with UIFontMetrics.`,
       ),
     );
   }
