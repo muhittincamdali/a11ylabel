@@ -3,6 +3,7 @@
 // that grows to at least 200% or the system's largest size; on iOS, body text passes 200% at the
 // AX3 size (DynamicTypeSize.accessibility3, UIContentSizeCategory.accessibilityExtraLarge).
 import type { SourceFile } from '../collect/sources.js';
+import { inAnyRange } from '../core/ranges.js';
 import {
   type Argument,
   callArguments,
@@ -122,14 +123,12 @@ function reactNativeAppWide(file: SourceFile, hits: Hit[], context: LargerTextCo
   return spans;
 }
 
-const inside = (spans: Span[], offset: number) =>
-  spans.some((span) => offset > span.open && offset < span.close);
-
 function checkReactNative(file: SourceFile, context: LargerTextContext): Hit[] {
   const hits: Hit[] = [];
-  const appWide = reactNativeAppWide(file, hits, context);
+  const spans = reactNativeAppWide(file, hits, context);
+  const appWide = inAnyRange(spans.map((span) => ({ start: span.open + 1, end: span.close - 1 })));
   for (const match of matches(file, /\ballowFontScaling\s*(?:=\s*\{\s*false\s*\}|:\s*false\b)/g)) {
-    if (inside(appWide, match.index)) continue;
+    if (appWide(match.index)) continue;
     hits.push(
       hitAt(
         file,
@@ -145,7 +144,7 @@ function checkReactNative(file: SourceFile, context: LargerTextContext): Hit[] {
     /\bmaxFontSizeMultiplier\s*(?:=\s*\{\s*([\d.]+)\s*\}|:\s*([\d.]+))/g,
   )) {
     const value = number(match[1] ?? match[2]);
-    if (inside(appWide, match.index) || !capsBelowTwice(value)) continue;
+    if (appWide(match.index) || !capsBelowTwice(value)) continue;
     hits.push(
       hitAt(
         file,
@@ -182,9 +181,7 @@ function appBuilders(file: SourceFile): Argument[] {
 
 function checkFlutter(file: SourceFile): Hit[] {
   const hits: Hit[] = [];
-  const builders = appBuilders(file);
-  const appWide = (offset: number) =>
-    builders.some((builder) => offset >= builder.start && offset <= builder.end);
+  const appWide = inAnyRange(appBuilders(file));
   const push = (offset: number, rule: RuleId, what: string, effect: string) => {
     const wide = appWide(offset);
     hits.push(
