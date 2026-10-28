@@ -1,6 +1,7 @@
 // Everything the rules look at for one project: its iOS app targets with their Info.plist and
 // build settings, the colours of its asset catalogs, and the app's own source files.
 import { join, relative, sep } from 'node:path';
+import { clip, clipOrNull } from '../core/clip.js';
 import { NOT_READ, readProjectFile, readProjectText } from '../core/files.js';
 import { compareVersions } from '../core/versions.js';
 import type { Project } from '../detect/project.js';
@@ -135,9 +136,11 @@ async function readTarget(
   notes: string[],
 ): Promise<AppTarget> {
   const { files, unresolved } = infoPlistFiles(xcode, target);
+  // The full name still expands $(TARGET_NAME) in INFOPLIST_FILE; the report gets the clipped one.
+  const name = clip(target.name);
   for (const raw of unresolved) {
     notes.push(
-      `${target.name}: INFOPLIST_FILE ${raw} uses a build setting a11ylabel does not expand.`,
+      `${name}: INFOPLIST_FILE ${clip(raw)} uses a build setting a11ylabel does not expand.`,
     );
   }
   const infoPlists: InfoPlistFile[] = [];
@@ -148,17 +151,17 @@ async function readTarget(
   const generates = generatesInfoPlist(target);
   if (files.length + unresolved.length === 0 && !generates) {
     notes.push(
-      `${target.name}: the Xcode project sets neither INFOPLIST_FILE nor GENERATE_INFOPLIST_FILE = YES; they may be set in an .xcconfig file, which a11ylabel does not read.`,
+      `${name}: the Xcode project sets neither INFOPLIST_FILE nor GENERATE_INFOPLIST_FILE = YES; they may be set in an .xcconfig file, which a11ylabel does not read.`,
     );
   }
   return {
-    name: target.name,
+    name,
     xcodeProject: xcode.path,
     infoPlists,
     generatesInfoPlist: generates,
     unreadInfoPlist: infoPlists.length < files.length + unresolved.length,
     styleSetting: buildSetting(xcode, target, STYLE_SETTING, pbxprojText),
-    deploymentTarget: lowestDeploymentTarget(target),
+    deploymentTarget: clipOrNull(lowestDeploymentTarget(target)),
   };
 }
 
