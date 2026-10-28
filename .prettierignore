@@ -9,3 +9,4 @@ _work/
 .simulator-work/
 .test-work/
 package-lock.json
+rules/schema.json
