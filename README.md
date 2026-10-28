@@ -65,16 +65,13 @@ fixture</a>, a SwiftUI app written for the tests (<code>npm run demo</code>).</s
 brew install muhittincamdali/tap/a11ylabel
 ```
 
-Or with npm from the
-[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0), which needs
-[Node.js](https://nodejs.org/) 22.12 or later (`node --version` prints it):
+Or with npm, which needs [Node.js](https://nodejs.org/) 22.12 or later (`node --version` prints it):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
+npm i -g @mcamdali/a11ylabel
 ```
 
-The package is not on the npm registry yet; publishing it there as `@mcamdali/a11ylabel` is
-planned. Both commands install the same release tarball.
+To run it without installing, use `npx @mcamdali/a11ylabel`.
 
 **2. Open a terminal in your app's folder**, the one with the `.xcodeproj`, `pubspec.yaml` or
 `package.json`:
@@ -157,17 +154,17 @@ light (no `darkTheme`) with its text at 130%.
 
 ## Installation
 
-The commands under Quick start install the `a11ylabel` command from the GitHub release. Each
-[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) carries the package as
-`a11ylabel-<version>.tgz` with a `SHA256SUMS` file. To pin a release in a project:
+The commands under Quick start install the `a11ylabel` command from the npm registry. To pin a version in a project:
+
+```sh
+npm install --save-dev @mcamdali/a11ylabel
+```
+
+`npx a11ylabel` then runs that copy. The package installs under the name `@mcamdali/a11ylabel`, the name the JavaScript API below imports. Each [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) also carries the package as `a11ylabel-<version>.tgz` with a `SHA256SUMS` file, to pin or verify an exact release:
 
 ```sh
 npm install --save-dev https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
 ```
-
-`npx a11ylabel` then runs that copy. The package installs under the name `@mcamdali/a11ylabel`,
-the name the JavaScript API below imports. Publishing to the npm registry is planned; until then
-`npx @mcamdali/a11ylabel` does not find the package.
 
 ## Usage
 

@@ -70,15 +70,13 @@ tests (<code>npm run demo</code>).</sub>
 brew install muhittincamdali/tap/a11ylabel
 ```
 
-Ou avec npm depuis la [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0), ce qui
-nécessite [Node.js](https://nodejs.org/) 22.12 ou une version ultérieure (`node --version` l’affiche) :
+Ou avec npm, ce qui nécessite [Node.js](https://nodejs.org/) 22.12 ou une version ultérieure (`node --version` l’affiche) :
 
 ```sh
-npm i -g https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
+npm i -g @mcamdali/a11ylabel
 ```
 
-Le paquet n’est pas encore sur le registre npm ; sa publication là-bas sous le nom `@mcamdali/a11ylabel` est
-prévue. Les deux commandes installent le même tarball de la release.
+Pour l’exécuter sans l’installer, utilisez `npx @mcamdali/a11ylabel`.
 
 **2. Ouvrez un terminal dans le dossier de votre app**, celui qui contient le `.xcodeproj`, `pubspec.yaml` ou
 `package.json` :
@@ -162,16 +160,17 @@ d’accueil ; les enregistrements sont dans [docs/media/simulator](docs/media/
 ## Installation
 
 Les commandes du Démarrage rapide installent la commande `a11ylabel` depuis la GitHub release. Chaque
-[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) fournit le paquet sous le nom
-`a11ylabel-<version>.tgz` avec un fichier `SHA256SUMS`. Pour figer une release dans un projet :
+Les commandes du Démarrage rapide installent la commande `a11ylabel` depuis le registre npm. Pour figer une version dans un projet :
+
+```sh
+npm install --save-dev @mcamdali/a11ylabel
+```
+
+`npx a11ylabel` exécute ensuite cette copie. Le paquet s’installe sous le nom `@mcamdali/a11ylabel`, le nom qu’importe l’API JavaScript ci-dessous. Chaque [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) fournit aussi le paquet sous le nom `a11ylabel-<version>.tgz` avec un fichier `SHA256SUMS`, pour figer ou vérifier une release précise :
 
 ```sh
 npm install --save-dev https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
 ```
-
-`npx a11ylabel` exécute ensuite cette copie. Le paquet s’installe sous le nom `@mcamdali/a11ylabel`, le nom
-qu’importe l’API JavaScript ci-dessous. La publication sur le registre npm est prévue ; d’ici là,
-`npx @mcamdali/a11ylabel` ne trouve pas le paquet.
 
 ## Utilisation
 

@@ -63,15 +63,13 @@ fixture</a>，这是为测试编写的一个 SwiftUI 应用（<code>npm run demo
 brew install muhittincamdali/tap/a11ylabel
 ```
 
-或者通过 npm 从 [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0)
-安装，这需要 [Node.js](https://nodejs.org/) 22.12 或更高版本（`node --version` 会显示版本）：
+或者通过 npm 安装，这需要 [Node.js](https://nodejs.org/) 22.12 或更高版本（`node --version` 会显示版本）：
 
 ```sh
-npm i -g https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
+npm i -g @mcamdali/a11ylabel
 ```
 
-该包尚未发布到 npm registry；计划以 `@mcamdali/a11ylabel` 的名称发布到那里。两条命令安装的是同一个 release
-tarball。
+如果不想安装，可以用 `npx @mcamdali/a11ylabel` 直接运行。
 
 **2. 在应用所在的文件夹中打开终端**，也就是包含 `.xcodeproj`、`pubspec.yaml` 或 `package.json` 的那个文件夹：
 
@@ -148,16 +146,17 @@ Apple 的[概述](https://developer.apple.com/help/app-store-connect/manage-app-
 
 ## 安装
 
-“快速开始”中的命令会从 GitHub release 安装 `a11ylabel` 命令。每个
-[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) 都以 `a11ylabel-<version>.tgz`
-提供该包，并附带 `SHA256SUMS` 文件。要在项目中固定某个 release：
+“快速开始”中的命令会从 npm registry 安装 `a11ylabel` 命令。要在项目中固定版本：
+
+```sh
+npm install --save-dev @mcamdali/a11ylabel
+```
+
+之后 `npx a11ylabel` 就会运行这份副本。该包以 `@mcamdali/a11ylabel` 的名称安装，也就是下面的 JavaScript API 所导入的名称。每个 [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) 还以 `a11ylabel-<version>.tgz` 提供该包，并附带 `SHA256SUMS` 文件，可用来固定或校验某个特定 release：
 
 ```sh
 npm install --save-dev https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
 ```
-
-之后 `npx a11ylabel` 就会运行这份副本。该包以 `@mcamdali/a11ylabel` 的名称安装，也就是下面的 JavaScript API
-所导入的名称。发布到 npm registry 在计划中；在此之前，`npx @mcamdali/a11ylabel` 找不到这个包。
 
 ## 使用方法
 

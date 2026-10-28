@@ -63,15 +63,13 @@ fixture</a> です（<code>npm run demo</code>）。</sub>
 brew install muhittincamdali/tap/a11ylabel
 ```
 
-または、[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0) から npm でインストールします。
-こちらは [Node.js](https://nodejs.org/) 22.12 以降が必要です（`node --version` で確認できます）：
+または npm でインストールします。こちらは [Node.js](https://nodejs.org/) 22.12 以降が必要です（`node --version` で確認できます）：
 
 ```sh
-npm i -g https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
+npm i -g @mcamdali/a11ylabel
 ```
 
-パッケージはまだ npm registry にありません。`@mcamdali/a11ylabel` として公開する予定です。どちらのコマンドも同じ release の
-tarball をインストールします。
+インストールせずに実行するには `npx @mcamdali/a11ylabel` を使います。
 
 **2. アプリのフォルダでターミナルを開きます。** `.xcodeproj`、`pubspec.yaml`、`package.json` のあるフォルダです：
 
@@ -149,16 +147,17 @@ warning は「review」にします。info の検出事項がラベルの状態�
 
 ## インストール
 
-クイックスタートのコマンドは、GitHub release から `a11ylabel` コマンドをインストールします。各
-[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) には、パッケージが `a11ylabel-<version>.tgz` として
-`SHA256SUMS` ファイルとともに含まれています。プロジェクトで release を固定するには：
+クイックスタートのコマンドは、npm registry から `a11ylabel` コマンドをインストールします。プロジェクトでバージョンを固定するには：
+
+```sh
+npm install --save-dev @mcamdali/a11ylabel
+```
+
+以後は `npx a11ylabel` がそのコピーを実行します。パッケージは `@mcamdali/a11ylabel` という名前でインストールされ、これは下の JavaScript API が import する名前です。各 [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) には、パッケージが `a11ylabel-<version>.tgz` として `SHA256SUMS` ファイルとともに含まれており、特定の release を固定または検証できます：
 
 ```sh
 npm install --save-dev https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
 ```
-
-以後は `npx a11ylabel` がそのコピーを実行します。パッケージは `@mcamdali/a11ylabel` という名前でインストールされ、これは下の JavaScript API が
-import する名前です。npm registry への公開は予定されていますが、それまでは `npx @mcamdali/a11ylabel` ではパッケージが見つかりません。
 
 ## 使い方
 

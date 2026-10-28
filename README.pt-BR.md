@@ -70,15 +70,13 @@ testes (<code>npm run demo</code>).</sub>
 brew install muhittincamdali/tap/a11ylabel
 ```
 
-Ou com npm a partir da [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0),
-o que exige o [Node.js](https://nodejs.org/) 22.12 ou posterior (`node --version` mostra a versão):
+Ou com npm, o que exige o [Node.js](https://nodejs.org/) 22.12 ou posterior (`node --version` mostra a versão):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
+npm i -g @mcamdali/a11ylabel
 ```
 
-O pacote ainda não está no registro do npm; publicá-lo lá como `@mcamdali/a11ylabel` está nos planos. Os dois
-comandos instalam o mesmo tarball da release.
+Para executá-lo sem instalar, use `npx @mcamdali/a11ylabel`.
 
 **2. Abra um terminal na pasta do seu app**, a que tem o `.xcodeproj`, o `pubspec.yaml` ou o
 `package.json`:
@@ -161,16 +159,17 @@ claro (sem `darkTheme`) com o texto em 130%.
 ## Instalação
 
 Os comandos do Início rápido instalam o comando `a11ylabel` a partir da GitHub release. Cada
-[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) traz o pacote como
-`a11ylabel-<version>.tgz` com um arquivo `SHA256SUMS`. Para fixar uma release em um projeto:
+Os comandos do Início rápido instalam o comando `a11ylabel` a partir do registro do npm. Para fixar uma versão em um projeto:
+
+```sh
+npm install --save-dev @mcamdali/a11ylabel
+```
+
+O `npx a11ylabel` passa então a executar essa cópia. O pacote é instalado com o nome `@mcamdali/a11ylabel`, o nome que a API JavaScript abaixo importa. Cada [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) também traz o pacote como `a11ylabel-<version>.tgz` com um arquivo `SHA256SUMS`, para fixar ou verificar uma release específica:
 
 ```sh
 npm install --save-dev https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
 ```
-
-O `npx a11ylabel` passa então a executar essa cópia. O pacote é instalado com o nome `@mcamdali/a11ylabel`,
-o nome que a API JavaScript abaixo importa. A publicação no registro do npm está nos planos; até lá,
-`npx @mcamdali/a11ylabel` não encontra o pacote.
 
 ## Uso
 

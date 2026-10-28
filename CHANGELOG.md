@@ -7,6 +7,10 @@ All notable changes to a11ylabel are listed here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- The package is now on the npm registry as `@mcamdali/a11ylabel`, and the README installs from it.
+
 ## [0.1.0] - 2026-10-28
 
 First release.
