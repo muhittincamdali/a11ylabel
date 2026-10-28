@@ -1,7 +1,26 @@
 // Blanking of comments and string literals, so that the rules' patterns never match inside them
 // while offsets and line numbers stay those of the file. Swift, Objective-C, JavaScript/TypeScript
 // and Dart all use // and /* */ comments; their string literals differ.
+import { Buffer } from 'node:buffer';
 import type { Language } from './sources.js';
+
+const SPACE = 0x20;
+const NEWLINE = 0x0a;
+
+/**
+ * Spaces in place of text[from, to), with its newlines kept. A regular expression replace of a
+ * long block comment held about 32 bytes per character until the scan ended; this is one byte.
+ */
+function blankRange(text: string, from: number, to: number): string {
+  // Searched in the range alone: a search of the text would read on to the next newline, past
+  // the end of every one of a million short literals.
+  const range = text.slice(from, to);
+  let newline = range.indexOf('\n');
+  if (newline === -1) return ' '.repeat(range.length);
+  const bytes = Buffer.alloc(range.length, SPACE);
+  for (; newline !== -1; newline = range.indexOf('\n', newline + 1)) bytes[newline] = NEWLINE;
+  return bytes.toString('latin1');
+}
 
 /** Index just past the closing `quote` of a literal whose content starts at `from`. */
 function literalEnd(text: string, from: number, quote: string, escapes: boolean): number {
@@ -60,7 +79,7 @@ export function blankCommentsAndStrings(text: string, language: Language): strin
   let copied = 0;
   const blank = (from: number, to: number) => {
     if (to <= from) return;
-    parts.push(text.slice(copied, from), text.slice(from, to).replace(/[^\n]/g, ' '));
+    parts.push(text.slice(copied, from), blankRange(text, from, to));
     copied = to;
   };
   let index = 0;
