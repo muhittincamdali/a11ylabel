@@ -4,7 +4,7 @@ import { Command, CommanderError, InvalidArgumentError, Option } from 'commander
 import { ProjectError } from '../detect/project.js';
 import type { Report } from '../model.js';
 import { FORMATS, type Format, render } from '../report/index.js';
-import { clean, REPOSITORY_URL } from '../report/text.js';
+import { clean, oneLine, REPOSITORY_URL } from '../report/text.js';
 import { LABEL_IDS, type LabelId } from '../rules/data.js';
 import { scan } from '../scan.js';
 import { VERSION } from '../version.js';
@@ -176,7 +176,8 @@ export async function run(argv: readonly string[], environment: CliEnvironment):
     }
     return failsOn(report, options.failOn) ? EXIT.findings : EXIT.ok;
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
+    // A message names the path it was given, and a newline in that path would end the line early.
+    const message = oneLine(error instanceof Error ? error.message : String(error));
     io.stderr(`a11ylabel: ${message}\n`);
     if (!(error instanceof ProjectError)) {
       io.stderr(

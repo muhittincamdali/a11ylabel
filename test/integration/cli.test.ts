@@ -152,6 +152,26 @@ describe('output', () => {
     expect(result.stdout).not.toContain('\u001b');
     expect(result.stdout).toContain('Bad�[31mName.swift');
   });
+
+  it('keeps a file name with a newline on the line of its finding', async () => {
+    const root = nativeApp(LIGHT, {
+      'Pa\n0 errors, all clear.swift': 'import SwiftUI\nlet f = Font.system(size: 9)\n',
+    });
+    for (const format of ['text', 'tty'] as const) {
+      const result = await a11ylabel([root, '--format', format]);
+      expect(result.stdout).toContain('App/Pa\uFFFD0 errors, all clear.swift:2');
+      // biome-ignore lint/suspicious/noControlCharactersInRegex: a colour code may open the line.
+      expect(result.stdout).not.toMatch(/^(\u001b\[\d+m)*0 errors, all clear/m);
+    }
+    const report = await json([root, '--json']);
+    expect(report.findings.map((item) => item.file)).toContain('App/Pa\n0 errors, all clear.swift');
+  });
+
+  it('prints an error about a path with a newline on one line', async () => {
+    const result = await a11ylabel(['no\nsuch folder']);
+    expect(result.code).toBe(EXIT.error);
+    expect(result.stderr).toMatch(/^a11ylabel: \/.*no\uFFFDsuch folder does not exist\.\n$/);
+  });
 });
 
 describe('--summary', () => {

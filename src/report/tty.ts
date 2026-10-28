@@ -1,6 +1,6 @@
 // The terminal report: the label table and the verdict first, then each finding with where it is
 // and what it means, then each fix once, lettered, with its steps and guide. render() has already
-// replaced the control characters in every string of the report.
+// replaced the control characters and line breaks in every string of the report (oneLine()).
 import type { FixAdvice, Finding, LabelStatus, Report } from '../model.js';
 import { labelById } from '../rules/data.js';
 import {
