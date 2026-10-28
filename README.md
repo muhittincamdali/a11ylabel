@@ -263,11 +263,12 @@ each toolchain:
 | React Native 0.88.1 app                                       | [light](docs/media/demo-react-native-light.svg) · [dark](docs/media/demo-react-native-dark.svg)                                                     |
 | `scripts/simulator-compare.sh` on the two SwiftUI apps        | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
-Measured on 28 October 2026 on a Mac (Apple silicon, M5 Max) with Node.js 26.12.1: three sets of 100
-runs of `node dist/cli/main.js --json` over the seven fixtures, Node.js start-up included. The
-medians of the three sets were 0.11, 0.11 and 0.11 seconds; the slowest run took 0.15 seconds. A
-generated SwiftUI project of 5,000 files (33.4 MB of Swift, 10,000 findings, 200 of them
-listed) took 1.06 to 1.19 seconds in three runs, with at most 230 MB (220 MiB) of memory.
+Measured on 28 October 2026 on a Mac (Apple silicon, M5 Max) with Node.js 26.12.1: five rounds
+of three sets of 100 runs of `node dist/cli/main.js --json` over the seven fixtures, Node.js
+start-up included. The fixtures were in the file cache (warm runs). The medians of the 15 sets
+were 0.11 to 0.12 seconds. Single runs vary more: the slowest run of a round took 0.15 to 0.38
+seconds. A generated SwiftUI project of 5,000 files (33.4 MB of Swift, 10,000 findings, 200 of
+them listed) took 1.05 to 1.11 seconds in three runs, with at most 230 MB (220 MiB) of memory.
 
 ## Status
 

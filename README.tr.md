@@ -276,10 +276,11 @@ Terminal kayıtları, her biri farklı bir araç zinciriyle yapılmış projeler
 | İki SwiftUI uygulamasında `scripts/simulator-compare.sh`      | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
 28 Ekim 2026'da Node.js 26.12.1 ile bir Mac'te (Apple silicon, M5 Max) ölçüldü: yedi fixture üzerinde
-`node dist/cli/main.js --json` komutunun 100'er çalıştırmalık üç seti, Node.js başlangıcı dahil. Üç
-setin medyanları 0,11, 0,11 ve 0,11 saniyeydi; en yavaş çalıştırma 0,15 saniye sürdü. 5.000 dosyalık
-(33,4 MB Swift, 10.000 bulgu, 200'ü listelenir) üretilmiş bir SwiftUI projesi üç çalıştırmada 1,06 ile 1,19 saniye
-sürdü; bellek kullanımı en çok 230 MB (220 MiB) oldu.
+`node dist/cli/main.js --json` komutunun 100'er çalıştırmalık üç setinden oluşan beş tur, Node.js
+başlangıcı dahil. Fixture'lar dosya önbelleğindeydi (sıcak çalıştırma). 15 setin medyanları 0,11 ile
+0,12 saniye arasındaydı. Tek tek çalıştırmalar daha çok değişir: her turun en yavaş çalıştırması 0,15 ile
+0,38 saniye sürdü. 5.000 dosyalık (33,4 MB Swift, 10.000 bulgu, 200'ü listelenir) üretilmiş bir SwiftUI
+projesi üç çalıştırmada 1,05 ile 1,11 saniye sürdü; bellek kullanımı en çok 230 MB (220 MiB) oldu.
 
 ## Durum
 
