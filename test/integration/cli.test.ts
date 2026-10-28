@@ -150,3 +150,25 @@ describe('output', () => {
     expect(result.stdout).toContain('Bad�[31mName.swift');
   });
 });
+
+describe('--summary', () => {
+  it('prints the label table and the verdict without the findings', async () => {
+    const result = await a11ylabel([LIGHT_APP, '--summary']);
+    expect(result.code).toBe(EXIT.findings);
+    expect(result.stdout).toContain('Dark Interface                     BLOCKED');
+    expect(result.stdout).toContain('1 label blocked by the code (Dark Interface)');
+    expect(result.stdout).toContain('Run without --summary for each finding and its fix.');
+    expect(result.stdout).not.toContain('A11Y201');
+    expect(result.stdout).not.toContain('How to fix');
+    const clean = await a11ylabel([CLEAN_APP, '--summary', '--format', 'text']);
+    expect(clean.stdout).not.toContain('Run without --summary');
+  });
+
+  it('is a usage error with the Markdown and JSON formats, which always list every finding', async () => {
+    for (const format of ['markdown', 'json']) {
+      const result = await a11ylabel([LIGHT_APP, '--summary', '--format', format]);
+      expect(result.code).toBe(EXIT.error);
+      expect(result.stderr).toContain(`--summary is for the tty and text formats`);
+    }
+  });
+});
