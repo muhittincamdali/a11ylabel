@@ -1,0 +1,5 @@
+fixture:    fixtures/flutter-tide
+built with: Xcode 27.1 (27A9275), SDK iphonesimulator27.1
+simulator:  iPhone 17, iOS 27.0, text size accessibility-extra-extra-extra-large, dark appearance
+Info.plist: UIUserInterfaceStyle = not set in the built app
+screenshot: .simulator-work/screenshots/flutter-tide-27.0-ax5-dark.png
