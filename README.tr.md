@@ -277,9 +277,9 @@ Terminal kayıtları, her biri farklı bir araç zinciriyle yapılmış projeler
 
 28 Ekim 2026'da Node.js 26.12.1 ile bir Mac'te (Apple silicon, M5 Max) ölçüldü: yedi fixture üzerinde
 `node dist/cli/main.js --json` komutunun 100'er çalıştırmalık üç seti, Node.js başlangıcı dahil. Üç
-setin medyanları 0,12, 0,12 ve 0,12 saniyeydi; en yavaş çalıştırma 0,43 saniye sürdü. 5.000 dosyalık
-(33,4 MB Swift, 10.000 bulgu) üretilmiş bir SwiftUI projesi üç çalıştırmada 1,36 ile 1,45 saniye
-sürdü; bellek kullanımı en çok 473 MB'tı.
+setin medyanları 0,11, 0,11 ve 0,11 saniyeydi; en yavaş çalıştırma 0,31 saniye sürdü. 5.000 dosyalık
+(33,4 MB Swift, 10.000 bulgu, 200'ü listelenir) üretilmiş bir SwiftUI projesi üç çalıştırmada 1,27 ile 1,43 saniye
+sürdü; bellek kullanımı en çok 297 MB'tı.
 
 ## Durum
 
@@ -316,6 +316,9 @@ sürdü; bellek kullanımı en çok 473 MB'tı.
   en çok 32 MB, kaynaklardan ise dosya başına 4 MB, toplamda 20.000 dosya ve 128 MB okur, ayrıca en
   çok 5.000 renk kümesi okur; dışarıda bıraktıkları raporun notlarında listelenir. Plist ve JSON
   dosyaları en çok 64 düzey iç içe olabilir.
+- **Sınırlı çıktı.** Bir rapor, bir kuralın bulgularından dosya başına en çok 20, proje başına en çok
+  100 tane listeler; yani en çok 1.700 bulgu. Bu sınırları aşan bulgular etiket sayılarında ve özette
+  yine sayılır; her kuraldan kaç bulgunun listelenmediğini bir not söyler.
 
 ## Dokümantasyon
 

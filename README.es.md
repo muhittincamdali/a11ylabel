@@ -272,9 +272,9 @@ con cada toolchain:
 
 Medido el 28 de octubre de 2026 en un Mac (Apple silicon, M5 Max) con Node.js 26.12.1: tres series de 100
 ejecuciones de `node dist/cli/main.js --json` sobre los siete fixtures, con el arranque de Node.js
-incluido. Las medianas de las tres series fueron 0,12, 0,12 y 0,12 segundos; la ejecución más lenta tardó
-0,43 segundos. Un proyecto SwiftUI generado de 5.000 archivos (33,4 MB de Swift, 10.000 hallazgos) tardó
-entre 1,36 y 1,45 segundos en tres ejecuciones, con un máximo de 473 MB de memoria.
+incluido. Las medianas de las tres series fueron 0,11, 0,11 y 0,11 segundos; la ejecución más lenta tardó
+0,31 segundos. Un proyecto SwiftUI generado de 5.000 archivos (33,4 MB de Swift, 10.000 hallazgos, 200 de ellos listados) tardó
+entre 1,27 y 1,43 segundos en tres ejecuciones, con un máximo de 297 MB de memoria.
 
 ## Estado
 
@@ -310,6 +310,9 @@ entre 1,36 y 1,45 segundos en tres ejecuciones, con un máximo de 473 MB de memo
   por archivo de proyecto y, de las fuentes, 4 MB por archivo, 20.000 archivos y 128 MB en total, y como
   máximo 5.000 conjuntos de colores; lo que deja fuera se indica en las notas del informe. Los plist y los
   archivos JSON pueden anidar 64 niveles.
+- **Salida acotada.** Un informe enumera como máximo 20 hallazgos de una regla por archivo y 100 por
+  proyecto, es decir, 1.700 como máximo. Los hallazgos por encima de esos límites siguen contando en los
+  recuentos de cada etiqueta y en el resumen, y una nota indica cuántos de cada regla se dejaron fuera.
 
 ## Documentación
 

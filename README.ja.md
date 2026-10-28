@@ -247,9 +247,9 @@ console.log(render(report, 'markdown'));
 | 2 つの SwiftUI アプリでの `scripts/simulator-compare.sh` | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
 2026 年 10 月 28 日に Mac（Apple silicon、M5 Max）で Node.js 26.12.1 を使って計測しました。7 つの fixture に対して
-`node dist/cli/main.js --json` を 100 回実行するセットを 3 回行い、Node.js の起動時間を含みます。3 セットの中央値は 0.12、0.12、0.12 秒、
-最も遅い実行は 0.43 秒でした。生成した 5,000 ファイル（Swift 33.4 MB、検出 10,000 件）の SwiftUI プロジェクトは、3 回の実行で 1.36〜1.45 秒、
-メモリは最大 473 MB でした。
+`node dist/cli/main.js --json` を 100 回実行するセットを 3 回行い、Node.js の起動時間を含みます。3 セットの中央値は 0.11、0.11、0.11 秒、
+最も遅い実行は 0.31 秒でした。生成した 5,000 ファイル（Swift 33.4 MB、検出 10,000 件、うち一覧は 200 件）の SwiftUI プロジェクトは、3 回の実行で 1.27〜1.43 秒、
+メモリは最大 297 MB でした。
 
 ## ステータス
 
@@ -281,6 +281,8 @@ console.log(render(report, 'markdown'));
 - **入力には上限があります。** プロジェクトは pull request から来ることがあるため、a11ylabel はプロジェクトファイルを 1 つにつき最大 32 MB、
   ソースは 1 ファイルにつき 4 MB、合計 20,000 ファイルと 128 MB まで、カラーセットは最大 5,000 個まで読み取ります。対象外にしたものは
   レポートの注記に一覧されます。plist と JSON ファイルは 64 階層までネストできます。
+- **出力には上限があります。** レポートに一覧する検出は、1 つのルールにつき 1 ファイルで最大 20 件、プロジェクト全体で最大 100 件、
+  合計で最大 1,700 件です。上限を超えた検出もラベルごとの件数とサマリーには数えられ、ルールごとに省いた件数が注記に示されます。
 
 ## ドキュメント
 

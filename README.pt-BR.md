@@ -266,9 +266,9 @@ As gravações de terminal vêm da CLI nos [fixtures](fixtures/README.md), proje
 
 Medido em 28 de outubro de 2026 em um Mac (Apple silicon, M5 Max) com Node.js 26.12.1: três séries de 100
 execuções de `node dist/cli/main.js --json` sobre os sete fixtures, incluindo a inicialização do Node.js. As
-medianas das três séries foram 0,12, 0,12 e 0,12 segundo; a execução mais lenta levou 0,43 segundo. Um projeto
-SwiftUI gerado com 5.000 arquivos (33,4 MB de Swift, 10.000 achados) levou de 1,36 a 1,45 segundo em três
-execuções, com no máximo 473 MB de memória.
+medianas das três séries foram 0,11, 0,11 e 0,11 segundo; a execução mais lenta levou 0,31 segundo. Um projeto
+SwiftUI gerado com 5.000 arquivos (33,4 MB de Swift, 10.000 achados, dos quais 200 listados) levou de 1,27 a 1,43 segundo em três
+execuções, com no máximo 297 MB de memória.
 
 ## Status
 
@@ -302,6 +302,9 @@ execuções, com no máximo 473 MB de memória.
   de projeto e, das fontes, 4 MB por arquivo, 20.000 arquivos e 128 MB no total, e no máximo 5.000 conjuntos
   de cores; o que fica de fora é listado nas notas do relatório. Plists e arquivos JSON podem ter até 64
   níveis de aninhamento.
+- **Saída limitada.** Um relatório lista no máximo 20 achados de uma regra por arquivo e 100 por projeto,
+  ou seja, 1.700 no máximo. Os achados acima desses limites continuam contados nos totais de cada rótulo e
+  no resumo, e uma nota informa quantos de cada regra ficaram de fora.
 
 ## Documentação
 

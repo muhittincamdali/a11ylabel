@@ -52,7 +52,8 @@ and keeps it from silently breaking afterwards.
 ## A record of what was checked
 
 The Markdown report names the a11ylabel version, the rule data version and the date its sources
-were read, the label table and every finding with its source. Kept with the code (for example
+were read, the label table and the findings with their sources: up to 20 of a rule per file and
+100 per project, with a note that counts the rest. Kept with the code (for example
 `accessibility.md` per release), it records what the code showed on that day.
 
 In the European Union, the [European Accessibility Act](https://eur-lex.europa.eu/eli/dir/2019/882/oj)
