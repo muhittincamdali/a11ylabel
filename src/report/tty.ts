@@ -4,6 +4,7 @@
 import type { FixAdvice, Finding, LabelStatus, Report } from '../model.js';
 import { labelById } from '../rules/data.js';
 import {
+  append,
   countsLine,
   countText,
   ECOSYSTEM_LABELS,
@@ -90,9 +91,9 @@ function header(report: Report, paint: Paint, width: number): string[] {
     `${paint('bold', name.slice(0, nameLength))}${name.slice(nameLength)}`,
     ...rest,
   ];
-  for (const target of project.targets) lines.push(...dim(targetLine(target)));
+  for (const target of project.targets) append(lines, dim(targetLine(target)));
   for (const version of project.versions) {
-    lines.push(...dim(`${version.name} ${version.version ?? '(unknown)'} (${version.source})`));
+    append(lines, dim(`${version.name} ${version.version ?? '(unknown)'} (${version.source})`));
   }
   return [...lines, ''];
 }
@@ -113,9 +114,10 @@ function labelTable(report: Report, paint: Paint, width: number): string[] {
     );
   }
   const style = VERDICT_STYLE[report.verdict.code];
-  lines.push(
-    '',
-    ...wrap(report.verdict.text, width).map((line) => paint('bold', paint(style, line))),
+  lines.push('');
+  append(
+    lines,
+    wrap(report.verdict.text, width).map((line) => paint('bold', paint(style, line))),
   );
   const signals = report.labels.flatMap((label) =>
     label.signals.map(
@@ -124,10 +126,9 @@ function labelTable(report: Report, paint: Paint, width: number): string[] {
     ),
   );
   if (signals.length > 0) {
-    lines.push(
-      ...wrap(`Already in the code: ${signals.join('; ')}`, width).map((line) =>
-        paint('green', line),
-      ),
+    append(
+      lines,
+      wrap(`Already in the code: ${signals.join('; ')}`, width).map((line) => paint('green', line)),
     );
   }
   return [...lines, ''];
@@ -144,9 +145,10 @@ function fixSection(
     fix.steps.forEach((step, index) => {
       const marker = `${index + 1}. `;
       const [first = '', ...rest] = wrap(step, width - LABEL_WIDTH - marker.length);
-      out.push(
-        `${INDENT}${marker}${first}`,
-        ...rest.map((line) => `${INDENT}${' '.repeat(marker.length)}${line}`),
+      out.push(`${INDENT}${marker}${first}`);
+      append(
+        out,
+        rest.map((line) => `${INDENT}${' '.repeat(marker.length)}${line}`),
       );
     });
     out.push(`${INDENT}${paint('dim', fix.guide)}`, '');
@@ -171,33 +173,38 @@ export function renderTty(report: Report, options: TtyOptions): string {
       `${item.rule} ${item.title} · ${labels}`,
       width - LABEL_WIDTH,
     );
-    out.push(
-      `${paint('bold', paint(style, label))}${paint('bold', titleFirst)}`,
-      ...titleRest.map((line) => `${INDENT}${paint('bold', line)}`),
-      `${INDENT}${paint('blue', `${item.file}${item.line ? `:${item.line}` : ''}`)}`,
-      ...body(item.message),
+    out.push(`${paint('bold', paint(style, label))}${paint('bold', titleFirst)}`);
+    append(
+      out,
+      titleRest.map((line) => `${INDENT}${paint('bold', line)}`),
     );
+    out.push(`${INDENT}${paint('blue', `${item.file}${item.line ? `:${item.line}` : ''}`)}`);
+    append(out, body(item.message));
     const fix = item.fix ? fixes.get(item.fix.id) : undefined;
-    if (fix) out.push(...body(`Fix: [${fix.letter}] ${fix.fix.title}`, 'bold'));
+    if (fix) append(out, body(`Fix: [${fix.letter}] ${fix.fix.title}`, 'bold'));
     out.push('');
   }
 
-  if (fixes.size > 0) out.push(...fixSection(fixes, paint, width));
+  if (fixes.size > 0) append(out, fixSection(fixes, paint, width));
   for (const note of report.notes) {
-    out.push(...wrap(`Note: ${note}`, width).map((line) => paint('dim', line)));
+    append(
+      out,
+      wrap(`Note: ${note}`, width).map((line) => paint('dim', line)),
+    );
   }
   if (options.summary && report.findings.length > 0) {
     out.push(paint('dim', 'Run without --summary for each finding and its fix.'));
   }
   if (report.notes.length) out.push('');
-  out.push(
-    paint('bold', countsLine(report)),
-    ...wrap(
+  out.push(paint('bold', countsLine(report)));
+  append(
+    out,
+    wrap(
       'a11ylabel reads code. Before claiming a label, Apple asks that people can complete every common task of the app with the feature on.',
       width,
     ).map((line) => paint('dim', line)),
-    paint('dim', `Criteria: ${OVERVIEW_URL}`),
   );
+  out.push(paint('dim', `Criteria: ${OVERVIEW_URL}`));
   if (report.findings.length === 0)
     out.push(paint('dim', `What is checked: ${REPOSITORY_URL}#what-a11ylabel-checks`));
   return `${out.join('\n')}\n`;

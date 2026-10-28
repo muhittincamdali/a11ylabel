@@ -4,6 +4,7 @@
 import type { FixAdvice, Finding, Report } from '../model.js';
 import { labelById } from '../rules/data.js';
 import {
+  append,
   countsLine,
   countText,
   ECOSYSTEM_LABELS,
@@ -61,13 +62,6 @@ const code = (text: string) => {
 };
 /** GitHub splits a table row on every `|` that has no backslash, inside code spans too. */
 const cell = (text: string) => text.replace(/\|/g, '\\|');
-/**
- * Adds `lines` to `out` one at a time: push(...lines) passes every line as an argument, and a
- * long list of them overflows the call stack.
- */
-function append(out: string[], lines: readonly string[]): void {
-  for (const line of lines) out.push(line);
-}
 const where = (item: Finding) => code(`${item.file}${item.line ? `:${item.line}` : ''}`);
 
 function fixLines(fix: FixAdvice): string[] {
