@@ -1,0 +1,19 @@
+{
+  "name": "a11ylabel",
+  "repository": "muhittincamdali/a11ylabel",
+  "tagline": {
+    "en": "Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."
+  },
+  "tags": {
+    "en": ["Nutrition Labels", "iOS", "Flutter", "React Native"]
+  },
+  "motif": "phone",
+  "buttons": ["start", "docs", "guides", "examples"],
+  "links": {
+    "docs": "https://muhittincamdali.github.io/a11ylabel/",
+    "guides": "docs/guides/",
+    "examples": "examples/"
+  },
+  "languages": ["en", "tr", "zh-CN", "ja", "ko", "es", "de", "fr", "pt-BR", "ru"],
+  "socialTheme": "dark"
+}
