@@ -2,7 +2,7 @@
 // already does something for a label (reads Reduce Motion, uses text styles, …).
 import type { AppModel } from '../collect/app.js';
 import type { SourceFile } from '../collect/sources.js';
-import { checkDarkInterface } from './dark-interface.js';
+import { darkInterfaceGroups } from './dark-interface.js';
 import { type LabelId, RULE_DATA } from './data.js';
 import type { Hit } from './hit.js';
 import { checkLabels } from './labels.js';
@@ -17,7 +17,7 @@ function* hitGroups(app: AppModel): Generator<readonly Hit[]> {
   const { root } = app.project;
   const reactNative = app.project.packages.get('react-native')?.version ?? null;
   const reader = sources.find(readsReduceMotion) ?? null;
-  yield checkDarkInterface(app);
+  yield* darkInterfaceGroups(app);
   yield checkContrastVariants(app.colors);
   yield checkFlutterMotionSetting(sources);
   for (const file of sources) {

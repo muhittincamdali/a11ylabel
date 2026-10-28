@@ -37,6 +37,21 @@ describe('blankCommentsAndStrings', () => {
     expect(code).toContain('bar(');
   });
 
+  it.each(['swift', 'objc', 'js', 'dart'] as const)(
+    'changes only the inside of comments and strings to spaces in %s',
+    (language) => {
+      const unit = 'a("s") /* c\n */ b(\'t\') // d\nr\'u\' `v\nw` ##"x"## e\n';
+      const text = unit.repeat(2_000);
+      const code = blankCommentsAndStrings(text, language);
+      expect(code).toHaveLength(text.length);
+      for (let index = 0; index < text.length; index++) {
+        if (code[index] === text[index]) continue;
+        expect(code[index]).toBe(' ');
+        expect(text[index]).not.toBe('\n');
+      }
+    },
+  );
+
   it('stops a single-line string at the end of the line', () => {
     const code = blankCommentsAndStrings('a = "open\nb = 1', 'swift');
     expect(code.split('\n')[1]).toBe('b = 1');

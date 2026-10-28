@@ -2,7 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { collectApp } from '../../src/collect/app.js';
 import { sourceFile } from '../../src/collect/sources.js';
 import { detectProject } from '../../src/detect/project.js';
-import { checkDarkInterface, darkInCode, expoStyle } from '../../src/rules/dark-interface.js';
+import {
+  checkDarkInterface,
+  darkInCode,
+  darkInterfaceGroups,
+  expoStyle,
+} from '../../src/rules/dark-interface.js';
 import { infoPlist, minimalPbxproj, tree } from '../helpers/tree.js';
 
 async function hits(files: Record<string, string>) {
@@ -170,6 +175,30 @@ struct Root: View {
     expect(
       darkInCode([sourceFile('/a/x.tsx', "Appearance.setColorScheme('dark')")]),
     ).not.toBeNull();
+  });
+
+  it('gives the hits of one file at a time', () => {
+    const light = 'v.preferredColorScheme(.light)\n';
+    const sources = [
+      sourceFile('/a/App/One.swift', light.repeat(3)),
+      sourceFile('/a/App/Two.swift', light.repeat(2)),
+      sourceFile('/a/lib/main.dart', 'MaterialApp(home: Home())'),
+    ];
+    const app = {
+      project: { root: '/a', expoConfig: null },
+      targets: [],
+      sources,
+      colors: [],
+    } as unknown as Parameters<typeof checkDarkInterface>[0];
+    const groups = [...darkInterfaceGroups(app)].map((group) => [
+      ...new Set(group.map((hit) => `${hit.rule} ${hit.file}`)),
+    ]);
+    expect(groups.filter((group) => group.length > 0)).toEqual([
+      ['A11Y203 /a/App/One.swift'],
+      ['A11Y203 /a/App/Two.swift'],
+      ['A11Y204 /a/lib/main.dart'],
+    ]);
+    expect(checkDarkInterface(app)).toHaveLength(6);
   });
 
   it('finds a MaterialApp without a dark theme', () => {

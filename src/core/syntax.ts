@@ -30,15 +30,14 @@ export function bracketPairs(code: string): ReadonlyMap<number, number> {
   return pairs;
 }
 
-const PAIRS = new WeakMap<SourceFile, ReadonlyMap<number, number>>();
+// The pairs of the last file asked about. The rules check one file at a time, so one entry is
+// enough; keeping the pairs of every file held a map entry per bracket pair of the whole project
+// until the scan ended, about 220 MB for 32 Swift files of 3.9 MB.
+let cached: { file: SourceFile; pairs: ReadonlyMap<number, number> } | null = null;
 
 function pairsOf(file: SourceFile): ReadonlyMap<number, number> {
-  let pairs = PAIRS.get(file);
-  if (!pairs) {
-    pairs = bracketPairs(file.code);
-    PAIRS.set(file, pairs);
-  }
-  return pairs;
+  if (cached?.file !== file) cached = { file, pairs: bracketPairs(file.code) };
+  return cached.pairs;
 }
 
 /** The offset of the bracket that closes the one at `open`, or null when it is never closed. */
