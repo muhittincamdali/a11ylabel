@@ -4,7 +4,8 @@ import { describe, expect, it } from 'vitest';
 import { blankCommentsAndStrings, sourceFile } from '../../src/collect/sources.js';
 import { checkLabels } from '../../src/rules/labels.js';
 import { checkLargerText } from '../../src/rules/larger-text.js';
-import { motionTriggers } from '../../src/rules/motion.js';
+import { appleVariant } from '../../src/rules/hit.js';
+import { checkMotion, motionTriggers } from '../../src/rules/motion.js';
 import { isFlutterPlugin } from '../../src/detect/project.js';
 
 const SIZE = 1_000_000;
@@ -66,5 +67,29 @@ describe('rules on hostile sources', () => {
     expect(
       timed(() => [checkLargerText(file), checkLabels(file), motionTriggers(file)]),
     ).toBeLessThan(LIMIT_MS);
+  });
+});
+
+describe('Reduced Motion on hostile sources', () => {
+  it('reports a file with a trigger on every line in linear time', () => {
+    // The audit's file: .repeatForever( on every line and no import. Choosing SwiftUI or UIKit
+    // for each of its hits read the whole file again: 11.6 s at 1.65 MB, 67 s at 3.9 MB.
+    const file = sourceFile('/app/App/Hostile.swift', repeat('.repeatForever(\n'));
+    let hits: ReturnType<typeof checkMotion> = [];
+    expect(timed(() => (hits = checkMotion([file], '/app')))).toBeLessThan(LIMIT_MS);
+    expect(hits.length).toBeGreaterThan(60_000);
+    expect(hits.every((hit) => hit.variant === 'uikit')).toBe(true);
+  });
+
+  it('looks for the import in a file of blank lines in linear time', () => {
+    const file = sourceFile('/app/App/Blank.swift', `${repeat('\n')}let a = 1\n`);
+    let variant = '';
+    expect(timed(() => (variant = appleVariant(file)))).toBeLessThan(LIMIT_MS);
+    expect(variant).toBe('uikit');
+  });
+
+  it('still reads an indented import after blank lines', () => {
+    expect(appleVariant(sourceFile('/a.swift', '// x\n\n\t  import SwiftUI\n'))).toBe('swiftui');
+    expect(appleVariant(sourceFile('/a.swift', 'import UIKit\n'))).toBe('uikit');
   });
 });
