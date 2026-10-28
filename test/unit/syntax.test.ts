@@ -20,6 +20,15 @@ describe('bracketPairs', () => {
     expect(bracketPairs('( [ )').get(0)).toBe(4);
   });
 
+  it('reads the right file when calls alternate between files', () => {
+    const one = sourceFile('/a.swift', 'f(a)');
+    const two = sourceFile('/b.swift', 'g(bb, c)');
+    for (let round = 0; round < 3; round++) {
+      expect(callArguments(one, 1)?.inner).toBe('a');
+      expect(callArguments(two, 1)?.inner).toBe('bb, c');
+    }
+  });
+
   it('ignores brackets in strings and comments', () => {
     const file = sourceFile('/a.swift', 'f(")", /* ( */ x)');
     expect(callArguments(file, 1)?.inner).toBe('" ",         x');

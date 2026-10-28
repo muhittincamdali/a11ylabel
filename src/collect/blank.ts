@@ -54,9 +54,14 @@ function literalAt(
  * characters, so offsets and line numbers stay the same.
  */
 export function blankCommentsAndStrings(text: string, language: Language): string {
-  const out = text.split('');
+  // The blanked file is built from slices of the text and the blanked ranges; splitting the text
+  // into an array of characters held eight bytes per character of every file being read.
+  const parts: string[] = [];
+  let copied = 0;
   const blank = (from: number, to: number) => {
-    for (let index = from; index < to; index++) if (out[index] !== '\n') out[index] = ' ';
+    if (to <= from) return;
+    parts.push(text.slice(copied, from), text.slice(from, to).replace(/[^\n]/g, ' '));
+    copied = to;
   };
   let index = 0;
   while (index < text.length) {
@@ -94,5 +99,6 @@ export function blankCommentsAndStrings(text: string, language: Language): strin
     blank(literal.start, end);
     index = end + (text.startsWith(literal.quote, end) ? literal.quote.length : 0);
   }
-  return out.join('');
+  parts.push(text.slice(copied));
+  return parts.join('');
 }
