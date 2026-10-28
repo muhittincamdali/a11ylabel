@@ -306,6 +306,7 @@ listed) took 1.06 to 1.19 seconds in three runs, with at most 230 MB (220 MiB) o
 - **Bounded output.** A report lists at most 20 findings of a rule per file and 100 per project,
   so 1,700 at most. The findings over these limits are still counted in the label counts and the
   summary, and a note says how many of each rule were left out.
+  Names and values from the project, such as target names, versions and Info.plist values, are cut to 200 characters.
 
 ## Documentation
 

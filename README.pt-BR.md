@@ -305,6 +305,7 @@ execuções, com no máximo 230 MB (220 MiB) de memória.
 - **Saída limitada.** Um relatório lista no máximo 20 achados de uma regra por arquivo e 100 por projeto,
   ou seja, 1.700 no máximo. Os achados acima desses limites continuam contados nos totais de cada rótulo e
   no resumo, e uma nota informa quantos de cada regra ficaram de fora.
+  Nomes e valores do projeto, como nomes de target, versões e valores do Info.plist, são cortados em 200 caracteres.
 
 ## Documentação
 

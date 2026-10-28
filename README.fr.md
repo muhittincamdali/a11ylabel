@@ -309,6 +309,7 @@ exécutions, avec au plus 230 Mo (220 Mio) de mémoire.
 - **Sortie bornée.** Un rapport liste au plus 20 constats d’une règle par fichier et 100 par projet, soit
   1 700 au plus. Les constats au-delà de ces limites restent comptés dans les totaux des labels et dans le
   résumé, et une note indique combien ont été laissés de côté pour chaque règle.
+  Les noms et valeurs du projet, comme les noms de cible, les versions et les valeurs d’Info.plist, sont coupés à 200 caractères.
 
 ## Documentation
 

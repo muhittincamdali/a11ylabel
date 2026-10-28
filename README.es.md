@@ -313,6 +313,7 @@ entre 1,06 y 1,19 segundos en tres ejecuciones, con un máximo de 230 MB (220 Mi
 - **Salida acotada.** Un informe enumera como máximo 20 hallazgos de una regla por archivo y 100 por
   proyecto, es decir, 1.700 como máximo. Los hallazgos por encima de esos límites siguen contando en los
   recuentos de cada etiqueta y en el resumen, y una nota indica cuántos de cada regla se dejaron fuera.
+  Los nombres y valores del proyecto, como nombres de target, versiones y valores de Info.plist, se recortan a 200 caracteres.
 
 ## Documentación
 

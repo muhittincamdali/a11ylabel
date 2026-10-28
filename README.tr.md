@@ -319,6 +319,7 @@ sürdü; bellek kullanımı en çok 230 MB (220 MiB) oldu.
 - **Sınırlı çıktı.** Bir rapor, bir kuralın bulgularından dosya başına en çok 20, proje başına en çok
   100 tane listeler; yani en çok 1.700 bulgu. Bu sınırları aşan bulgular etiket sayılarında ve özette
   yine sayılır; her kuraldan kaç bulgunun listelenmediğini bir not söyler.
+  Projeden gelen adlar ve değerler (hedef adları, sürümler, Info.plist değerleri gibi) 200 karakterde kesilir.
 
 ## Dokümantasyon
 

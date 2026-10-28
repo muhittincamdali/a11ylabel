@@ -312,6 +312,7 @@ brauchte in drei Läufen 1,06 bis 1,19 Sekunden, bei höchstens 230 MB (220 MiB)
 - **Begrenzte Ausgabe.** Ein Bericht führt höchstens 20 Befunde einer Regel pro Datei und 100 pro
   Projekt auf, also höchstens 1.700. Befunde über diesen Grenzen zählen weiter in den Zahlen der Labels
   und der Zusammenfassung, und ein Hinweis nennt, wie viele je Regel ausgelassen wurden.
+  Namen und Werte aus dem Projekt, etwa Target-Namen, Versionen und Info.plist-Werte, werden auf 200 Zeichen gekürzt.
 
 ## Dokumentation
 
