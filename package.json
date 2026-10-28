@@ -1,0 +1,73 @@
+{
+  "name": "@mcamdali/a11ylabel",
+  "version": "0.0.0",
+  "description": "Shows which App Store Accessibility Nutrition Labels a native iOS, Flutter or React Native/Expo app can claim, what in its code blocks each one, and how to fix it.",
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "accessibility-nutrition-labels",
+    "app-store",
+    "dynamic-type",
+    "dark-mode",
+    "reduce-motion",
+    "voiceover",
+    "european-accessibility-act",
+    "swiftui",
+    "uikit",
+    "flutter",
+    "react-native",
+    "expo",
+    "cli"
+  ],
+  "homepage": "https://github.com/muhittincamdali/a11ylabel#readme",
+  "bugs": "https://github.com/muhittincamdali/a11ylabel/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhittincamdali/a11ylabel.git"
+  },
+  "license": "MIT",
+  "author": "Muhittin Camdali",
+  "type": "module",
+  "bin": {
+    "a11ylabel": "dist/cli/main.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "rules/*.json",
+    "!dist/**/*.map"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "biome lint --error-on-warnings . && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "commander": "15.0.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.3",
+    "@types/node": "24.19.2",
+    "@vitest/coverage-v8": "5.0.5",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2",
+    "vitest": "5.0.5"
+  }
+}
