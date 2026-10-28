@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Finding, LabelSummary, Report } from '../../src/model.js';
 import { render } from '../../src/report/index.js';
-import { countText, wrap } from '../../src/report/text.js';
+import { clean, countText, wrap } from '../../src/report/text.js';
 import { LABEL_IDS, labelById, RULE_DATA } from '../../src/rules/data.js';
 import { labelStatus, scan, verdictOf } from '../../src/scan.js';
 import { CLEAN_VIEW, LIGHT, nativeApp } from '../helpers/projects.js';
@@ -171,6 +171,13 @@ describe('render', () => {
       // biome-ignore lint/suspicious/noControlCharactersInRegex: the point of the test.
       expect(render(hostile, format)).not.toMatch(/[\u0000-\u0008\u000b-\u001f\u007f-\u009f‮]/);
     }
+  });
+
+  it('replaces direction marks as well as bidi controls', () => {
+    expect(clean('a\u200Eb\u200Fc\u061Cd\u202Ee\u2066f')).toBe(
+      'a\uFFFDb\uFFFDc\uFFFDd\uFFFDe\uFFFDf',
+    );
+    expect(clean('tab\tand\nnewline stay')).toBe('tab\tand\nnewline stay');
   });
 
   it('counts and wraps', () => {
