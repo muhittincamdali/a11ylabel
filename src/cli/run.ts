@@ -33,6 +33,7 @@ interface Options {
   output?: string;
   failOn: FailOn;
   labels?: LabelId[];
+  summary?: boolean;
   color: boolean;
 }
 
@@ -59,6 +60,7 @@ Examples:
   a11ylabel --labels larger-text,dark-interface
                                        checks only the labels you claim, e.g. in CI
   a11ylabel --fail-on error            fails only when a label is blocked
+  a11ylabel --summary                  the label table without the findings
 
 The npm package is ${PACKAGE_NAME}; the command is a11ylabel:
   npx ${PACKAGE_NAME}              runs the latest version without installing it
@@ -103,6 +105,7 @@ function program(io: CliEnvironment): Command {
         .choices(FAIL_ON)
         .default('warning'),
     )
+    .option('-s, --summary', 'only the label table and the verdict (tty and text formats)')
     .option('--no-color', 'plain text even in a terminal')
     .addHelpText('after', HELP_AFTER)
     .showHelpAfterError('(add --help for usage)')
@@ -148,6 +151,12 @@ export async function run(argv: readonly string[], environment: CliEnvironment):
   const options = command.opts<Options>();
   if (options.json) options.format = 'json';
   const path = (command.processedArgs[0] as string | undefined) ?? '.';
+  if (options.summary && options.format !== 'tty' && options.format !== 'text') {
+    io.stderr(
+      `a11ylabel: --summary is for the tty and text formats; the ${options.format} report always has every finding.\n`,
+    );
+    return EXIT.error;
+  }
   try {
     const report = await scan(
       resolve(io.cwd, path),
@@ -155,7 +164,11 @@ export async function run(argv: readonly string[], environment: CliEnvironment):
     );
     report.project.path = path;
     const width = io.stdoutIsTty && io.columns ? Math.min(io.columns, 100) : 100;
-    const output = render(report, options.format, { color: useColor(options, io), width });
+    const output = render(report, options.format, {
+      color: useColor(options, io),
+      width,
+      summary: options.summary === true,
+    });
     if (options.output) {
       await writeFile(resolve(io.cwd, options.output), output);
       io.stderr(`Wrote ${options.output}: ${report.verdict.text}\n`);

@@ -18,6 +18,8 @@ export interface TtyOptions {
   color: boolean;
   /** Total width to wrap to (default 100, at least 60). */
   width?: number;
+  /** Only the label table, the verdict and the counts: no findings or fixes. */
+  summary?: boolean;
 }
 
 type Style = 'bold' | 'dim' | 'red' | 'yellow' | 'cyan' | 'green' | 'blue';
@@ -157,10 +159,11 @@ export function renderTty(report: Report, options: TtyOptions): string {
   const width = Math.max(60, options.width ?? 100);
   const body = (text: string, style?: Style) =>
     wrap(text, width - LABEL_WIDTH).map((line) => `${INDENT}${style ? paint(style, line) : line}`);
-  const fixes = letterFixes(report.findings);
+  const fixes = letterFixes(options.summary ? [] : report.findings);
   const out = [...header(report, paint, width), ...labelTable(report, paint, width)];
+  const findings = options.summary ? [] : report.findings;
 
-  for (const item of report.findings) {
+  for (const item of findings) {
     const label = item.severity.toUpperCase().padEnd(LABEL_WIDTH);
     const style = SEVERITY_STYLE[item.severity];
     const labels = item.labels.map((id) => labelById(id).name).join(', ');
@@ -182,6 +185,9 @@ export function renderTty(report: Report, options: TtyOptions): string {
   if (fixes.size > 0) out.push(...fixSection(fixes, paint, width));
   for (const note of report.notes) {
     out.push(...wrap(`Note: ${note}`, width).map((line) => paint('dim', line)));
+  }
+  if (options.summary && report.findings.length > 0) {
+    out.push(paint('dim', 'Run without --summary for each finding and its fix.'));
   }
   if (report.notes.length) out.push('');
   out.push(
