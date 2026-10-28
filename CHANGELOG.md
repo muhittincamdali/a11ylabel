@@ -38,6 +38,9 @@ First release.
   blocked SwiftUI app stays light with capped text and the fixed one turns dark with large text.
 - Guides for claiming labels and for each label group, an API reference site, and examples for
   JavaScript, `jq` and GitHub Actions.
+- Limits on what a report lists: at most 20 findings of a rule per file and 100 per project. The
+  label counts and the summary include the findings over these limits, and a note says how many of
+  each rule were left out.
 
 [Unreleased]: https://github.com/muhittincamdali/a11ylabel/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0

@@ -269,9 +269,9 @@ chaque toolchain :
 
 Mesuré le 28 octobre 2026 sur un Mac (Apple silicon, M5 Max) avec Node.js 26.12.1 : trois séries de 100
 exécutions de `node dist/cli/main.js --json` sur les sept fixtures, démarrage de Node.js inclus. Les médianes
-des trois séries étaient de 0,12, 0,12 et 0,12 seconde ; l’exécution la plus lente a pris 0,43 seconde. Un projet
-SwiftUI généré de 5 000 fichiers (33,4 Mo de Swift, 10 000 constats) a pris de 1,36 à 1,45 seconde en trois
-exécutions, avec au plus 473 Mo de mémoire.
+des trois séries étaient de 0,11, 0,11 et 0,11 seconde ; l’exécution la plus lente a pris 0,31 seconde. Un projet
+SwiftUI généré de 5 000 fichiers (33,4 Mo de Swift, 10 000 constats, dont 200 listés) a pris de 1,27 à 1,43 seconde en trois
+exécutions, avec au plus 297 Mo de mémoire.
 
 ## État d’avancement
 
@@ -306,6 +306,9 @@ exécutions, avec au plus 473 Mo de mémoire.
   projet et, pour les sources, 4 Mo par fichier, 20 000 fichiers et 128 Mo au total, et au plus 5 000 jeux de
   couleurs ; ce qu’il laisse de côté figure dans les notes du rapport. Les plists et les fichiers JSON peuvent
   être imbriqués sur 64 niveaux.
+- **Sortie bornée.** Un rapport liste au plus 20 constats d’une règle par fichier et 100 par projet, soit
+  1 700 au plus. Les constats au-delà de ces limites restent comptés dans les totaux des labels et dans le
+  résumé, et une note indique combien ont été laissés de côté pour chaque règle.
 
 ## Documentation
 

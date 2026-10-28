@@ -247,9 +247,9 @@ console.log(render(report, 'markdown'));
 | 두 SwiftUI 앱에서의 `scripts/simulator-compare.sh` | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
 2026년 10월 28일 Mac(Apple silicon, M5 Max)에서 Node.js 26.12.1로 측정했습니다. 일곱 개 fixture에 대해
-`node dist/cli/main.js --json`을 100회 실행하는 세트를 세 번 진행했으며 Node.js 시작 시간이 포함됩니다. 세 세트의 중앙값은 0.12초, 0.12초, 0.12초였고,
-가장 느린 실행은 0.43초였습니다. 생성한 5,000개 파일(Swift 33.4 MB, 발견 사항 10,000건)의 SwiftUI 프로젝트는 세 번 실행에서 1.36~1.45초가 걸렸고,
-메모리는 최대 473 MB였습니다.
+`node dist/cli/main.js --json`을 100회 실행하는 세트를 세 번 진행했으며 Node.js 시작 시간이 포함됩니다. 세 세트의 중앙값은 0.11초, 0.11초, 0.11초였고,
+가장 느린 실행은 0.31초였습니다. 생성한 5,000개 파일(Swift 33.4 MB, 발견 사항 10,000건, 그중 200건 나열)의 SwiftUI 프로젝트는 세 번 실행에서 1.27~1.43초가 걸렸고,
+메모리는 최대 297 MB였습니다.
 
 ## 상태
 
@@ -281,6 +281,8 @@ console.log(render(report, 'markdown'));
 - **입력에는 한도가 있습니다.** 프로젝트는 pull request에서 올 수 있으므로 a11ylabel은 프로젝트 파일은 하나당 최대 32 MB, 소스는 파일당 4 MB,
   전체 20,000개 파일과 128 MB까지, 컬러 세트는 최대 5,000개까지 읽습니다. 제외된 항목은 보고서의 notes에 나열됩니다.
   plist와 JSON 파일은 64단계까지 중첩될 수 있습니다.
+- **출력에는 한도가 있습니다.** 보고서는 규칙 하나당 파일마다 최대 20건, 프로젝트 전체에서 최대 100건, 합계 최대 1,700건의
+  발견 사항을 나열합니다. 한도를 넘은 발견 사항도 레이블별 개수와 요약에는 포함되며, 규칙별로 생략된 개수가 notes에 표시됩니다.
 
 ## 문서
 

@@ -245,8 +245,8 @@ console.log(render(report, 'markdown'));
 | 在两个 SwiftUI 应用上运行 `scripts/simulator-compare.sh` | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
 2026 年 10 月 28 日在 Mac（Apple silicon，M5 Max）上使用 Node.js 26.12.1 测得：对七个 fixture 运行 `node dist/cli/main.js --json`，
-三组、每组 100 次，包含 Node.js 启动时间。三组的中位数分别为 0.12、0.12 和 0.12 秒；最慢的一次耗时 0.43 秒。一个生成的包含
-5,000 个文件（33.4 MB 的 Swift，10,000 个发现）的 SwiftUI 项目，三次运行耗时 1.36 至 1.45 秒，内存最多 473 MB。
+三组、每组 100 次，包含 Node.js 启动时间。三组的中位数分别为 0.11、0.11 和 0.11 秒；最慢的一次耗时 0.31 秒。一个生成的包含
+5,000 个文件（33.4 MB 的 Swift，10,000 个发现，其中列出 200 个）的 SwiftUI 项目，三次运行耗时 1.27 至 1.43 秒，内存最多 297 MB。
 
 ## 状态
 
@@ -274,6 +274,8 @@ console.log(render(report, 'markdown'));
 - **Expo 配置按文本处理。** `app.config.js` 和 `app.config.ts` 不会被执行，因此通过变量或 config plugin 设置的 `userInterfaceStyle` 看不到。
 - **输入有上限。** 项目可能来自 pull request，因此 a11ylabel 对每个项目文件最多读取 32 MB，对源码则每个文件最多 4 MB、总共最多 20,000
   个文件和 128 MB，并且最多读取 5,000 个颜色集；被排除的内容会列在报告的注释中。plist 和 JSON 文件最多可嵌套 64 层。
+- **输出有上限。** 报告中每条规则在每个文件最多列出 20 个发现，在整个项目最多列出 100 个，总计最多 1,700 个。超出上限的发现仍计入各标签的数量和摘要，
+  并由一条注释说明每条规则有多少个未列出。
 
 ## 文档
 
