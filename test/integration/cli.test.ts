@@ -136,8 +136,11 @@ describe('output', () => {
     expect(help.code).toBe(EXIT.ok);
     expect(help.stdout).toContain('Exit codes:');
     expect(help.stdout).toContain('voiceover, voice-control, larger-text, dark-interface');
-    expect(help.stdout).toContain(`npx ${PACKAGE_NAME}`);
-    expect(help.stdout).toContain(RELEASE_TARBALL_URL);
+    expect(help.stdout).toContain(`npx ${RELEASE_TARBALL_URL}`);
+    // The package is not on the npm registry yet: help must not tell people to install it from there.
+    expect(help.stdout).not.toContain(`npm i -g ${PACKAGE_NAME}`);
+    expect(help.stdout).not.toContain(`npx ${PACKAGE_NAME}`);
+    expect(help.stdout).toContain('npm registry is planned');
     expect(help.stdout).toContain('--labels <ids>');
   });
 

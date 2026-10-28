@@ -62,11 +62,10 @@ Examples:
   a11ylabel --fail-on error            fails only when a label is blocked
   a11ylabel --summary                  the label table without the findings
 
-The npm package is ${PACKAGE_NAME}; the command is a11ylabel:
-  npx ${PACKAGE_NAME}              runs the latest version without installing it
-  npm i -g ${PACKAGE_NAME}         installs the a11ylabel command
+Each GitHub release carries the package (${PACKAGE_NAME}) as a tarball; the command is a11ylabel:
   npx ${RELEASE_TARBALL_URL}
-                                       runs this release from GitHub
+                                       runs this release without installing it
+Publishing to the npm registry is planned; ${PACKAGE_NAME} is not there yet.
 
 Docs: ${REPOSITORY_URL}#readme`;
 
