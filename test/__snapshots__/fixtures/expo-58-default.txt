@@ -1,0 +1,28 @@
+a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+
+expo-58-default · Expo · fixtures/expo-58-default
+react-native 0.88.0 (declared)
+expo 58.0.20 (declared)
+expo-router 58.0.27 (declared)
+react-native-reanimated 4.7.1 (declared)
+
+Label                              Status            Findings
+VoiceOver                          no blocker found
+Voice Control                      no blocker found
+Larger Text                        no blocker found
+Dark Interface                     no blocker found
+Differentiate Without Color Alone  check by hand
+Sufficient Contrast                check by hand
+Reduced Motion                     no blocker found
+Captions                           check by hand
+Audio Descriptions                 check by hand
+
+No blockers found in the code for VoiceOver, Voice Control, Larger Text, Dark Interface, Reduced
+Motion; 4 more to check by hand
+Already in the code: Dark Interface: Reads the colour scheme (src/app/_layout.tsx and 4 more)
+
+0 errors, 0 warnings, 0 info
+a11ylabel reads code. Before claiming a label, Apple asks that people can complete every common task
+of the app with the feature on.
+Criteria: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels
+What is checked: https://github.com/muhittincamdali/a11ylabel#what-a11ylabel-checks

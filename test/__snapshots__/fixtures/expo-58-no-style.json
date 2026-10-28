@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "a11ylabel",
+    "version": "0.0.0"
+  },
+  "rules": {
+    "ruleSet": "nutrition-labels",
+    "dataVersion": "2026.10.28",
+    "read": "2026-10-28"
+  },
+  "project": {
+    "path": "fixtures/expo-58-no-style",
+    "name": "expo-58-no-style",
+    "ecosystem": "expo",
+    "versions": [
+      {
+        "name": "react-native",
+        "version": "0.88.0",
+        "source": "declared"
+      },
+      {
+        "name": "expo",
+        "version": "58.0.20",
+        "source": "declared"
+      },
+      {
+        "name": "expo-router",
+        "version": "58.0.27",
+        "source": "declared"
+      },
+      {
+        "name": "react-native-reanimated",
+        "version": "4.7.1",
+        "source": "declared"
+      }
+    ],
+    "targets": []
+  },
+  "scope": [
+    "voiceover",
+    "voice-control",
+    "larger-text",
+    "dark-interface",
+    "differentiate-without-color",
+    "sufficient-contrast",
+    "reduced-motion",
+    "captions",
+    "audio-descriptions"
+  ],
+  "verdict": {
+    "code": "blocked",
+    "text": "1 label blocked by the code (Dark Interface); no blocker found for 4"
+  },
+  "labels": [
+    {
+      "id": "voiceover",
+      "name": "VoiceOver",
+      "status": "no-blocker",
+      "coverage": "partial",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Icon-only buttons without an accessibility label, and labels that name the control type.",
+      "manual": "Complete every common task with VoiceOver alone: reading order, grouping, values and states, custom actions, focus in modal views."
+    },
+    {
+      "id": "voice-control",
+      "name": "Voice Control",
+      "status": "no-blocker",
+      "coverage": "partial",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Icon-only buttons without a name Voice Control can show and say.",
+      "manual": "Say \"Show names\" and \"Show numbers\" on every screen of the common tasks; reach swipe and long-press actions by voice; dictate into every text field."
+    },
+    {
+      "id": "larger-text",
+      "name": "Larger Text",
+      "status": "no-blocker",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Text scaling turned off or capped below 200% (for the whole app or one view), and fixed font sizes that Dynamic Type does not scale.",
+      "manual": "Use the common tasks at the largest accessibility text size: no overlapping text, no truncation that hides information."
+    },
+    {
+      "id": "dark-interface",
+      "name": "Dark Interface",
+      "status": "blocked",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria",
+      "counts": {
+        "errors": 1,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [
+        {
+          "text": "Reads the colour scheme",
+          "file": "src/app/_layout.tsx",
+          "files": 5
+        }
+      ],
+      "checked": "A light appearance forced in Info.plist, the build settings, the Expo config or code; a Flutter app without a dark theme; asset colours without a dark variant.",
+      "manual": "Use the common tasks in Dark Mode: no screen, sheet, web view or launch screen that flashes bright."
+    },
+    {
+      "id": "differentiate-without-color",
+      "name": "Differentiate Without Color Alone",
+      "status": "manual",
+      "coverage": "manual",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/differentiate-without-color-alone-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Nothing: whether colour is the only difference is a question of design, not of code a11ylabel can read.",
+      "manual": "Look for status, charts and selections told apart by colour alone; add a shape, symbol or text."
+    },
+    {
+      "id": "sufficient-contrast",
+      "name": "Sufficient Contrast",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/sufficient-contrast-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Asset catalog colours without a high contrast variant for the Increase Contrast setting.",
+      "manual": "Measure text and controls against their background: about 4.5:1 for most text, by default or with Increase Contrast."
+    },
+    {
+      "id": "reduced-motion",
+      "name": "Reduced Motion",
+      "status": "no-blocker",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Repeating, parallax, 3D and auto-playing animations in an app that never reads the Reduce Motion setting, or in files that do not.",
+      "manual": "Turn on Reduce Motion and use the common tasks: no spinning, scaling, parallax or auto-advancing motion left."
+    },
+    {
+      "id": "captions",
+      "name": "Captions",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/captions-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video and audio of the common tasks have captions or transcripts, and that people can tell which media is captioned."
+    },
+    {
+      "id": "audio-descriptions",
+      "name": "Audio Descriptions",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/audio-descriptions-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video of the common tasks offers an audio-described track."
+    }
+  ],
+  "findings": [
+    {
+      "rule": "A11Y201",
+      "labels": [
+        "dark-interface"
+      ],
+      "severity": "error",
+      "title": "Light appearance forced for the whole app",
+      "message": "app.json does not set userInterfaceStyle, so Expo uses light: the app ignores Dark Mode and nothing in the code turns it dark.",
+      "file": "app.json",
+      "line": null,
+      "target": null,
+      "fix": {
+        "id": "A11Y201/expo-config",
+        "title": "Set userInterfaceStyle to automatic",
+        "steps": [
+          "In app.json (or app.config), set \"userInterfaceStyle\": \"automatic\"; Expo uses light when the key is missing.",
+          "On Android, install expo-system-ui for the setting to apply there too.",
+          "Read the scheme with useColorScheme() and give every screen dark colours."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#expo"
+      },
+      "sources": [
+        {
+          "title": "UIUserInterfaceStyle (Information Property List)",
+          "url": "https://developer.apple.com/documentation/bundleresources/information-property-list/uiuserinterfacestyle"
+        },
+        {
+          "title": "Dark Interface evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria"
+        },
+        {
+          "title": "Expo app config: userInterfaceStyle",
+          "url": "https://docs.expo.dev/versions/latest/config/app/"
+        }
+      ]
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 1,
+    "warnings": 0,
+    "info": 0
+  }
+}
