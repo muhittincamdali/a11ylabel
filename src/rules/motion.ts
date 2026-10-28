@@ -152,23 +152,24 @@ export function checkMotion(files: readonly SourceFile[], root: string): Hit[] {
   const reader = files.find(readsReduceMotion) ?? null;
   const hits: Hit[] = [];
   for (const file of files) {
-    const fileReads = readsReduceMotion(file);
-    for (const trigger of motionTriggers(file)) {
-      if (fileReads) continue;
+    const triggers = readsReduceMotion(file) ? [] : motionTriggers(file);
+    // Once per file: appleVariant reads the whole file, and a file can hold a trigger per line.
+    const variant = variantOf(file);
+    for (const trigger of triggers) {
       hits.push(
         reader
           ? hitAt(
               file,
               trigger.offset,
               'A11Y302',
-              variantOf(file),
+              variant,
               `${trigger.what}, in a file that does not read Reduce Motion (the app reads it in ${shownPath(reader.path, root)}).`,
             )
           : hitAt(
               file,
               trigger.offset,
               'A11Y301',
-              variantOf(file),
+              variant,
               `${trigger.what}, and nothing in the app reads Reduce Motion.`,
             ),
       );

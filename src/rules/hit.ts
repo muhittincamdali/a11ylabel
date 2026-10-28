@@ -55,9 +55,13 @@ export function stringAt(file: SourceFile, from: number, to = file.code.length):
   return null;
 }
 
-/** SwiftUI or UIKit, by what the Swift file imports; Objective-C is always UIKit. */
+/**
+ * SwiftUI or UIKit, by what the Swift file imports; Objective-C is always UIKit. It reads the
+ * whole file, so a check calls it once per file. Only spaces and tabs may come before `import`:
+ * with \s* every line start of a run of blank lines would scan the rest of the run again.
+ */
 export function appleVariant(file: SourceFile): 'swiftui' | 'uikit' {
-  return file.language === 'swift' && /^\s*import\s+SwiftUI\b/m.test(file.code)
+  return file.language === 'swift' && /^[ \t]*import\s+SwiftUI\b/m.test(file.code)
     ? 'swiftui'
     : 'uikit';
 }
