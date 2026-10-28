@@ -3,6 +3,7 @@
 // text for VoiceOver to read or for Voice Control to show and match; the fix is a short label
 // that names the action.
 import type { SourceFile } from '../collect/sources.js';
+import { inAnyRange, type OffsetRange } from '../core/ranges.js';
 import {
   callArguments,
   chainedModifiers,
@@ -208,40 +209,16 @@ function checkReactNative(file: SourceFile): Hit[] {
 
 // Flutter -----------------------------------------------------------------------------------
 
-/**
- * The ranges of the file inside a Semantics(label: …) call, merged and sorted, so that whether
- * an offset is covered is a binary search, not a scan of every wrapper.
- */
-function semanticsWithLabel(file: SourceFile): [number, number][] {
-  const spans: [number, number][] = [];
+/** Whether an offset is inside a Semantics(label: …) call of the file. */
+function inLabelledSemantics(file: SourceFile): (offset: number) => boolean {
+  const ranges: OffsetRange[] = [];
   for (const match of matches(file, /\bSemantics(?=\s*\()/g)) {
     const args = callArguments(file, match.index + match[0].length);
     if (args && topLevelArguments(file, args).some((arg) => arg.label === 'label')) {
-      spans.push([args.open, args.close]);
+      ranges.push({ start: args.open + 1, end: args.close - 1 });
     }
   }
-  spans.sort((left, right) => left[0] - right[0]);
-  const merged: [number, number][] = [];
-  for (const span of spans) {
-    const last = merged.at(-1);
-    if (last && span[0] <= last[1]) last[1] = Math.max(last[1], span[1]);
-    else merged.push([...span]);
-  }
-  return merged;
-}
-
-/** Whether `offset` falls strictly inside one of the merged, sorted `ranges`. */
-export function covered(ranges: readonly [number, number][], offset: number): boolean {
-  let low = 0;
-  let high = ranges.length - 1;
-  while (low <= high) {
-    const middle = (low + high) >> 1;
-    const [start, end] = ranges[middle] as [number, number];
-    if (offset <= start) high = middle - 1;
-    else if (offset >= end) low = middle + 1;
-    else return true;
-  }
-  return false;
+  return inAnyRange(ranges);
 }
 
 const FLUTTER_BUTTONS =
@@ -249,11 +226,11 @@ const FLUTTER_BUTTONS =
 
 function checkFlutter(file: SourceFile): Hit[] {
   const hits: Hit[] = [];
-  const labelled = semanticsWithLabel(file);
+  const labelled = inLabelledSemantics(file);
   for (const match of matches(file, FLUTTER_BUTTONS)) {
     const args = callArguments(file, match.index + match[0].length);
     if (!args) continue;
-    if (covered(labelled, match.index)) continue;
+    if (labelled(match.index)) continue;
     const name = (match[1] as string).replace(/\s+/g, '');
     const has = (label: string) => hasArgument(args.inner, label);
     if (has('tooltip') || has('semanticLabel') || has('semanticsLabel')) continue;

@@ -1,7 +1,8 @@
-// Whether an offset lies in any of a file's app-wide ranges (the builder of a Flutter app, the
-// defaultProps of React Native text). A file from a pull request can hold a hundred thousand of
-// these ranges and as many hits to look up; checking every range for every hit took 5.6 s for one
-// 3.6 MB Dart file, so the ranges are merged and sorted once and each lookup is a binary search.
+// Whether an offset lies in any of a file's ranges: the builder of a Flutter app, the
+// defaultProps of React Native text, a Semantics call with a label. A file from a pull request
+// can hold a hundred thousand of these ranges and as many hits to look up; checking every range
+// for every hit took 5.6 s for one 3.6 MB Dart file, so the ranges are merged and sorted once and
+// each lookup is a binary search.
 
 /** A range of offsets that includes both `start` and `end`. */
 export interface OffsetRange {
