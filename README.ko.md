@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@6ff027cd7ebc2a47513ef24c6774454bdd417336 status=reviewed -->
+<!-- i18n-source: README.md@ffa00e221e64ba2224b648e1bfb266c09dee9691 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -63,15 +63,13 @@ fixture</a>입니다(<code>npm run demo</code>).</sub>
 brew install muhittincamdali/tap/a11ylabel
 ```
 
-또는 [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0)에서 npm으로 설치합니다.
-이 경우 [Node.js](https://nodejs.org/) 22.12 이상이 필요합니다(`node --version`으로 확인할 수 있습니다):
+또는 npm으로 설치합니다. 이 경우 [Node.js](https://nodejs.org/) 22.12 이상이 필요합니다(`node --version`으로 확인할 수 있습니다):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
+npm i -g @mcamdali/a11ylabel
 ```
 
-패키지는 아직 npm registry에 없습니다. `@mcamdali/a11ylabel`이라는 이름으로 게시할 예정입니다. 두 명령 모두
-같은 release tarball을 설치합니다.
+설치하지 않고 실행하려면 `npx @mcamdali/a11ylabel`을 사용합니다.
 
 **2. 앱 폴더에서 터미널을 엽니다.** `.xcodeproj`, `pubspec.yaml`, `package.json`이 있는 폴더입니다:
 
@@ -149,16 +147,17 @@ warning은 "review"로 만듭니다. info 발견 사항은 레이블 상태를 �
 
 ## 설치
 
-빠른 시작의 명령은 GitHub release에서 `a11ylabel` 명령을 설치합니다. 각
-[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases)에는 패키지가 `a11ylabel-<version>.tgz`로,
-`SHA256SUMS` 파일과 함께 들어 있습니다. 프로젝트에서 release를 고정하려면:
+빠른 시작의 명령은 npm registry에서 `a11ylabel` 명령을 설치합니다. 프로젝트에서 버전을 고정하려면:
+
+```sh
+npm install --save-dev @mcamdali/a11ylabel
+```
+
+이후 `npx a11ylabel`은 그 사본을 실행합니다. 패키지는 `@mcamdali/a11ylabel`이라는 이름으로 설치되며, 아래 JavaScript API가 import하는 이름이 바로 이것입니다. 각 [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases)에는 패키지가 `a11ylabel-<version>.tgz`로 `SHA256SUMS` 파일과 함께 들어 있어, 특정 release를 고정하거나 검증할 수 있습니다:
 
 ```sh
 npm install --save-dev https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
 ```
-
-이후 `npx a11ylabel`은 그 사본을 실행합니다. 패키지는 `@mcamdali/a11ylabel`이라는 이름으로 설치되며, 아래 JavaScript API가
-import하는 이름이 바로 이것입니다. npm registry 게시는 예정되어 있으며, 그때까지는 `npx @mcamdali/a11ylabel`로 패키지를 찾을 수 없습니다.
 
 ## 사용법
 

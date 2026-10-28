@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@6ff027cd7ebc2a47513ef24c6774454bdd417336 status=reviewed -->
+<!-- i18n-source: README.md@ffa00e221e64ba2224b648e1bfb266c09dee9691 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -71,15 +71,13 @@ para las pruebas (<code>npm run demo</code>).</sub>
 brew install muhittincamdali/tap/a11ylabel
 ```
 
-O con npm desde la [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0),
-que requiere [Node.js](https://nodejs.org/) 22.12 o posterior (`node --version` lo muestra):
+O con npm, que requiere [Node.js](https://nodejs.org/) 22.12 o posterior (`node --version` lo muestra):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
+npm i -g @mcamdali/a11ylabel
 ```
 
-El paquete todavía no está en el registro de npm; está previsto publicarlo allí como
-`@mcamdali/a11ylabel`. Ambos comandos instalan el mismo tarball de la release.
+Para ejecutarlo sin instalar, usa `npx @mcamdali/a11ylabel`.
 
 **2. Abre una terminal en la carpeta de tu app**, la que contiene el `.xcodeproj`, `pubspec.yaml` o
 `package.json`:
@@ -164,16 +162,17 @@ inicio; las grabaciones están en [docs/media/simulator](docs/media/simulator). 
 ## Instalación
 
 Los comandos del Inicio rápido instalan el comando `a11ylabel` desde la GitHub release. Cada
-[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) incluye el paquete como
-`a11ylabel-<version>.tgz` junto con un archivo `SHA256SUMS`. Para fijar una release en un proyecto:
+Los comandos del Inicio rápido instalan el comando `a11ylabel` desde el registro de npm. Para fijar una versión en un proyecto:
+
+```sh
+npm install --save-dev @mcamdali/a11ylabel
+```
+
+`npx a11ylabel` ejecuta entonces esa copia. El paquete se instala con el nombre `@mcamdali/a11ylabel`, el nombre que importa la API de JavaScript de más abajo. Cada [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) incluye además el paquete como `a11ylabel-<version>.tgz` junto con un archivo `SHA256SUMS`, para fijar o verificar una release concreta:
 
 ```sh
 npm install --save-dev https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
 ```
-
-`npx a11ylabel` ejecuta entonces esa copia. El paquete se instala con el nombre `@mcamdali/a11ylabel`,
-el nombre que importa la API de JavaScript de más abajo. Publicarlo en el registro de npm está previsto;
-hasta entonces, `npx @mcamdali/a11ylabel` no encuentra el paquete.
 
 ## Uso
 

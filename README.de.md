@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@6ff027cd7ebc2a47513ef24c6774454bdd417336 status=reviewed -->
+<!-- i18n-source: README.md@ffa00e221e64ba2224b648e1bfb266c09dee9691 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -70,15 +70,13 @@ geschriebenen SwiftUI-App (<code>npm run demo</code>).</sub>
 brew install muhittincamdali/tap/a11ylabel
 ```
 
-Oder mit npm aus dem [GitHub-Release](https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0);
-dafür wird [Node.js](https://nodejs.org/) 22.12 oder neuer benötigt (`node --version` zeigt die Version an):
+Oder mit npm; dafür wird [Node.js](https://nodejs.org/) 22.12 oder neuer benötigt (`node --version` zeigt die Version an):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
+npm i -g @mcamdali/a11ylabel
 ```
 
-Das Paket ist noch nicht in der npm-Registry; es dort als `@mcamdali/a11ylabel` zu veröffentlichen, ist
-geplant. Beide Befehle installieren dasselbe Release-Tarball.
+Ohne Installation führst du es mit `npx @mcamdali/a11ylabel` aus.
 
 **2. Öffne ein Terminal im Ordner deiner App**, in dem `.xcodeproj`, `pubspec.yaml` oder
 `package.json` liegt:
@@ -161,17 +159,17 @@ hell (kein `darkTheme`) mit Text bei 130 %.
 
 ## Installation
 
-Die Befehle im Schnellstart installieren den Befehl `a11ylabel` aus dem GitHub-Release. Jedes
-[GitHub-Release](https://github.com/muhittincamdali/a11ylabel/releases) enthält das Paket als
-`a11ylabel-<version>.tgz` mit einer Datei `SHA256SUMS`. So legst du in einem Projekt ein Release fest:
+Die Befehle im Schnellstart installieren den Befehl `a11ylabel` aus der npm-Registry. So legst du in einem Projekt eine Version fest:
+
+```sh
+npm install --save-dev @mcamdali/a11ylabel
+```
+
+`npx a11ylabel` führt dann diese Kopie aus. Das Paket wird unter dem Namen `@mcamdali/a11ylabel` installiert, dem Namen, den die JavaScript-API weiter unten importiert. Jedes [GitHub-Release](https://github.com/muhittincamdali/a11ylabel/releases) enthält das Paket außerdem als `a11ylabel-<version>.tgz` mit einer Datei `SHA256SUMS`, um ein Release genau festzulegen oder zu prüfen:
 
 ```sh
 npm install --save-dev https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
 ```
-
-`npx a11ylabel` führt dann diese Kopie aus. Das Paket wird unter dem Namen `@mcamdali/a11ylabel`
-installiert, dem Namen, den die JavaScript-API weiter unten importiert. Die Veröffentlichung in der
-npm-Registry ist geplant; bis dahin findet `npx @mcamdali/a11ylabel` das Paket nicht.
 
 ## Verwendung
 

@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@6ff027cd7ebc2a47513ef24c6774454bdd417336 status=reviewed -->
+<!-- i18n-source: README.md@ffa00e221e64ba2224b648e1bfb266c09dee9691 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -71,16 +71,14 @@ fixture</a> (<code>npm run demo</code>).</sub>
 brew install muhittincamdali/tap/a11ylabel
 ```
 
-Ya da [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0) üzerinden
-npm ile; bunun için [Node.js](https://nodejs.org/) 22.12 veya üstü gerekir (`node --version` sürümü
+Ya da npm ile; bunun için [Node.js](https://nodejs.org/) 22.12 veya üstü gerekir (`node --version` sürümü
 gösterir):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
+npm i -g @mcamdali/a11ylabel
 ```
 
-Paket henüz npm registry'de değil; `@mcamdali/a11ylabel` adıyla oraya yayımlamak planlanıyor. İki
-komut da aynı release tarball'unu kurar.
+Kurmadan çalıştırmak için `npx @mcamdali/a11ylabel` kullanın.
 
 **2. Uygulamanızın klasöründe bir terminal açın**, yani `.xcodeproj`, `pubspec.yaml` veya
 `package.json` dosyasının bulunduğu klasörde:
@@ -164,18 +162,17 @@ metni %130'dadır.
 
 ## Kurulum
 
-Hızlı başlangıçtaki komutlar, `a11ylabel` komutunu GitHub release'ten kurar. Her
-[GitHub release](https://github.com/muhittincamdali/a11ylabel/releases), paketi
-`a11ylabel-<version>.tgz` olarak bir `SHA256SUMS` dosyasıyla birlikte sunar. Bir projede release
-sabitlemek için:
+Hızlı başlangıçtaki komutlar, `a11ylabel` komutunu npm registry'den kurar. Bir projede sürümü sabitlemek için:
+
+```sh
+npm install --save-dev @mcamdali/a11ylabel
+```
+
+`npx a11ylabel` bundan sonra o kopyayı çalıştırır. Paket `@mcamdali/a11ylabel` adıyla kurulur; aşağıdaki JavaScript API'sinin içe aktardığı ad budur. Her [GitHub release](https://github.com/muhittincamdali/a11ylabel/releases) ayrıca paketi `a11ylabel-<version>.tgz` olarak bir `SHA256SUMS` dosyasıyla birlikte sunar; belirli bir release'i sabitlemek veya doğrulamak için:
 
 ```sh
 npm install --save-dev https://github.com/muhittincamdali/a11ylabel/releases/download/v0.1.0/a11ylabel-0.1.0.tgz
 ```
-
-`npx a11ylabel` bundan sonra o kopyayı çalıştırır. Paket `@mcamdali/a11ylabel` adıyla kurulur; aşağıdaki
-JavaScript API'sinin içe aktardığı ad budur. npm registry'ye yayımlamak planlanıyor; o zamana kadar
-`npx @mcamdali/a11ylabel` paketi bulamaz.
 
 ## Kullanım
 
