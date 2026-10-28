@@ -247,9 +247,9 @@ console.log(render(report, 'markdown'));
 | 두 SwiftUI 앱에서의 `scripts/simulator-compare.sh` | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
 2026년 10월 28일 Mac(Apple silicon, M5 Max)에서 Node.js 26.12.1로 측정했습니다. 일곱 개 fixture에 대해
-`node dist/cli/main.js --json`을 100회 실행하는 세트를 세 번 진행했으며 Node.js 시작 시간이 포함됩니다. 세 세트의 중앙값은 0.12초, 0.12초, 0.12초였고,
-가장 느린 실행은 0.17초였습니다. 생성한 5,000개 파일(Swift 33.4 MB, 발견 사항 10,000건, 그중 200건 나열)의 SwiftUI 프로젝트는 세 번 실행에서 1.13~1.21초가 걸렸고,
-메모리는 최대 217 MB였습니다.
+`node dist/cli/main.js --json`을 100회 실행하는 세트를 세 번 진행했으며 Node.js 시작 시간이 포함됩니다. 세 세트의 중앙값은 0.11초, 0.11초, 0.11초였고,
+가장 느린 실행은 0.15초였습니다. 생성한 5,000개 파일(Swift 33.4 MB, 발견 사항 10,000건, 그중 200건 나열)의 SwiftUI 프로젝트는 세 번 실행에서 1.06~1.19초가 걸렸고,
+메모리는 최대 230 MB(220 MiB)였습니다.
 
 ## 상태
 

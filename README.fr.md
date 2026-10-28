@@ -269,9 +269,9 @@ chaque toolchain :
 
 Mesuré le 28 octobre 2026 sur un Mac (Apple silicon, M5 Max) avec Node.js 26.12.1 : trois séries de 100
 exécutions de `node dist/cli/main.js --json` sur les sept fixtures, démarrage de Node.js inclus. Les médianes
-des trois séries étaient de 0,12, 0,12 et 0,12 seconde ; l’exécution la plus lente a pris 0,17 seconde. Un projet
-SwiftUI généré de 5 000 fichiers (33,4 Mo de Swift, 10 000 constats, dont 200 listés) a pris de 1,13 à 1,21 seconde en trois
-exécutions, avec au plus 217 Mo de mémoire.
+des trois séries étaient de 0,11, 0,11 et 0,11 seconde ; l’exécution la plus lente a pris 0,15 seconde. Un projet
+SwiftUI généré de 5 000 fichiers (33,4 Mo de Swift, 10 000 constats, dont 200 listés) a pris de 1,06 à 1,19 seconde en trois
+exécutions, avec au plus 230 Mo (220 Mio) de mémoire.
 
 ## État d’avancement
 
