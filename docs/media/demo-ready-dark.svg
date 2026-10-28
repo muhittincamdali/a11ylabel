@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1066" height="891" viewBox="0 0 1066 891" role="img" aria-label="a11ylabel fixtures/native-swiftui-ready: terminal output">
+<title>a11ylabel · the same SwiftUI app after the fixes</title>
+<style>
+text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;white-space:pre}
+.t{opacity:0;animation:show 0.01s linear forwards}
+.caret{opacity:0;animation:blink 1.1s step-end infinite}
+@keyframes show{to{opacity:1}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.t{animation:none;opacity:1}.caret{animation:none;opacity:1}}
+</style>
+<rect width="1066" height="891" fill="#0D1117"/>
+<rect x="0.5" y="0.5" width="1065" height="890" rx="10" fill="#04111F" stroke="#1C3557"/>
+<path d="M0.5 34V10.5a10 10 0 0 1 10-10h1045a10 10 0 0 1 10 10V34z" fill="#0B1626"/>
+<line x1="0.5" y1="34" x2="1065.5" y2="34" stroke="#1C3557"/>
+<circle cx="20" cy="17" r="6" fill="#0A84FF"/><circle cx="40" cy="17" r="6" fill="#64D2FF"/><circle cx="60" cy="17" r="6" fill="#1C3557"/>
+<text x="533" y="22" text-anchor="middle" fill="#8FA3BC" style="font-size:12px">a11ylabel · the same SwiftUI app after the fixes</text>
+<text x="20" y="67" fill="#8FA3BC"># fixtures/native-swiftui-ready: no blockers; the video still needs a manual check</text>
+<text x="20" y="86"><tspan fill="#0A84FF" font-weight="700">$ </tspan><tspan fill="#D0E2F7"><tspan class="t" style="animation-delay:0.40s">a</tspan><tspan class="t" style="animation-delay:0.45s">1</tspan><tspan class="t" style="animation-delay:0.49s">1</tspan><tspan class="t" style="animation-delay:0.54s">y</tspan><tspan class="t" style="animation-delay:0.58s">l</tspan><tspan class="t" style="animation-delay:0.63s">a</tspan><tspan class="t" style="animation-delay:0.67s">b</tspan><tspan class="t" style="animation-delay:0.72s">e</tspan><tspan class="t" style="animation-delay:0.76s">l</tspan><tspan class="t" style="animation-delay:0.80s"> </tspan><tspan class="t" style="animation-delay:0.85s">f</tspan><tspan class="t" style="animation-delay:0.90s">i</tspan><tspan class="t" style="animation-delay:0.94s">x</tspan><tspan class="t" style="animation-delay:0.98s">t</tspan><tspan class="t" style="animation-delay:1.03s">u</tspan><tspan class="t" style="animation-delay:1.07s">r</tspan><tspan class="t" style="animation-delay:1.12s">e</tspan><tspan class="t" style="animation-delay:1.17s">s</tspan><tspan class="t" style="animation-delay:1.21s">/</tspan><tspan class="t" style="animation-delay:1.25s">n</tspan><tspan class="t" style="animation-delay:1.30s">a</tspan><tspan class="t" style="animation-delay:1.34s">t</tspan><tspan class="t" style="animation-delay:1.39s">i</tspan><tspan class="t" style="animation-delay:1.44s">v</tspan><tspan class="t" style="animation-delay:1.48s">e</tspan><tspan class="t" style="animation-delay:1.52s">-</tspan><tspan class="t" style="animation-delay:1.57s">s</tspan><tspan class="t" style="animation-delay:1.61s">w</tspan><tspan class="t" style="animation-delay:1.66s">i</tspan><tspan class="t" style="animation-delay:1.71s">f</tspan><tspan class="t" style="animation-delay:1.75s">t</tspan><tspan class="t" style="animation-delay:1.79s">u</tspan><tspan class="t" style="animation-delay:1.84s">i</tspan><tspan class="t" style="animation-delay:1.88s">-</tspan><tspan class="t" style="animation-delay:1.93s">r</tspan><tspan class="t" style="animation-delay:1.98s">e</tspan><tspan class="t" style="animation-delay:2.02s">a</tspan><tspan class="t" style="animation-delay:2.06s">d</tspan><tspan class="t" style="animation-delay:2.11s">y</tspan></tspan></text>
+<text class="t" x="20" y="105" style="animation-delay:2.65s"><tspan fill="#8FA3BC">a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28</tspan></text>
+<text class="t" x="20" y="124" style="animation-delay:2.69s"></text>
+<text class="t" x="20" y="143" style="animation-delay:2.72s"><tspan fill="#FFFFFF" font-weight="700">Pantry</tspan><tspan fill="#D0E2F7"> · native iOS · fixtures/native-swiftui-ready</tspan></text>
+<text class="t" x="20" y="162" style="animation-delay:2.76s"><tspan fill="#8FA3BC">target Pantry · iOS 18.0</tspan></text>
+<text class="t" x="20" y="181" style="animation-delay:2.79s"></text>
+<text class="t" x="20" y="200" style="animation-delay:2.83s"><tspan fill="#FFFFFF" font-weight="700">Label                              Status            Findings</tspan></text>
+<text class="t" x="20" y="219" style="animation-delay:2.86s"><tspan fill="#D0E2F7">VoiceOver                          </tspan><tspan fill="#5AC8FA">no blocker found</tspan></text>
+<text class="t" x="20" y="238" style="animation-delay:2.90s"><tspan fill="#D0E2F7">Voice Control                      </tspan><tspan fill="#5AC8FA">no blocker found</tspan></text>
+<text class="t" x="20" y="257" style="animation-delay:2.93s"><tspan fill="#D0E2F7">Larger Text                        </tspan><tspan fill="#5AC8FA">no blocker found</tspan></text>
+<text class="t" x="20" y="276" style="animation-delay:2.97s"><tspan fill="#D0E2F7">Dark Interface                     </tspan><tspan fill="#5AC8FA">no blocker found</tspan></text>
+<text class="t" x="20" y="295" style="animation-delay:3.00s"><tspan fill="#D0E2F7">Differentiate Without Color Alone  </tspan><tspan fill="#8FA3BC">check by hand</tspan></text>
+<text class="t" x="20" y="314" style="animation-delay:3.04s"><tspan fill="#D0E2F7">Sufficient Contrast                </tspan><tspan fill="#8FA3BC">check by hand</tspan></text>
+<text class="t" x="20" y="333" style="animation-delay:3.07s"><tspan fill="#D0E2F7">Reduced Motion                     </tspan><tspan fill="#5AC8FA">no blocker found</tspan></text>
+<text class="t" x="20" y="352" style="animation-delay:3.11s"><tspan fill="#D0E2F7">Captions                           </tspan><tspan fill="#8FA3BC">check by hand</tspan><tspan fill="#D0E2F7">     1 info</tspan></text>
+<text class="t" x="20" y="371" style="animation-delay:3.15s"><tspan fill="#D0E2F7">Audio Descriptions                 </tspan><tspan fill="#8FA3BC">check by hand</tspan><tspan fill="#D0E2F7">     1 info</tspan></text>
+<text class="t" x="20" y="390" style="animation-delay:3.18s"></text>
+<text class="t" x="20" y="409" style="animation-delay:3.21s"><tspan fill="#5AC8FA" font-weight="700">No blockers found in the code for VoiceOver, Voice Control, Larger Text, Dark Interface, Reduced</tspan></text>
+<text class="t" x="20" y="428" style="animation-delay:3.25s"><tspan fill="#5AC8FA" font-weight="700">Motion; 4 more to check by hand</tspan></text>
+<text class="t" x="20" y="447" style="animation-delay:3.29s"><tspan fill="#5AC8FA">Already in the code: VoiceOver: Sets accessibility labels (Pantry/PantryListView.swift); Larger</tspan></text>
+<text class="t" x="20" y="466" style="animation-delay:3.32s"><tspan fill="#5AC8FA">Text: Uses Dynamic Type text styles (Pantry/PantryListView.swift and 1 more); Reduced Motion: Reads</tspan></text>
+<text class="t" x="20" y="485" style="animation-delay:3.35s"><tspan fill="#5AC8FA">the Reduce Motion setting (Pantry/PantryListView.swift)</tspan></text>
+<text class="t" x="20" y="504" style="animation-delay:3.39s"></text>
+<text class="t" x="20" y="523" style="animation-delay:3.42s"><tspan fill="#64D2FF" font-weight="700">INFO     </tspan><tspan fill="#FFFFFF" font-weight="700">A11Y601 The app plays video · Captions, Audio Descriptions</tspan></text>
+<text class="t" x="20" y="542" style="animation-delay:3.46s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#4DA3FF">Pantry/RecipeView.swift:10</tspan></text>
+<text class="t" x="20" y="561" style="animation-delay:3.50s"><tspan fill="#D0E2F7">         VideoPlayer plays video here: check that it has captions and an audio-described track.</tspan></text>
+<text class="t" x="20" y="580" style="animation-delay:3.53s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [A] Check the media, then decide on the two labels</tspan></text>
+<text class="t" x="20" y="599" style="animation-delay:3.56s"></text>
+<text class="t" x="20" y="618" style="animation-delay:3.60s"><tspan fill="#FFFFFF" font-weight="700">How to fix</tspan></text>
+<text class="t" x="20" y="637" style="animation-delay:3.63s"></text>
+<text class="t" x="20" y="656" style="animation-delay:3.67s"><tspan fill="#FFFFFF" font-weight="700">[A]      </tspan><tspan fill="#FFFFFF" font-weight="700">Check the media, then decide on the two labels</tspan></text>
+<text class="t" x="20" y="675" style="animation-delay:3.71s"><tspan fill="#D0E2F7">         1. List the videos of the common tasks and check each for a captions track and a</tspan></text>
+<text class="t" x="20" y="694" style="animation-delay:3.74s"><tspan fill="#D0E2F7">            described-audio track.</tspan></text>
+<text class="t" x="20" y="713" style="animation-delay:3.77s"><tspan fill="#D0E2F7">         2. With AVPlayerViewController or VideoPlayer, the system shows legible and audio options</tspan></text>
+<text class="t" x="20" y="732" style="animation-delay:3.81s"><tspan fill="#D0E2F7">            when the asset has them.</tspan></text>
+<text class="t" x="20" y="751" style="animation-delay:3.84s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/contrast-color-media.md#captions-and-audio-descriptions</tspan></text>
+<text class="t" x="20" y="770" style="animation-delay:3.88s"></text>
+<text class="t" x="20" y="789" style="animation-delay:3.92s"><tspan fill="#FFFFFF" font-weight="700">0 errors, 0 warnings, 1 info</tspan></text>
+<text class="t" x="20" y="808" style="animation-delay:3.95s"><tspan fill="#8FA3BC">a11ylabel reads code. Before claiming a label, Apple asks that people can complete every common task</tspan></text>
+<text class="t" x="20" y="827" style="animation-delay:3.98s"><tspan fill="#8FA3BC">of the app with the feature on.</tspan></text>
+<text class="t" x="20" y="846" style="animation-delay:4.02s"><tspan fill="#8FA3BC">Criteria: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels</tspan></text>
+<text class="t" x="20" y="865" style="animation-delay:4.25s"><tspan fill="#0A84FF" font-weight="700">$ </tspan></text>
+<rect class="caret" x="35.66" y="853" width="7.83" height="16" fill="#0A84FF" style="animation-delay:4.25s"/>
+</svg>
