@@ -227,14 +227,24 @@ function assetHits(app: AppModel): Hit[] {
   ];
 }
 
-/** The Dark Interface checks for a collected project. */
-export function checkDarkInterface(app: AppModel): Hit[] {
+/**
+ * The Dark Interface checks for a collected project, one group per file so that no more than one
+ * file's hits are held: the project settings first, then each file's light appearances, each
+ * file's Flutter apps without a dark theme, and the asset colours.
+ */
+export function* darkInterfaceGroups(app: AppModel): Generator<readonly Hit[]> {
   const inApp = darkInCode(app.sources);
-  const hits = [...targetHits(app, inApp), ...expoHits(app, inApp)];
-  // One hit at a time: push(...list) passes each hit as an argument, and a file with a trigger on
+  yield [...targetHits(app, inApp), ...expoHits(app, inApp)];
+  if (!inApp) for (const file of app.sources) yield lightInCode(file);
+  for (const file of app.sources) yield flutterWithoutDarkTheme(file);
+  if (!darkByDefault(app.targets)) yield assetHits(app);
+}
+
+/** All Dark Interface hits of a collected project, in the order of darkInterfaceGroups. */
+export function checkDarkInterface(app: AppModel): Hit[] {
+  const hits: Hit[] = [];
+  // One hit at a time: push(...group) passes each hit as an argument, and a file with a trigger on
   // every line has more of them than the call stack holds.
-  for (const file of inApp ? [] : app.sources) for (const hit of lightInCode(file)) hits.push(hit);
-  for (const file of app.sources) for (const hit of flutterWithoutDarkTheme(file)) hits.push(hit);
-  if (!darkByDefault(app.targets)) hits.push(...assetHits(app));
+  for (const group of darkInterfaceGroups(app)) for (const hit of group) hits.push(hit);
   return hits;
 }
