@@ -1,0 +1,15 @@
+fixture:    fixtures/native-swiftui-ready
+built with: Xcode 27.1 (27A9275), SDK iphonesimulator27.1
+simulator:  iPhone 17, iOS 27.0, text size large, light appearance
+Info.plist: UIUserInterfaceStyle = not set in the built app
+screenshot: .simulator-work/screenshots/native-swiftui-ready-27.0-default.png
+
+fixture:    fixtures/native-swiftui-ready
+built with: Xcode 27.1 (27A9275), SDK iphonesimulator27.1
+simulator:  iPhone 17, iOS 27.0, text size accessibility-extra-extra-extra-large, dark appearance
+Info.plist: UIUserInterfaceStyle = not set in the built app
+screenshot: .simulator-work/screenshots/native-swiftui-ready-27.0-ax5-dark.png
+
+compared:   1206 x 2562 pixels above the home indicator, 2% tolerance
+brightness: 0.97 at the default size in light, 0.57 at AX5 in Dark Mode
+changed:    3052635 of 3089772 pixels (99%)
