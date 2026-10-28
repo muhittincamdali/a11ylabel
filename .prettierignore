@@ -10,3 +10,4 @@ _work/
 .test-work/
 package-lock.json
 rules/schema.json
+docs/media/
