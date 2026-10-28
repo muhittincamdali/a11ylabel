@@ -98,7 +98,7 @@ How to fix
             Interface Style), or set it to Automatic.
          2. Give every custom colour a dark variant in the asset catalog, then use the common tasks
             in Dark Mode.
-         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#info-plist-and-build-settings
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#infoplist-and-build-settings
 
 [C]      Use a text style, or a size relative to one
          1. Replace .system(size: 17) with a text style such as .body, .headline or .title.

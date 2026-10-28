@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { ruleSchemaJson } from '../../scripts/rule-schema.ts';
@@ -44,6 +44,27 @@ describe('rules/nutrition-labels.json', () => {
     for (const rule of RULE_DATA.rules) {
       expect(rule.sources.length, rule.id).toBeGreaterThan(0);
       for (const source of rule.sources) expect(source.url, rule.id).toMatch(primary);
+    }
+  });
+
+  it('links every fix to a guide section that exists', () => {
+    // GitHub's heading anchors: lower case, punctuation dropped, spaces as hyphens.
+    const slug = (heading: string) =>
+      heading
+        .toLowerCase()
+        .replace(/[^\w\- ]/g, '')
+        .replace(/ /g, '-');
+    for (const rule of RULE_DATA.rules) {
+      for (const fix of Object.values(rule.fixes)) {
+        const [file = '', anchor] = fix.guide.split('#');
+        expect(existsSync(`${ROOT}${file}`), `${rule.id} ${file}`).toBe(true);
+        if (!anchor) continue;
+        const headings = [...readFileSync(`${ROOT}${file}`, 'utf8').matchAll(/^#{2,3} (.+)$/gm)];
+        expect(
+          headings.map((match) => slug(match[1] as string)),
+          `${rule.id} ${fix.guide}`,
+        ).toContain(anchor);
+      }
     }
   });
 

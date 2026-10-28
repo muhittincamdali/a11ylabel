@@ -342,7 +342,7 @@
             "Remove UIUserInterfaceStyle from Info.plist, or set it to Automatic (or to Dark for an app that is always dark).",
             "Give every custom colour a dark variant in the asset catalog, then use the common tasks in Dark Mode."
           ],
-          "guide": "docs/guides/dark-interface.md#info-plist-and-build-settings"
+          "guide": "docs/guides/dark-interface.md#infoplist-and-build-settings"
         },
         "build-setting": {
           "title": "Remove the build setting that forces light",
@@ -350,7 +350,7 @@
             "Delete INFOPLIST_KEY_UIUserInterfaceStyle (Build Settings > Info.plist Values > User Interface Style), or set it to Automatic.",
             "Give every custom colour a dark variant in the asset catalog, then use the common tasks in Dark Mode."
           ],
-          "guide": "docs/guides/dark-interface.md#info-plist-and-build-settings"
+          "guide": "docs/guides/dark-interface.md#infoplist-and-build-settings"
         },
         "expo-config": {
           "title": "Set userInterfaceStyle to automatic",

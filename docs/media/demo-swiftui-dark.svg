@@ -75,7 +75,7 @@ text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",mo
 <text class="t" x="20" y="1169" style="animation-delay:6.33s"><tspan fill="#D0E2F7">            Interface Style), or set it to Automatic.</tspan></text>
 <text class="t" x="20" y="1188" style="animation-delay:6.36s"><tspan fill="#D0E2F7">         2. Give every custom colour a dark variant in the asset catalog, then use the common tasks</tspan></text>
 <text class="t" x="20" y="1207" style="animation-delay:6.40s"><tspan fill="#D0E2F7">            in Dark Mode.</tspan></text>
-<text class="t" x="20" y="1226" style="animation-delay:6.43s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#info-plist-and-build-settings</tspan></text>
+<text class="t" x="20" y="1226" style="animation-delay:6.43s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#infoplist-and-build-settings</tspan></text>
 <text class="t" x="20" y="1245" style="animation-delay:6.46s"></text>
 <text class="t" x="20" y="1264" style="animation-delay:6.50s"><tspan fill="#FFFFFF" font-weight="700">[C]      </tspan><tspan fill="#FFFFFF" font-weight="700">Use a text style, or a size relative to one</tspan></text>
 <text class="t" x="20" y="1283" style="animation-delay:6.54s"><tspan fill="#D0E2F7">         1. Replace .system(size: 17) with a text style such as .body, .headline or .title.</tspan></text>

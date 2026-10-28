@@ -51,7 +51,7 @@ Sources: [Larger Text evaluation criteria \(App Store Connect Help\)](https://de
 
 `Pantry.xcodeproj/project.pbxproj:194`: Pantry: INFOPLIST\_KEY\_UIUserInterfaceStyle is Light: the app ignores Dark Mode and nothing in the code turns it dark. (Dark Interface)
 
-**Fix: Remove the build setting that forces light** ([guide](https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#info-plist-and-build-settings))
+**Fix: Remove the build setting that forces light** ([guide](https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#infoplist-and-build-settings))
 
 1. Delete INFOPLIST\_KEY\_UIUserInterfaceStyle \(Build Settings \> Info.plist Values \> User Interface Style\), or set it to Automatic.
 2. Give every custom colour a dark variant in the asset catalog, then use the common tasks in Dark Mode.
