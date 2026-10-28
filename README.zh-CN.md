@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2725a7403253e305cfe7775804e3f897218bb327 status=reviewed -->
+<!-- i18n-source: README.md@591f001bea80e268117678c02777f62e0d8328ee status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/a11ylabel/main/.github/brand/banner-light.svg" alt="a11ylabel: Shows which App Store accessibility labels an iOS, Flutter or React Native app can claim, and what blocks each one."></picture></p>
@@ -245,8 +245,8 @@ console.log(render(report, 'markdown'));
 | 在两个 SwiftUI 应用上运行 `scripts/simulator-compare.sh` | [blocked](docs/media/demo-simulator-native-swiftui-blocked-27.0-light.svg) · [ready](docs/media/demo-simulator-native-swiftui-ready-27.0-light.svg) |
 
 2026 年 10 月 28 日在 Mac（Apple silicon，M5 Max）上使用 Node.js 26.12.1 测得：对七个 fixture 运行 `node dist/cli/main.js --json`，
-三组、每组 100 次，包含 Node.js 启动时间。三组的中位数分别为 0.12、0.12 和 0.12 秒；最慢的一次耗时 0.17 秒。一个生成的包含
-5,000 个文件（33.4 MB 的 Swift，10,000 个发现，其中列出 200 个）的 SwiftUI 项目，三次运行耗时 1.13 至 1.21 秒，内存最多 217 MB。
+三组、每组 100 次，包含 Node.js 启动时间。三组的中位数分别为 0.11、0.11 和 0.11 秒；最慢的一次耗时 0.15 秒。一个生成的包含
+5,000 个文件（33.4 MB 的 Swift，10,000 个发现，其中列出 200 个）的 SwiftUI 项目，三次运行耗时 1.06 至 1.19 秒，内存最多 230 MB（220 MiB）。
 
 ## 状态
 
@@ -276,6 +276,7 @@ console.log(render(report, 'markdown'));
   个文件和 128 MB，并且最多读取 5,000 个颜色集；被排除的内容会列在报告的注释中。plist 和 JSON 文件最多可嵌套 64 层。
 - **输出有上限。** 报告中每条规则在每个文件最多列出 20 个发现，在整个项目最多列出 100 个，总计最多 1,700 个。超出上限的发现仍计入各标签的数量和摘要，
   并由一条注释说明每条规则有多少个未列出。
+  来自项目的名称和值（例如 target 名称、版本和 Info.plist 值）会截断为 200 个字符。
 
 ## 文档
 

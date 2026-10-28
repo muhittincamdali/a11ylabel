@@ -265,9 +265,9 @@ each toolchain:
 
 Measured on 28 October 2026 on a Mac (Apple silicon, M5 Max) with Node.js 26.12.1: three sets of 100
 runs of `node dist/cli/main.js --json` over the seven fixtures, Node.js start-up included. The
-medians of the three sets were 0.12, 0.12 and 0.12 seconds; the slowest run took 0.17 seconds. A
+medians of the three sets were 0.11, 0.11 and 0.11 seconds; the slowest run took 0.15 seconds. A
 generated SwiftUI project of 5,000 files (33.4 MB of Swift, 10,000 findings, 200 of them
-listed) took 1.13 to 1.21 seconds in three runs, with at most 217 MB of memory.
+listed) took 1.06 to 1.19 seconds in three runs, with at most 230 MB (220 MiB) of memory.
 
 ## Status
 
@@ -306,6 +306,7 @@ listed) took 1.13 to 1.21 seconds in three runs, with at most 217 MB of memory.
 - **Bounded output.** A report lists at most 20 findings of a rule per file and 100 per project,
   so 1,700 at most. The findings over these limits are still counted in the label counts and the
   summary, and a note says how many of each rule were left out.
+  Names and values from the project, such as target names, versions and Info.plist values, are cut to 200 characters.
 
 ## Documentation
 
