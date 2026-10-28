@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "a11ylabel",
+    "version": "0.0.0"
+  },
+  "rules": {
+    "ruleSet": "nutrition-labels",
+    "dataVersion": "2026.10.28",
+    "read": "2026-10-28"
+  },
+  "project": {
+    "path": "fixtures/flutter-tide",
+    "name": "tide",
+    "ecosystem": "flutter",
+    "versions": [],
+    "targets": [
+      {
+        "name": "Runner",
+        "infoPlists": [
+          "ios/Runner/Info.plist"
+        ],
+        "interfaceStyle": null,
+        "deploymentTarget": "15.0"
+      }
+    ]
+  },
+  "scope": [
+    "voiceover",
+    "voice-control",
+    "larger-text",
+    "dark-interface",
+    "differentiate-without-color",
+    "sufficient-contrast",
+    "reduced-motion",
+    "captions",
+    "audio-descriptions"
+  ],
+  "verdict": {
+    "code": "blocked",
+    "text": "1 label blocked by the code (Larger Text); 4 to review"
+  },
+  "labels": [
+    {
+      "id": "voiceover",
+      "name": "VoiceOver",
+      "status": "review",
+      "coverage": "partial",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "signals": [
+        {
+          "text": "Sets accessibility labels",
+          "file": "lib/main.dart",
+          "files": 1
+        }
+      ],
+      "checked": "Icon-only buttons without an accessibility label, and labels that name the control type.",
+      "manual": "Complete every common task with VoiceOver alone: reading order, grouping, values and states, custom actions, focus in modal views."
+    },
+    {
+      "id": "voice-control",
+      "name": "Voice Control",
+      "status": "review",
+      "coverage": "partial",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Icon-only buttons without a name Voice Control can show and say.",
+      "manual": "Say \"Show names\" and \"Show numbers\" on every screen of the common tasks; reach swipe and long-press actions by voice; dictate into every text field."
+    },
+    {
+      "id": "larger-text",
+      "name": "Larger Text",
+      "status": "blocked",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria",
+      "counts": {
+        "errors": 1,
+        "warnings": 1,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Text scaling turned off or capped below 200% (for the whole app or one view), and fixed font sizes that Dynamic Type does not scale.",
+      "manual": "Use the common tasks at the largest accessibility text size: no overlapping text, no truncation that hides information."
+    },
+    {
+      "id": "dark-interface",
+      "name": "Dark Interface",
+      "status": "review",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "A light appearance forced in Info.plist, the build settings, the Expo config or code; a Flutter app without a dark theme; asset colours without a dark variant.",
+      "manual": "Use the common tasks in Dark Mode: no screen, sheet, web view or launch screen that flashes bright."
+    },
+    {
+      "id": "differentiate-without-color",
+      "name": "Differentiate Without Color Alone",
+      "status": "manual",
+      "coverage": "manual",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/differentiate-without-color-alone-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Nothing: whether colour is the only difference is a question of design, not of code a11ylabel can read.",
+      "manual": "Look for status, charts and selections told apart by colour alone; add a shape, symbol or text."
+    },
+    {
+      "id": "sufficient-contrast",
+      "name": "Sufficient Contrast",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/sufficient-contrast-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Asset catalog colours without a high contrast variant for the Increase Contrast setting.",
+      "manual": "Measure text and controls against their background: about 4.5:1 for most text, by default or with Increase Contrast."
+    },
+    {
+      "id": "reduced-motion",
+      "name": "Reduced Motion",
+      "status": "review",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Repeating, parallax, 3D and auto-playing animations in an app that never reads the Reduce Motion setting, or in files that do not.",
+      "manual": "Turn on Reduce Motion and use the common tasks: no spinning, scaling, parallax or auto-advancing motion left."
+    },
+    {
+      "id": "captions",
+      "name": "Captions",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/captions-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video and audio of the common tasks have captions or transcripts, and that people can tell which media is captioned."
+    },
+    {
+      "id": "audio-descriptions",
+      "name": "Audio Descriptions",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/audio-descriptions-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video of the common tasks offers an audio-described track."
+    }
+  ],
+  "findings": [
+    {
+      "rule": "A11Y101",
+      "labels": [
+        "larger-text"
+      ],
+      "severity": "error",
+      "title": "Text size locked for the whole app",
+      "message": "maxScaleFactor 1.3 in the app's builder: all text stops at 130% of its size.",
+      "file": "lib/main.dart",
+      "line": 16,
+      "target": null,
+      "fix": {
+        "id": "A11Y101/flutter",
+        "title": "Stop overriding the text scaler for the whole app",
+        "steps": [
+          "Remove the MediaQuery, MediaQuery.withNoTextScaling or TextScaler.noScaling that wraps the app in MaterialApp.builder.",
+          "If a limit is needed, use MediaQuery.withClampedTextScaling with maxScaleFactor 2.0 or more, or clamp only the widgets that cannot grow.",
+          "Check the common tasks at the largest accessibility size on an iOS simulator."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#flutter"
+      },
+      "sources": [
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        },
+        {
+          "title": "React Native Text: allowFontScaling, maxFontSizeMultiplier",
+          "url": "https://reactnative.dev/docs/text"
+        },
+        {
+          "title": "React 19 upgrade guide: defaultProps removed from function components",
+          "url": "https://react.dev/blog/2024/04/25/react-19-upgrade-guide"
+        },
+        {
+          "title": "Flutter MediaQuery.withClampedTextScaling",
+          "url": "https://api.flutter.dev/flutter/widgets/MediaQuery/withClampedTextScaling.html"
+        },
+        {
+          "title": "SwiftUI dynamicTypeSize(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/dynamictypesize(_:)"
+        },
+        {
+          "title": "UIKit UIView.maximumContentSizeCategory",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/maximumcontentsizecategory"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y102",
+      "labels": [
+        "larger-text"
+      ],
+      "severity": "warning",
+      "title": "Text that does not scale",
+      "message": "TextScaler.noScaling: this text keeps its size when the system text size grows.",
+      "file": "lib/main.dart",
+      "line": 86,
+      "target": null,
+      "fix": {
+        "id": "A11Y102/flutter",
+        "title": "Let this text scale",
+        "steps": [
+          "Remove textScaler: TextScaler.noScaling (or linear(1.0), or textScaleFactor: 1.0) from this widget.",
+          "If it cannot grow, clamp it with MediaQuery.withClampedTextScaling(maxScaleFactor: 2.0) rather than turning scaling off."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#flutter"
+      },
+      "sources": [
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        },
+        {
+          "title": "React Native Text: allowFontScaling",
+          "url": "https://reactnative.dev/docs/text"
+        },
+        {
+          "title": "Flutter TextScaler.noScaling",
+          "url": "https://api.flutter.dev/flutter/painting/TextScaler/noScaling-constant.html"
+        },
+        {
+          "title": "UIKit adjustsFontForContentSizeCategory",
+          "url": "https://developer.apple.com/documentation/uikit/uicontentsizecategoryadjusting/adjustsfontforcontentsizecategory"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y204",
+      "labels": [
+        "dark-interface"
+      ],
+      "severity": "warning",
+      "title": "Flutter app without a dark theme",
+      "message": "MaterialApp has no darkTheme, so it shows its light theme in Dark Mode too.",
+      "file": "lib/main.dart",
+      "line": 10,
+      "target": null,
+      "fix": {
+        "id": "A11Y204/flutter",
+        "title": "Add a dark theme",
+        "steps": [
+          "Pass darkTheme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: …, brightness: Brightness.dark)) to MaterialApp.",
+          "Leave themeMode at ThemeMode.system, and read colours from Theme.of(context).colorScheme instead of constants."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#flutter"
+      },
+      "sources": [
+        {
+          "title": "Flutter MaterialApp.darkTheme",
+          "url": "https://api.flutter.dev/flutter/material/MaterialApp/darkTheme.html"
+        },
+        {
+          "title": "Dark Interface evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y301",
+      "labels": [
+        "reduced-motion"
+      ],
+      "severity": "warning",
+      "title": "Motion in an app that never reads Reduce Motion",
+      "message": "repeat(), an animation that never stops, and nothing in the app reads Reduce Motion.",
+      "file": "lib/main.dart",
+      "line": 50,
+      "target": null,
+      "fix": {
+        "id": "A11Y301/flutter",
+        "title": "Read Reduce Motion and calm the animation",
+        "steps": [
+          "Read PlatformDispatcher.instance.accessibilityFeatures.reduceMotion (iOS) together with MediaQuery.disableAnimationsOf(context) (Android).",
+          "When either is set, do not call repeat() or auto-play Lottie and carousels; jump to the end value instead."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/reduced-motion.md#flutter"
+      },
+      "sources": [
+        {
+          "title": "Reduced Motion evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityReduceMotion",
+          "url": "https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityreducemotion"
+        },
+        {
+          "title": "UIKit UIAccessibility.isReduceMotionEnabled",
+          "url": "https://developer.apple.com/documentation/uikit/uiaccessibility/isreducemotionenabled"
+        },
+        {
+          "title": "React Native AccessibilityInfo.isReduceMotionEnabled",
+          "url": "https://reactnative.dev/docs/accessibilityinfo"
+        },
+        {
+          "title": "Flutter AccessibilityFeatures.reduceMotion",
+          "url": "https://api.flutter.dev/flutter/dart-ui/AccessibilityFeatures/reduceMotion.html"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y303",
+      "labels": [
+        "reduced-motion"
+      ],
+      "severity": "warning",
+      "title": "Flutter reads disableAnimations, which iOS Reduce Motion does not set",
+      "message": "The app reads disableAnimations but not accessibilityFeatures.reduceMotion, so an iPhone with Reduce Motion on still gets every animation.",
+      "file": "lib/main.dart",
+      "line": 60,
+      "target": null,
+      "fix": {
+        "id": "A11Y303/flutter",
+        "title": "Also read the iOS setting",
+        "steps": [
+          "Combine both: MediaQuery.disableAnimationsOf(context) || View.of(context).platformDispatcher.accessibilityFeatures.reduceMotion.",
+          "Rebuild when the setting changes: listen to PlatformDispatcher.onAccessibilityFeaturesChanged or WidgetsBindingObserver.didChangeAccessibilityFeatures."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/reduced-motion.md#flutter"
+      },
+      "sources": [
+        {
+          "title": "Flutter MediaQueryData.disableAnimations",
+          "url": "https://api.flutter.dev/flutter/widgets/MediaQueryData/disableAnimations.html"
+        },
+        {
+          "title": "Flutter AccessibilityFeatures.reduceMotion",
+          "url": "https://api.flutter.dev/flutter/dart-ui/AccessibilityFeatures/reduceMotion.html"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y401",
+      "labels": [
+        "voiceover",
+        "voice-control"
+      ],
+      "severity": "warning",
+      "title": "Icon-only button without an accessibility label",
+      "message": "An IconButton without a tooltip, which Flutter uses as its accessibility label.",
+      "file": "lib/main.dart",
+      "line": 65,
+      "target": null,
+      "fix": {
+        "id": "A11Y401/flutter",
+        "title": "Name the button",
+        "steps": [
+          "Pass tooltip: 'Close' to IconButton or FloatingActionButton; Flutter uses it as the semantic label.",
+          "For other buttons, give the Icon a semanticLabel or wrap the button in Semantics(label: …, button: true)."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#flutter"
+      },
+      "sources": [
+        {
+          "title": "VoiceOver evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria"
+        },
+        {
+          "title": "Voice Control evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityLabel(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/accessibilitylabel(_:)"
+        },
+        {
+          "title": "React Native accessibility: accessibilityLabel",
+          "url": "https://reactnative.dev/docs/accessibility"
+        },
+        {
+          "title": "Flutter IconButton.tooltip",
+          "url": "https://api.flutter.dev/flutter/material/IconButton/tooltip.html"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y401",
+      "labels": [
+        "voiceover",
+        "voice-control"
+      ],
+      "severity": "warning",
+      "title": "Icon-only button without an accessibility label",
+      "message": "A FloatingActionButton without a tooltip, which Flutter uses as its accessibility label.",
+      "file": "lib/main.dart",
+      "line": 90,
+      "target": null,
+      "fix": {
+        "id": "A11Y401/flutter",
+        "title": "Name the button",
+        "steps": [
+          "Pass tooltip: 'Close' to IconButton or FloatingActionButton; Flutter uses it as the semantic label.",
+          "For other buttons, give the Icon a semanticLabel or wrap the button in Semantics(label: …, button: true)."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#flutter"
+      },
+      "sources": [
+        {
+          "title": "VoiceOver evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria"
+        },
+        {
+          "title": "Voice Control evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityLabel(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/accessibilitylabel(_:)"
+        },
+        {
+          "title": "React Native accessibility: accessibilityLabel",
+          "url": "https://reactnative.dev/docs/accessibility"
+        },
+        {
+          "title": "Flutter IconButton.tooltip",
+          "url": "https://api.flutter.dev/flutter/material/IconButton/tooltip.html"
+        }
+      ]
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 1,
+    "warnings": 6,
+    "info": 0
+  }
+}

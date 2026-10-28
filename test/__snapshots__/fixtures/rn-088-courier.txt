@@ -1,0 +1,94 @@
+a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+
+HelloWorld · React Native · fixtures/rn-088-courier
+target HelloWorld · iOS 15.1 (ios/HelloWorld/Info.plist)
+react-native 0.88.1 (declared)
+
+Label                              Status            Findings
+VoiceOver                          review            1 warning, 1 info
+Voice Control                      review            1 warning
+Larger Text                        review            2 warnings
+Dark Interface                     review            1 warning
+Differentiate Without Color Alone  check by hand
+Sufficient Contrast                check by hand
+Reduced Motion                     review            1 warning
+Captions                           check by hand
+Audio Descriptions                 check by hand
+
+No label blocked; 5 labels to review (VoiceOver, Voice Control, Larger Text, Dark Interface, Reduced
+Motion)
+Already in the code: VoiceOver: Sets accessibility labels (App.tsx)
+
+WARNING  A11Y102 Text that does not scale · Larger Text
+         App.tsx:63
+         allowFontScaling is false: this text keeps its size when the system text size grows.
+         Fix: [A] Let this text scale
+
+WARNING  A11Y103 Text capped below 200% · Larger Text
+         App.tsx:48
+         maxFontSizeMultiplier is 1.2: this text stops at 120% of its size.
+         Fix: [B] Raise the limit to 2 or remove it
+
+WARNING  A11Y203 Light colour scheme set in code · Dark Interface
+         App.tsx:22
+         Appearance.setColorScheme('light') keeps the whole app light, whatever the system
+         appearance is.
+         Fix: [C] Stop forcing the light scheme
+
+WARNING  A11Y301 Motion in an app that never reads Reduce Motion · Reduced Motion
+         App.tsx:35
+         Animated.loop, an animation that never stops, and nothing in the app reads Reduce Motion.
+         Fix: [D] Read Reduce Motion and calm the animation
+
+WARNING  A11Y401 Icon-only button without an accessibility label · VoiceOver, Voice Control
+         App.tsx:52
+         A Pressable that shows only an icon or image, without accessibilityLabel.
+         Fix: [E] Name the button
+
+INFO     A11Y402 Accessibility label names the control type · VoiceOver
+         App.tsx:66
+         The label "Call courier button" ends with "button", which VoiceOver already says from the
+         element's traits.
+         Fix: [F] Drop the control type from the label
+
+How to fix
+
+[A]      Let this text scale
+         1. Remove allowFontScaling={false}; if the text truly cannot grow (a tab bar label), keep
+            it and make sure its meaning is available another way.
+         2. Let the container grow with the text: no fixed height, numberOfLines only where the full
+            text is shown elsewhere.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#react-native-and-expo
+
+[B]      Raise the limit to 2 or remove it
+         1. Set maxFontSizeMultiplier to 2 or more, or to 0 for no limit.
+         2. Keep a lower limit only on repeated navigation such as a tab bar.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#react-native-and-expo
+
+[C]      Stop forcing the light scheme
+         1. Remove Appearance.setColorScheme('light'), or call it only with the person's own choice.
+         2. Read useColorScheme() and pick colours for both schemes.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#react-native
+
+[D]      Read Reduce Motion and calm the animation
+         1. Read AccessibilityInfo.isReduceMotionEnabled() and listen to its reduceMotionChanged
+            event (or use Reanimated's useReducedMotion()).
+         2. When it is on, do not start Animated.loop, auto-playing Lottie or carousel motion; show
+            the final frame instead.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/reduced-motion.md#react-native-and-expo
+
+[E]      Name the button
+         1. Add accessibilityLabel="Close" (or aria-label) and accessibilityRole="button" to the
+            Pressable or Touchable.
+         2. For react-native-paper's IconButton, pass accessibilityLabel.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#react-native-and-expo
+
+[F]      Drop the control type from the label
+         1. Shorten the label to the action ("Close") and set accessibilityRole="button" (or
+            role="button").
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#react-native-and-expo
+
+0 errors, 5 warnings, 1 info
+a11ylabel reads code. Before claiming a label, Apple asks that people can complete every common task
+of the app with the feature on.
+Criteria: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels

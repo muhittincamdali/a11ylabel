@@ -1,0 +1,106 @@
+a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+
+tide · Flutter · fixtures/flutter-tide
+target Runner · iOS 15.0 (ios/Runner/Info.plist)
+
+Label                              Status            Findings
+VoiceOver                          review            2 warnings
+Voice Control                      review            2 warnings
+Larger Text                        BLOCKED           1 error, 1 warning
+Dark Interface                     review            1 warning
+Differentiate Without Color Alone  check by hand
+Sufficient Contrast                check by hand
+Reduced Motion                     review            2 warnings
+Captions                           check by hand
+Audio Descriptions                 check by hand
+
+1 label blocked by the code (Larger Text); 4 to review
+Already in the code: VoiceOver: Sets accessibility labels (lib/main.dart)
+
+ERROR    A11Y101 Text size locked for the whole app · Larger Text
+         lib/main.dart:16
+         maxScaleFactor 1.3 in the app's builder: all text stops at 130% of its size.
+         Fix: [A] Stop overriding the text scaler for the whole app
+
+WARNING  A11Y102 Text that does not scale · Larger Text
+         lib/main.dart:86
+         TextScaler.noScaling: this text keeps its size when the system text size grows.
+         Fix: [B] Let this text scale
+
+WARNING  A11Y204 Flutter app without a dark theme · Dark Interface
+         lib/main.dart:10
+         MaterialApp has no darkTheme, so it shows its light theme in Dark Mode too.
+         Fix: [C] Add a dark theme
+
+WARNING  A11Y301 Motion in an app that never reads Reduce Motion · Reduced Motion
+         lib/main.dart:50
+         repeat(), an animation that never stops, and nothing in the app reads Reduce Motion.
+         Fix: [D] Read Reduce Motion and calm the animation
+
+WARNING  A11Y303 Flutter reads disableAnimations, which iOS Reduce Motion does not set · Reduced
+         Motion
+         lib/main.dart:60
+         The app reads disableAnimations but not accessibilityFeatures.reduceMotion, so an iPhone
+         with Reduce Motion on still gets every animation.
+         Fix: [E] Also read the iOS setting
+
+WARNING  A11Y401 Icon-only button without an accessibility label · VoiceOver, Voice Control
+         lib/main.dart:65
+         An IconButton without a tooltip, which Flutter uses as its accessibility label.
+         Fix: [F] Name the button
+
+WARNING  A11Y401 Icon-only button without an accessibility label · VoiceOver, Voice Control
+         lib/main.dart:90
+         A FloatingActionButton without a tooltip, which Flutter uses as its accessibility label.
+         Fix: [F] Name the button
+
+How to fix
+
+[A]      Stop overriding the text scaler for the whole app
+         1. Remove the MediaQuery, MediaQuery.withNoTextScaling or TextScaler.noScaling that wraps
+            the app in MaterialApp.builder.
+         2. If a limit is needed, use MediaQuery.withClampedTextScaling with maxScaleFactor 2.0 or
+            more, or clamp only the widgets that cannot grow.
+         3. Check the common tasks at the largest accessibility size on an iOS simulator.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#flutter
+
+[B]      Let this text scale
+         1. Remove textScaler: TextScaler.noScaling (or linear(1.0), or textScaleFactor: 1.0) from
+            this widget.
+         2. If it cannot grow, clamp it with MediaQuery.withClampedTextScaling(maxScaleFactor: 2.0)
+            rather than turning scaling off.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#flutter
+
+[C]      Add a dark theme
+         1. Pass darkTheme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: …, brightness:
+            Brightness.dark)) to MaterialApp.
+         2. Leave themeMode at ThemeMode.system, and read colours from Theme.of(context).colorScheme
+            instead of constants.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#flutter
+
+[D]      Read Reduce Motion and calm the animation
+         1. Read PlatformDispatcher.instance.accessibilityFeatures.reduceMotion (iOS) together with
+            MediaQuery.disableAnimationsOf(context) (Android).
+         2. When either is set, do not call repeat() or auto-play Lottie and carousels; jump to the
+            end value instead.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/reduced-motion.md#flutter
+
+[E]      Also read the iOS setting
+         1. Combine both: MediaQuery.disableAnimationsOf(context) ||
+            View.of(context).platformDispatcher.accessibilityFeatures.reduceMotion.
+         2. Rebuild when the setting changes: listen to
+            PlatformDispatcher.onAccessibilityFeaturesChanged or
+            WidgetsBindingObserver.didChangeAccessibilityFeatures.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/reduced-motion.md#flutter
+
+[F]      Name the button
+         1. Pass tooltip: 'Close' to IconButton or FloatingActionButton; Flutter uses it as the
+            semantic label.
+         2. For other buttons, give the Icon a semanticLabel or wrap the button in Semantics(label:
+            …, button: true).
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#flutter
+
+1 error, 6 warnings, 0 info
+a11ylabel reads code. Before claiming a label, Apple asks that people can complete every common task
+of the app with the feature on.
+Criteria: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels

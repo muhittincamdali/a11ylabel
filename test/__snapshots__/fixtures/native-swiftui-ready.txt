@@ -1,0 +1,40 @@
+a11ylabel 0.0.0 · rules nutrition-labels@2026.10.28
+
+Pantry · native iOS · fixtures/native-swiftui-ready
+target Pantry · iOS 18.0
+
+Label                              Status            Findings
+VoiceOver                          no blocker found
+Voice Control                      no blocker found
+Larger Text                        no blocker found
+Dark Interface                     no blocker found
+Differentiate Without Color Alone  check by hand
+Sufficient Contrast                check by hand
+Reduced Motion                     no blocker found
+Captions                           check by hand     1 info
+Audio Descriptions                 check by hand     1 info
+
+No blockers found in the code for VoiceOver, Voice Control, Larger Text, Dark Interface, Reduced
+Motion; 4 more to check by hand
+Already in the code: VoiceOver: Sets accessibility labels (Pantry/PantryListView.swift); Larger
+Text: Uses Dynamic Type text styles (Pantry/PantryListView.swift and 1 more); Reduced Motion: Reads
+the Reduce Motion setting (Pantry/PantryListView.swift)
+
+INFO     A11Y601 The app plays video · Captions, Audio Descriptions
+         Pantry/RecipeView.swift:10
+         VideoPlayer plays video here: check that it has captions and an audio-described track.
+         Fix: [A] Check the media, then decide on the two labels
+
+How to fix
+
+[A]      Check the media, then decide on the two labels
+         1. List the videos of the common tasks and check each for a captions track and a
+            described-audio track.
+         2. With AVPlayerViewController or VideoPlayer, the system shows legible and audio options
+            when the asset has them.
+         https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/contrast-color-media.md#captions-and-audio-descriptions
+
+0 errors, 0 warnings, 1 info
+a11ylabel reads code. Before claiming a label, Apple asks that people can complete every common task
+of the app with the feature on.
+Criteria: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/overview-of-accessibility-nutrition-labels

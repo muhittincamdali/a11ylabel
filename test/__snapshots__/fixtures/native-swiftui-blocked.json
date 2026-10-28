@@ -1,0 +1,649 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "a11ylabel",
+    "version": "0.0.0"
+  },
+  "rules": {
+    "ruleSet": "nutrition-labels",
+    "dataVersion": "2026.10.28",
+    "read": "2026-10-28"
+  },
+  "project": {
+    "path": "fixtures/native-swiftui-blocked",
+    "name": "Pantry",
+    "ecosystem": "native",
+    "versions": [],
+    "targets": [
+      {
+        "name": "Pantry",
+        "infoPlists": [],
+        "interfaceStyle": "Light",
+        "deploymentTarget": "18.0"
+      }
+    ]
+  },
+  "scope": [
+    "voiceover",
+    "voice-control",
+    "larger-text",
+    "dark-interface",
+    "differentiate-without-color",
+    "sufficient-contrast",
+    "reduced-motion",
+    "captions",
+    "audio-descriptions"
+  ],
+  "verdict": {
+    "code": "blocked",
+    "text": "2 labels blocked by the code (Larger Text, Dark Interface); 3 to review"
+  },
+  "labels": [
+    {
+      "id": "voiceover",
+      "name": "VoiceOver",
+      "status": "review",
+      "coverage": "partial",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 1
+      },
+      "signals": [
+        {
+          "text": "Sets accessibility labels",
+          "file": "Pantry/PantryListView.swift",
+          "files": 1
+        }
+      ],
+      "checked": "Icon-only buttons without an accessibility label, and labels that name the control type.",
+      "manual": "Complete every common task with VoiceOver alone: reading order, grouping, values and states, custom actions, focus in modal views."
+    },
+    {
+      "id": "voice-control",
+      "name": "Voice Control",
+      "status": "review",
+      "coverage": "partial",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Icon-only buttons without a name Voice Control can show and say.",
+      "manual": "Say \"Show names\" and \"Show numbers\" on every screen of the common tasks; reach swipe and long-press actions by voice; dictate into every text field."
+    },
+    {
+      "id": "larger-text",
+      "name": "Larger Text",
+      "status": "blocked",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria",
+      "counts": {
+        "errors": 1,
+        "warnings": 3,
+        "info": 0
+      },
+      "signals": [
+        {
+          "text": "Uses Dynamic Type text styles",
+          "file": "Pantry/RecipeView.swift",
+          "files": 1
+        }
+      ],
+      "checked": "Text scaling turned off or capped below 200% (for the whole app or one view), and fixed font sizes that Dynamic Type does not scale.",
+      "manual": "Use the common tasks at the largest accessibility text size: no overlapping text, no truncation that hides information."
+    },
+    {
+      "id": "dark-interface",
+      "name": "Dark Interface",
+      "status": "blocked",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria",
+      "counts": {
+        "errors": 1,
+        "warnings": 0,
+        "info": 1
+      },
+      "signals": [],
+      "checked": "A light appearance forced in Info.plist, the build settings, the Expo config or code; a Flutter app without a dark theme; asset colours without a dark variant.",
+      "manual": "Use the common tasks in Dark Mode: no screen, sheet, web view or launch screen that flashes bright."
+    },
+    {
+      "id": "differentiate-without-color",
+      "name": "Differentiate Without Color Alone",
+      "status": "manual",
+      "coverage": "manual",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/differentiate-without-color-alone-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Nothing: whether colour is the only difference is a question of design, not of code a11ylabel can read.",
+      "manual": "Look for status, charts and selections told apart by colour alone; add a shape, symbol or text."
+    },
+    {
+      "id": "sufficient-contrast",
+      "name": "Sufficient Contrast",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/sufficient-contrast-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 1
+      },
+      "signals": [],
+      "checked": "Asset catalog colours without a high contrast variant for the Increase Contrast setting.",
+      "manual": "Measure text and controls against their background: about 4.5:1 for most text, by default or with Increase Contrast."
+    },
+    {
+      "id": "reduced-motion",
+      "name": "Reduced Motion",
+      "status": "review",
+      "coverage": "checked",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "signals": [],
+      "checked": "Repeating, parallax, 3D and auto-playing animations in an app that never reads the Reduce Motion setting, or in files that do not.",
+      "manual": "Turn on Reduce Motion and use the common tasks: no spinning, scaling, parallax or auto-advancing motion left."
+    },
+    {
+      "id": "captions",
+      "name": "Captions",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/captions-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 1
+      },
+      "signals": [],
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video and audio of the common tasks have captions or transcripts, and that people can tell which media is captioned."
+    },
+    {
+      "id": "audio-descriptions",
+      "name": "Audio Descriptions",
+      "status": "manual",
+      "coverage": "hint",
+      "criteria": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/audio-descriptions-evaluation-criteria",
+      "counts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 1
+      },
+      "signals": [],
+      "checked": "Whether the app plays video, which makes the label apply.",
+      "manual": "Check that the video of the common tasks offers an audio-described track."
+    }
+  ],
+  "findings": [
+    {
+      "rule": "A11Y101",
+      "labels": [
+        "larger-text"
+      ],
+      "severity": "error",
+      "title": "Text size locked for the whole app",
+      "message": ".dynamicTypeSize(...DynamicTypeSize.xLarge) on the app's scene: no text grows past xLarge, below 200%.",
+      "file": "Pantry/PantryApp.swift",
+      "line": 9,
+      "target": null,
+      "fix": {
+        "id": "A11Y101/swiftui",
+        "title": "Remove the Dynamic Type limit from the scene",
+        "steps": [
+          "Remove .dynamicTypeSize(…) from the WindowGroup content, or raise its upper bound to .accessibility3 or above (AX3 is the first size above 200% for body text).",
+          "Put a limit only on the views that cannot grow, such as a tab bar, and give them .accessibilityShowsLargeContentViewer().",
+          "Preview the screens with .dynamicTypeSize(.accessibility5)."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#swiftui"
+      },
+      "sources": [
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        },
+        {
+          "title": "React Native Text: allowFontScaling, maxFontSizeMultiplier",
+          "url": "https://reactnative.dev/docs/text"
+        },
+        {
+          "title": "React 19 upgrade guide: defaultProps removed from function components",
+          "url": "https://react.dev/blog/2024/04/25/react-19-upgrade-guide"
+        },
+        {
+          "title": "Flutter MediaQuery.withClampedTextScaling",
+          "url": "https://api.flutter.dev/flutter/widgets/MediaQuery/withClampedTextScaling.html"
+        },
+        {
+          "title": "SwiftUI dynamicTypeSize(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/dynamictypesize(_:)"
+        },
+        {
+          "title": "UIKit UIView.maximumContentSizeCategory",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/maximumcontentsizecategory"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y201",
+      "labels": [
+        "dark-interface"
+      ],
+      "severity": "error",
+      "title": "Light appearance forced for the whole app",
+      "message": "Pantry: INFOPLIST_KEY_UIUserInterfaceStyle is Light: the app ignores Dark Mode and nothing in the code turns it dark.",
+      "file": "Pantry.xcodeproj/project.pbxproj",
+      "line": 194,
+      "target": "Pantry",
+      "fix": {
+        "id": "A11Y201/build-setting",
+        "title": "Remove the build setting that forces light",
+        "steps": [
+          "Delete INFOPLIST_KEY_UIUserInterfaceStyle (Build Settings > Info.plist Values > User Interface Style), or set it to Automatic.",
+          "Give every custom colour a dark variant in the asset catalog, then use the common tasks in Dark Mode."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#info-plist-and-build-settings"
+      },
+      "sources": [
+        {
+          "title": "UIUserInterfaceStyle (Information Property List)",
+          "url": "https://developer.apple.com/documentation/bundleresources/information-property-list/uiuserinterfacestyle"
+        },
+        {
+          "title": "Dark Interface evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/dark-interface-evaluation-criteria"
+        },
+        {
+          "title": "Expo app config: userInterfaceStyle",
+          "url": "https://docs.expo.dev/versions/latest/config/app/"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y104",
+      "labels": [
+        "larger-text"
+      ],
+      "severity": "warning",
+      "title": "Fixed font size",
+      "message": ".system(size:) is a fixed point size: Dynamic Type does not scale it.",
+      "file": "Pantry/PantryListView.swift",
+      "line": 25,
+      "target": null,
+      "fix": {
+        "id": "A11Y104/swiftui",
+        "title": "Use a text style, or a size relative to one",
+        "steps": [
+          "Replace .system(size: 17) with a text style such as .body, .headline or .title.",
+          "For a custom size or font, use .system(size: 17, …) only for decoration; for text, use Font.custom(\"Name\", size: 17, relativeTo: .body) or a @ScaledMetric size."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#swiftui"
+      },
+      "sources": [
+        {
+          "title": "SwiftUI Font.system(size:weight:design:)",
+          "url": "https://developer.apple.com/documentation/swiftui/font/system(size:weight:design:)"
+        },
+        {
+          "title": "SwiftUI Font.custom(_:fixedSize:)",
+          "url": "https://developer.apple.com/documentation/swiftui/font/custom(_:fixedsize:)"
+        },
+        {
+          "title": "UIKit UIFontMetrics",
+          "url": "https://developer.apple.com/documentation/uikit/uifontmetrics"
+        },
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y104",
+      "labels": [
+        "larger-text"
+      ],
+      "severity": "warning",
+      "title": "Fixed font size",
+      "message": ".system(size:) is a fixed point size: Dynamic Type does not scale it.",
+      "file": "Pantry/PantryListView.swift",
+      "line": 28,
+      "target": null,
+      "fix": {
+        "id": "A11Y104/swiftui",
+        "title": "Use a text style, or a size relative to one",
+        "steps": [
+          "Replace .system(size: 17) with a text style such as .body, .headline or .title.",
+          "For a custom size or font, use .system(size: 17, …) only for decoration; for text, use Font.custom(\"Name\", size: 17, relativeTo: .body) or a @ScaledMetric size."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#swiftui"
+      },
+      "sources": [
+        {
+          "title": "SwiftUI Font.system(size:weight:design:)",
+          "url": "https://developer.apple.com/documentation/swiftui/font/system(size:weight:design:)"
+        },
+        {
+          "title": "SwiftUI Font.custom(_:fixedSize:)",
+          "url": "https://developer.apple.com/documentation/swiftui/font/custom(_:fixedsize:)"
+        },
+        {
+          "title": "UIKit UIFontMetrics",
+          "url": "https://developer.apple.com/documentation/uikit/uifontmetrics"
+        },
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y104",
+      "labels": [
+        "larger-text"
+      ],
+      "severity": "warning",
+      "title": "Fixed font size",
+      "message": "Font.custom(_:fixedSize:) keeps its size whatever the system text size is.",
+      "file": "Pantry/RecipeView.swift",
+      "line": 15,
+      "target": null,
+      "fix": {
+        "id": "A11Y104/swiftui",
+        "title": "Use a text style, or a size relative to one",
+        "steps": [
+          "Replace .system(size: 17) with a text style such as .body, .headline or .title.",
+          "For a custom size or font, use .system(size: 17, …) only for decoration; for text, use Font.custom(\"Name\", size: 17, relativeTo: .body) or a @ScaledMetric size."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/larger-text.md#swiftui"
+      },
+      "sources": [
+        {
+          "title": "SwiftUI Font.system(size:weight:design:)",
+          "url": "https://developer.apple.com/documentation/swiftui/font/system(size:weight:design:)"
+        },
+        {
+          "title": "SwiftUI Font.custom(_:fixedSize:)",
+          "url": "https://developer.apple.com/documentation/swiftui/font/custom(_:fixedsize:)"
+        },
+        {
+          "title": "UIKit UIFontMetrics",
+          "url": "https://developer.apple.com/documentation/uikit/uifontmetrics"
+        },
+        {
+          "title": "Larger Text evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/larger-text-evaluation-criteria"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y301",
+      "labels": [
+        "reduced-motion"
+      ],
+      "severity": "warning",
+      "title": "Motion in an app that never reads Reduce Motion",
+      "message": "repeatForever, an animation that never stops, and nothing in the app reads Reduce Motion.",
+      "file": "Pantry/PantryListView.swift",
+      "line": 48,
+      "target": null,
+      "fix": {
+        "id": "A11Y301/swiftui",
+        "title": "Read Reduce Motion and calm the animation",
+        "steps": [
+          "Add @Environment(\\.accessibilityReduceMotion) var reduceMotion to the view.",
+          "When it is true, drop repeatForever, rotation and 3D effects, or replace them with a fade."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/reduced-motion.md#swiftui-and-uikit"
+      },
+      "sources": [
+        {
+          "title": "Reduced Motion evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityReduceMotion",
+          "url": "https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityreducemotion"
+        },
+        {
+          "title": "UIKit UIAccessibility.isReduceMotionEnabled",
+          "url": "https://developer.apple.com/documentation/uikit/uiaccessibility/isreducemotionenabled"
+        },
+        {
+          "title": "React Native AccessibilityInfo.isReduceMotionEnabled",
+          "url": "https://reactnative.dev/docs/accessibilityinfo"
+        },
+        {
+          "title": "Flutter AccessibilityFeatures.reduceMotion",
+          "url": "https://api.flutter.dev/flutter/dart-ui/AccessibilityFeatures/reduceMotion.html"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y401",
+      "labels": [
+        "voiceover",
+        "voice-control"
+      ],
+      "severity": "warning",
+      "title": "Icon-only button without an accessibility label",
+      "message": "A Button whose label is only the image \"Filter\", whose asset name becomes the label, with no accessibilityLabel.",
+      "file": "Pantry/PantryListView.swift",
+      "line": 58,
+      "target": null,
+      "fix": {
+        "id": "A11Y401/swiftui",
+        "title": "Name the button",
+        "steps": [
+          "Use Label(\"Close\", systemImage: \"xmark\").labelStyle(.iconOnly) as the button's label, or add .accessibilityLabel(\"Close\").",
+          "Name the action, not the control: \"Close\", not \"Close button\" or \"X\"."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#swiftui"
+      },
+      "sources": [
+        {
+          "title": "VoiceOver evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria"
+        },
+        {
+          "title": "Voice Control evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityLabel(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/accessibilitylabel(_:)"
+        },
+        {
+          "title": "React Native accessibility: accessibilityLabel",
+          "url": "https://reactnative.dev/docs/accessibility"
+        },
+        {
+          "title": "Flutter IconButton.tooltip",
+          "url": "https://api.flutter.dev/flutter/material/IconButton/tooltip.html"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y401",
+      "labels": [
+        "voiceover",
+        "voice-control"
+      ],
+      "severity": "warning",
+      "title": "Icon-only button without an accessibility label",
+      "message": "A Button whose label is only the SF Symbol \"plus\", whose name is not a label you chose, with no accessibilityLabel.",
+      "file": "Pantry/PantryListView.swift",
+      "line": 63,
+      "target": null,
+      "fix": {
+        "id": "A11Y401/swiftui",
+        "title": "Name the button",
+        "steps": [
+          "Use Label(\"Close\", systemImage: \"xmark\").labelStyle(.iconOnly) as the button's label, or add .accessibilityLabel(\"Close\").",
+          "Name the action, not the control: \"Close\", not \"Close button\" or \"X\"."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#swiftui"
+      },
+      "sources": [
+        {
+          "title": "VoiceOver evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria"
+        },
+        {
+          "title": "Voice Control evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voice-control-evaluation-criteria"
+        },
+        {
+          "title": "SwiftUI accessibilityLabel(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/accessibilitylabel(_:)"
+        },
+        {
+          "title": "React Native accessibility: accessibilityLabel",
+          "url": "https://reactnative.dev/docs/accessibility"
+        },
+        {
+          "title": "Flutter IconButton.tooltip",
+          "url": "https://api.flutter.dev/flutter/material/IconButton/tooltip.html"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y205",
+      "labels": [
+        "dark-interface"
+      ],
+      "severity": "info",
+      "title": "Asset colours without a dark variant",
+      "message": "3 of 3 asset colours have no dark variant: Brand, Card, Muted.",
+      "file": "Pantry/Assets.xcassets/Brand.colorset/Contents.json",
+      "line": null,
+      "target": null,
+      "fix": {
+        "id": "A11Y205/asset-catalog",
+        "title": "Add a dark value to each colour",
+        "steps": [
+          "Select the colour set in Xcode, set Appearances to \"Any, Dark\" in the Attributes inspector and fill the Dark well.",
+          "Keep a single value only for colours that read well on both light and dark backgrounds."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/dark-interface.md#asset-catalog-colours"
+      },
+      "sources": [
+        {
+          "title": "Supporting Dark Mode in your interface",
+          "url": "https://developer.apple.com/documentation/uikit/supporting-dark-mode-in-your-interface"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y402",
+      "labels": [
+        "voiceover"
+      ],
+      "severity": "info",
+      "title": "Accessibility label names the control type",
+      "message": "The label \"Delete button\" ends with \"button\", which VoiceOver already says from the element's traits.",
+      "file": "Pantry/PantryListView.swift",
+      "line": 38,
+      "target": null,
+      "fix": {
+        "id": "A11Y402/swiftui",
+        "title": "Drop the control type from the label",
+        "steps": [
+          "Shorten the label to the action (\"Close\"); add .accessibilityAddTraits(.isButton) where the view is not already a Button."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/voiceover.md#swiftui"
+      },
+      "sources": [
+        {
+          "title": "VoiceOver evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y501",
+      "labels": [
+        "sufficient-contrast"
+      ],
+      "severity": "info",
+      "title": "Asset colours without a high contrast variant",
+      "message": "3 of 3 asset colours have no high contrast variant: Brand, Card, Muted.",
+      "file": "Pantry/Assets.xcassets/Brand.colorset/Contents.json",
+      "line": null,
+      "target": null,
+      "fix": {
+        "id": "A11Y501/asset-catalog",
+        "title": "Check the contrast, then add high contrast values where needed",
+        "steps": [
+          "Measure text and control colours against their backgrounds (about 4.5:1 for most text).",
+          "Where the default falls short, tick High Contrast in the colour set's Attributes inspector and fill the new wells with stronger values."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/contrast-color-media.md#sufficient-contrast"
+      },
+      "sources": [
+        {
+          "title": "Sufficient Contrast evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/sufficient-contrast-evaluation-criteria"
+        },
+        {
+          "title": "UIKit UITraitCollection.accessibilityContrast",
+          "url": "https://developer.apple.com/documentation/uikit/uitraitcollection/accessibilitycontrast"
+        }
+      ]
+    },
+    {
+      "rule": "A11Y601",
+      "labels": [
+        "captions",
+        "audio-descriptions"
+      ],
+      "severity": "info",
+      "title": "The app plays video",
+      "message": "VideoPlayer plays video here: check that it has captions and an audio-described track.",
+      "file": "Pantry/RecipeView.swift",
+      "line": 10,
+      "target": null,
+      "fix": {
+        "id": "A11Y601/swiftui",
+        "title": "Check the media, then decide on the two labels",
+        "steps": [
+          "List the videos of the common tasks and check each for a captions track and a described-audio track.",
+          "With AVPlayerViewController or VideoPlayer, the system shows legible and audio options when the asset has them."
+        ],
+        "guide": "https://github.com/muhittincamdali/a11ylabel/blob/main/docs/guides/contrast-color-media.md#captions-and-audio-descriptions"
+      },
+      "sources": [
+        {
+          "title": "Captions evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/captions-evaluation-criteria"
+        },
+        {
+          "title": "Audio Descriptions evaluation criteria (App Store Connect Help)",
+          "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/audio-descriptions-evaluation-criteria"
+        },
+        {
+          "title": "AVFoundation: selecting subtitles and alternative audio tracks",
+          "url": "https://developer.apple.com/documentation/avfoundation/selecting-subtitles-and-alternative-audio-tracks"
+        }
+      ]
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 2,
+    "warnings": 6,
+    "info": 4
+  }
+}
