@@ -2,7 +2,8 @@
 // file is read only when it is a regular file and, unless the caller says otherwise, inside the
 // project folder: a link to /dev/zero or a FIFO would never end, and a link out of the project
 // would read a file the user did not ask to check.
-import { readFile, realpath, stat } from 'node:fs/promises';
+import { constants } from 'node:fs';
+import { type FileHandle, open, realpath, stat } from 'node:fs/promises';
 import { isAbsolute, relative, sep } from 'node:path';
 
 export type ProjectFile =
@@ -52,17 +53,52 @@ export async function readProjectFile(
   if (root !== null && !isInside(real, await realpath(root).catch(() => root))) {
     return { found: false, reason: 'outside' };
   }
+  let handle: FileHandle | undefined;
   try {
-    const info = await stat(real);
+    // stat before open: opening a FIFO for reading waits for a writer.
+    if (!(await stat(real)).isFile()) return { found: false, reason: 'not-file' };
+    // The path may have been replaced since; O_NONBLOCK keeps a FIFO put there from blocking,
+    // and the checks below are on the file actually opened.
+    handle = await open(real, constants.O_RDONLY | (constants.O_NONBLOCK ?? 0));
+    const info = await handle.stat();
     if (!info.isFile()) return { found: false, reason: 'not-file' };
     if (info.size > maxBytes) return { found: false, reason: 'too-large' };
-    const bytes = await readFile(real);
-    // The file may have grown between stat and read.
+    // The file may grow after the size check: read one byte past the limit at most, never more.
+    const bytes = await readAtMost(handle, info.size, maxBytes + 1);
     if (bytes.length > maxBytes) return { found: false, reason: 'too-large' };
     return { found: true, bytes };
   } catch {
     return { found: false, reason: 'missing' };
+  } finally {
+    await handle?.close().catch(() => undefined);
   }
+}
+
+/** Bytes read after the expected size, per read, when a file has grown. */
+const GROWTH_CHUNK = 65_536;
+
+/**
+ * The first `limit` bytes of the file at most. It asks for one byte more than `expected` (the size
+ * from fstat) first, so a file that has not grown takes one read.
+ */
+export async function readAtMost(
+  handle: FileHandle,
+  expected: number,
+  limit: number,
+): Promise<Buffer> {
+  const chunks: Buffer[] = [];
+  let total = 0;
+  let size = Math.min(expected + 1, limit);
+  while (total < limit) {
+    const chunk = Buffer.allocUnsafe(Math.min(size, limit - total));
+    const { bytesRead } = await handle.read(chunk, 0, chunk.length, total);
+    chunks.push(chunk.subarray(0, bytesRead));
+    total += bytesRead;
+    // A regular file reads short only at its end.
+    if (bytesRead < chunk.length) break;
+    size = GROWTH_CHUNK;
+  }
+  return Buffer.concat(chunks, total);
 }
 
 /** The text of `path` (see readProjectFile), or null when it is not read. */
