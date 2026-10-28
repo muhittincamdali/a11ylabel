@@ -42,6 +42,10 @@ First release.
   label counts and the summary include the findings over these limits, and a note says how many of
   each rule were left out. Names and values from the project (target names, versions, build
   setting and Info.plist values) are cut to 200 characters.
+- Every report replaces control and bidirectional characters in file names and values from the
+  project with U+FFFD. The terminal and text reports replace line breaks too, so a file name with a
+  newline cannot start a line that looks like part of the report; the same goes for a path with a
+  newline in an error message on stderr.
 
 [Unreleased]: https://github.com/muhittincamdali/a11ylabel/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/muhittincamdali/a11ylabel/releases/tag/v0.1.0

@@ -38,8 +38,10 @@ sources, package.json, package-lock.json, app.json, app.config.js/ts as text, pu
 .fvmrc, and the package.json of the packages it lists in node_modules) and writes only the report
 you ask for with `--output`. It makes no network requests and never runs project code. Reports
 that fit this policy include, for example: a crafted project file that makes a11ylabel write outside
-the `--output` file, run code, hang or exhaust memory, or print terminal escape sequences or
-Markdown links from file names or values in the project.
+the `--output` file, run code, hang or exhaust memory, or print terminal escape sequences,
+Markdown links or report lines of its own from file names or values in the project. Every report
+replaces control and bidirectional characters in them with U+FFFD; the terminal and text reports
+replace line breaks too, so a file name with a newline stays on the line of its finding.
 
 The project you check may come from a pull request, so a11ylabel limits what it reads: 32 MB per
 project file; for sources 4 MB per file, 20,000 files and 128 MB in total; 5,000 colour sets;
