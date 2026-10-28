@@ -1,9 +1,19 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { MAX_BINARY_PLIST_VALUES } from '../../src/collect/plist-binary.js';
+import {
+  BINARY_PLIST_TOO_MUCH_TEXT,
+  MAX_BINARY_PLIST_VALUES,
+} from '../../src/collect/plist-binary.js';
 import { excerpt, MAX_EXCERPT_LENGTH, MAX_PLIST_DEPTH } from '../../src/collect/plist-value.js';
 import { isDict, type PlistDict, PlistError, parsePlist } from '../../src/collect/plist.js';
-import { type BinaryObject, binaryPlist, sharedReferencePlist } from '../helpers/bplist.js';
+import {
+  arrayOfReferences,
+  asciiObject,
+  type BinaryObject,
+  binaryPlist,
+  rawBinaryPlist,
+  sharedReferencePlist,
+} from '../helpers/bplist.js';
 
 const data = (name: string) => readFileSync(new URL(`../data/${name}`, import.meta.url));
 
@@ -109,6 +119,40 @@ describe('parsePlist (XML)', () => {
     expect(() => parsePlist(nest(MAX_PLIST_DEPTH + 1))).toThrow(/nests more than/);
     // Without the limit this is a stack overflow rather than a PlistError.
     expect(() => parsePlist(nest(200_000))).toThrow(PlistError);
+  });
+
+  it('decodes a string once when many references share its offset', () => {
+    // The audit's 1 MB file: 8000 references whose offsets all name one 1 MB string. Read once
+    // per reference, it decoded 8 GB and the command ran out of memory.
+    const refs = 8000;
+    const array = arrayOfReferences(refs);
+    const body = Buffer.concat([array, asciiObject(1_000_000)]);
+    const bytes = rawBinaryPlist(body, [0, ...Array.from({ length: refs }, () => array.length)]);
+    const started = performance.now();
+    const { value } = parsePlist(bytes);
+    expect(performance.now() - started).toBeLessThan(1000);
+    if (!Array.isArray(value)) throw new Error('not an array');
+    expect(value).toHaveLength(refs);
+    expect(new Set(value).size).toBe(1);
+    expect((value[0] as string).length).toBe(1_000_000);
+  });
+
+  it('stops overlapping strings that decode more bytes than the file holds', () => {
+    // Each 3-byte header "ASCII string of 255 bytes" is followed by the next headers, so every
+    // offset in the run starts a valid string: 2000 strings of 255 bytes from a 6 KB body.
+    const count = 2000;
+    const array = arrayOfReferences(count);
+    const run = Buffer.alloc(count * 3 + 255);
+    for (let index = 0; index < count; index++) run.set([0x5f, 0x10, 0xff], index * 3);
+    const offsets = Array.from({ length: count }, (_, index) => array.length + index * 3);
+    const bytes = rawBinaryPlist(Buffer.concat([array, run]), [0, ...offsets]);
+    expect(() => parsePlist(bytes)).toThrow(new PlistError(BINARY_PLIST_TOO_MUCH_TEXT));
+  });
+
+  it('sees a cycle through two references to the same array', () => {
+    // Object 1 and 2 both name the array at offset 0, which holds reference 2.
+    const body = Buffer.from([0xa1, 0, 0, 0, 2]);
+    expect(() => parsePlist(rawBinaryPlist(body, [0, 0, 0]))).toThrow(/reference cycle/);
   });
 
   it('keeps a __proto__ key as a key', () => {
